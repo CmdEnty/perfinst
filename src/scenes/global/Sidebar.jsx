@@ -17,7 +17,7 @@ import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import ArticleIcon from '@mui/icons-material/Article';
 import OutboxIcon from '@mui/icons-material/Outbox';
-import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
@@ -85,7 +85,12 @@ const Sidebar = () => {
 
           {!isCollapsed && (
             <Box mb="25px">
-              <Box display="flex" justifyContent="center" alignItems="center" mt="-5px">
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                mt="-5px"
+              >
                 <img
                   alt="profile-user"
                   width="150px"
@@ -227,10 +232,10 @@ const Sidebar = () => {
             >
               Emails/Sms
             </Typography>
-             <Item
-              title="Inbox"
+            <Item
+              title="Email"
               to="/geography"
-              icon={<InboxOutlinedIcon />}
+              icon={<EmailOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -243,13 +248,11 @@ const Sidebar = () => {
             />
             <Item
               title="Drafts"
-              to="/geography"
+              to="/faq"
               icon={<DraftsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
-            
 
             {/* <Item
               title="Bar Chart"

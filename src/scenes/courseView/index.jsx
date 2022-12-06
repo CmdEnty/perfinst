@@ -9,8 +9,8 @@ import { tokens } from "../../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import Header from "../../components/Header";
-import CourseList from "../../components/course/courseList";
 import { Link } from "react-router-dom";
+import CourseViewCustomizedTabs from "../../components/course/courseViewVerticalTabs";
 const CourseView = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -63,7 +63,7 @@ const CourseView = () => {
         <Box>
           {" "}
           <Box backgroundColor={colors.primary[400]} width="590px">
-            <CourseList />
+            <CourseViewCustomizedTabs />
           </Box>
         </Box>
       </Box>

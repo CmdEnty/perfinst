@@ -1,11 +1,14 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import { tokens } from "../../theme";
 import { Box, Button, Typography, useTheme } from "@mui/material";
-import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import NextOfKinAccordions from '../nextOfKinAccordions';
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import NextOfKinAccordions from "../nextOfKinAccordions";
+import * as yup from "yup";
+import ToggleEdit from "../../scenes/faq";
+import { useState } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,18 +39,42 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
 export default function StudentViewTab() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [state_data, setState_data] = useState({
+    selectedValue: "",
+    form1Submitted: "",
+    surName: "Joh",
+    fastName: "Mwangi",
+    middleName: "Njoroge",
+    selectedGender: "",
+    idNo: "",
+    selectedNationality: "",
+    nationality: "",
+  });
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const checkoutSchema = yup.object().shape({
+    // selectedValue: yup.string().required("You must select one the buttons"),
+    surName: yup.string().required("required"),
+    fastName: yup.string().required("required"),
+    middleName: yup.string().required("required"),
+    // selectedGender: yup.string().required("You must select one the buttons"),
+    // idNo: yup.string().required("required"),
+    // selectedNationality: yup
+    //   .string()
+    //   .required("You must select one the buttons"),
+    // nationality: yup.string().required("required"),
+  });
 
   return (
     <Box sx={{ width: "100%", mt: "-35px" }}>
@@ -114,23 +141,14 @@ export default function StudentViewTab() {
                   sx={{ cursor: "pointer" }}
                 />
               </Box>
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-                color={colors.blueAccent[700]}
-              >
-                Middle Name
-              </Typography>
-              <Box display="flex" gap="10px">
-                <Typography variant="h6" color={colors.grey[200]}>
-                  N/A
-                </Typography>
-                <ModeEditOutlineOutlinedIcon
-                  fontSize="small"
-                  color="secondary"
-                  sx={{ cursor: "pointer" }}
-                />
-              </Box>
+              <ToggleEdit
+                state_data={state_data}
+                name="middleName"
+                type="text"
+                checkoutSchema={checkoutSchema}
+                label="Middle Name"
+              />
+
               <Typography
                 variant="h5"
                 fontWeight="bold"

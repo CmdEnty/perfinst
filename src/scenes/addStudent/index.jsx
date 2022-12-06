@@ -2,7 +2,7 @@ import React from 'react'
 import StudentFormTab from '../../components/studentFormTab';
 import Header from "../../components/Header";
 import { Box } from '@mui/material';
-import ColorTabs from '../global/ColoredTab';
+import AccountMenu from "../global/ColoredTab";
 import { useState } from "react";
 
 function AddStudent() {
@@ -47,15 +47,15 @@ function AddStudent() {
 
   return (
     <>
-    <Box m="30px">
-      <Header title="REGISTER STUDENT" subtitle="Student Registration Form" />
-     </Box>
-    <Box m="20px">
-      <ColorTabs value="two"/>
-     </Box>
-    <StudentFormTab student={student} handleFormChange={handleFormChange}/>
+      <Box m="20px">
+        <Header title="REGISTER STUDENT" subtitle="Student Registration Form" />
+      </Box>
+      <Box m="20px">
+        <AccountMenu value="two" />
+      </Box>
+      <StudentFormTab student={student} handleFormChange={handleFormChange} />
     </>
-  )
+  );
 }
 
 export default AddStudent

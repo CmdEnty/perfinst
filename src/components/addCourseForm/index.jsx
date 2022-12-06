@@ -147,6 +147,41 @@ const AddCourseForm = (props) => {
                       },
                   }}
                 />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Level"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.level}
+                  name="level"
+                  error={!!touched.level && !!errors.level}
+                  helperText={touched.level && errors.level}
+                  sx={{
+                    gridColumn: "span 2",
+                    ".Mui-focused": {
+                      color: "#f2f0f0 !important",
+                      input: {
+                        color: "#f2f0f0 !important",
+                      },
+                    },
+                    ".Mui-focused.Mui-error": {
+                      color: "#f44336 !important",
+                    },
+                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                      {
+                        borderBottom: "2px solid #0ba2de !important",
+                      },
+                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
+                      borderBottom: "2px solid #f5079e !important",
+                    },
+                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                      {
+                        borderBottom: "#f44336 !important",
+                      },
+                  }}
+                />
                 <FormControl
                   sx={{
                     ".css-w3lmqu-MuiFormLabel-root.Mui-focused": {
@@ -340,6 +375,7 @@ const AddCourseForm = (props) => {
 const checkoutSchema = yup.object().shape({
   code: yup.string().required("required"),
   title: yup.string().required("required"),
+  level: yup.string().required("required"),
   duration: yup.string().required("Select one of the buttons above"),
   durationValue: yup.string().required("Required"),
 });
@@ -347,6 +383,7 @@ const checkoutSchema = yup.object().shape({
 const initialValues = {
   code: "",
   title: "",
+  level: "",
   duration: "",
   durationValue: "",
 };

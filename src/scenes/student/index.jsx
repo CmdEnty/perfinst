@@ -1,15 +1,22 @@
-import { Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import ColorTabs from "../global/ColoredTab";
-import { Link } from "react-router-dom";
+import AccountMenu from "../global/ColoredTab";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Students = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const navigate = useNavigate();
+  const studentViewPage = useCallback(
+    () => navigate("/studentView", { replace: true }),
+    [navigate]
+  );
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
@@ -52,39 +59,12 @@ const Students = () => {
       headerName: "ID Number",
       flex: 1,
     },
-    {
-      field: "accessLevel",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { view } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={colors.greenAccent[600]}
-            borderRadius="4px"
-          >
-            <Link to="/studentView" style={{ textDecoration: "none" }}>
-              <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-                VIEW
-              </Typography>
-            </Link>
-          </Box>
-        );
-      },
-    },
   ];
 
   return (
     <Box m="20px">
-      <Header
-        title="STUDENTS"
-        subtitle="List of Admitted Students"
-      />
-            <ColorTabs value="one"/>
+      <Header title="STUDENTS" subtitle="List of Admitted Students" />
+      <AccountMenu value="one" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -121,6 +101,7 @@ const Students = () => {
           rows={mockDataContacts}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
+          onRowClick={studentViewPage}
         />
       </Box>
     </Box>

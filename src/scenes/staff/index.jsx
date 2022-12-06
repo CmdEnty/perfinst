@@ -6,10 +6,19 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Staff = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+    const navigate = useNavigate();
+    const staffViewPage = useCallback(
+      () => navigate("/staffView", { replace: true }),
+      [navigate]
+    );
+
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -100,7 +109,12 @@ const Staff = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid
+          checkboxSelection
+          rows={mockDataTeam}
+          columns={columns}
+          onRowClick={staffViewPage}
+        />
       </Box>
     </Box>
   );
