@@ -234,7 +234,7 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Email"
-              to="/geography"
+              to="/emails"
               icon={<EmailOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

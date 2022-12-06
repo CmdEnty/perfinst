@@ -18,6 +18,7 @@ import DesignationAccordions from "./scenes/designation";
 import StudentView from "./scenes/studentView";
 import Course from "./scenes/course";
 import CourseView from "./scenes/courseView";
+import Emails from "./scenes/emails";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -38,7 +39,7 @@ function App() {
               <Route path="/pendingStudents" element={<PendingStudents />} />
               <Route path="/addStudent" element={<AddStudentForm />} />
               <Route path="/designation" element={<DesignationAccordions />} />
-              <Route path="/form" element={<Form />} />
+              <Route path="/emails" element={<Emails />} />
               <Route path="/courseView" element={<CourseView/>} />
               <Route path="/studentView" element={<StudentView />} />
               <Route path="/line" element={<Line />} />
