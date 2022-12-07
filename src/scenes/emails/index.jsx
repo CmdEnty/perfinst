@@ -8,6 +8,8 @@ import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import InboxList from "../../components/emails/inbox";
+import SentList from "../../components/emails/sent";
+import DraftList from "../../components/emails/draft";
 // import React, { useCallback } from "react";
 // import { useNavigate } from "react-router-dom";
 
@@ -77,7 +79,7 @@ export default function Emails() {
           value={value}
           onChange={handleChange}
           aria-label="Vertical tabs example"
-          sx={{ borderRight: 1, borderColor: "divider", color: 'white' }}
+          sx={{ borderRight: 1, borderColor: "divider", color: "white" }}
         >
           <Tab label="Inbox" {...a11yProps(0)} />
           <Tab label="Sent" {...a11yProps(1)} />
@@ -85,13 +87,15 @@ export default function Emails() {
         </Tabs>
         <TabPanel value={value} index={0}>
           Inbox
-          <InboxList/>
+          <InboxList />
         </TabPanel>
         <TabPanel value={value} index={1}>
           Sent
+          <SentList />
         </TabPanel>
         <TabPanel value={value} index={2}>
           Draft
+          <DraftList/>
         </TabPanel>
       </Box>
     </Box>

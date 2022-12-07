@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Tooltip, Typography } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
@@ -62,12 +62,14 @@ export default function ToggleEdit(props) {
                   <Typography variant="h6" color={colors.grey[200]}>
                     {props.state_data[name]}
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                    onClick={toggleEditMode}
-                  />
+                  <Tooltip title="Edit">
+                    <ModeEditOutlineOutlinedIcon
+                      fontSize="small"
+                      color="secondary"
+                      sx={{ cursor: "pointer" }}
+                      onClick={toggleEditMode}
+                    />
+                  </Tooltip>
                 </Box>
               </Box>
             ) : (
@@ -109,22 +111,27 @@ export default function ToggleEdit(props) {
                 />
 
                 <Box>
-                  <CancelPresentationOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => (
-                      (values[name] = props.state_data[name], errors[name]=''),
-                      setEditMode(!editMode)
-                    )}
-                  />
-
-                  <Button type="submit">
-                    <DoneOutlinedIcon
+                  <Tooltip title="Cancel Edit">
+                    <CancelPresentationOutlinedIcon
                       fontSize="small"
                       color="secondary"
-                      sx={{ cursor: "pointer", ml: "-45px" }}
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => (
+                        ((values[name] = props.state_data[name]),
+                        (errors[name] = "")),
+                        setEditMode(!editMode)
+                      )}
                     />
+                  </Tooltip>
+
+                  <Button type="submit">
+                    <Tooltip title="Save">
+                      <DoneOutlinedIcon
+                        fontSize="small"
+                        color="secondary"
+                        sx={{ cursor: "pointer", ml: "-45px" }}
+                      />
+                    </Tooltip>
                   </Button>
                 </Box>
               </Box>

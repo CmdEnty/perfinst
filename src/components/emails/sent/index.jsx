@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function InboxList() {
+export default function SentList() {
   const [checked, setChecked] = React.useState([0]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -62,14 +62,14 @@ export default function InboxList() {
             </ListItemIcon>
             <ListItemButton
               role={undefined}
-              onClick={handleToggle(value)}
+              onClick={() => alert("clicked")}
               dense
             >
               <ListItemText
                 id={labelId}
                 primary={
                   <Typography width="150px" noWrap>
-                    John Mwangangioooopp
+                    To: John Mwangangioooopp
                   </Typography>
                 }
               />
