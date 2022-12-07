@@ -14,11 +14,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 
 const RecordSalaryForm = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [qualificationsFields, setQualificationsField] = useState([]);
-  const [responsFields, setResponsField] = useState([]);
-  const [dynamicQualField, setDynamicQualField] = useState(0);
-  const [dynamicDescrField, setDynamicDescrField] = useState(0);
-  const [fields, setFieldsField] = useState({});
 
   const handleFormSubmit = (values) => {
     const NewValues = Object.assign(values, { form1Submitted: 1 });
@@ -26,55 +21,33 @@ const RecordSalaryForm = (props) => {
     // props.handlePage();
   };
 
-  const addQualField = (e, checkoutSchema) => {
-    e.preventDefault();
-    setDynamicQualField(dynamicQualField + 1);
-    let val = `qualification_${dynamicQualField}`;
 
-    setQualificationsField([
-      ...qualificationsFields,
-      { id: dynamicQualField, name: val },
-    ]);
-
-    setFieldsField([...fields, { dynamicQualField: "" }]);
-  };
-
-  const addDescrField = (e) => {
-    e.preventDefault();
-    setDynamicDescrField(dynamicDescrField + 1);
-    let val = `qualification_${dynamicDescrField + 2}`;
-
-    setResponsField([...responsFields, { id: dynamicDescrField, name: val }]);
-
-    setFieldsField([...fields, { dynamicDescrField: "" }]);
-  };
-
-//   months
-const months = [
-  {
-    value: 0,
-    label: "January",
-  },
-  {
-    value: 1,
-    label: "February",
-  },
-  {
-    value: 2,
-    label: "March",
-  },
-  {
-    value: 3,
-    label: "April",
-  },
-];
+  //   months
+  const months = [
+    {
+      value: 0,
+      label: "January",
+    },
+    {
+      value: 1,
+      label: "February",
+    },
+    {
+      value: 2,
+      label: "March",
+    },
+    {
+      value: 3,
+      label: "April",
+    },
+  ];
 
   return (
     <>
       <Box ml="20px" mr="40px" mt="20px" width="250px">
         <Formik
           onSubmit={handleFormSubmit}
-          initialValues={Object.assign(initialValues, fields)}
+          initialValues={Object.assign(initialValues)}
           validationSchema={checkoutSchema}
         >
           {({
@@ -173,13 +146,13 @@ const months = [
                   fullWidth
                   variant="filled"
                   select
-                  label="Level"
+                  label="Select Month"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.level}
-                  name="level"
-                  error={!!touched.level && !!errors.level}
-                  helperText={touched.level && errors.level}
+                  value={values.month}
+                  name="month"
+                  error={!!touched.month && !!errors.month}
+                  helperText={touched.month && errors.month}
                   sx={{
                     gridColumn: "span 2",
                     ".Mui-focused": {
@@ -221,48 +194,81 @@ const months = [
                   error={!!touched.duration && !!errors.duration}
                 >
                   <FormLabel id="demo-row-radio-buttons-group-label">
-                    Duration
+                    Method Of Payment
                   </FormLabel>
                   <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="duration"
+                    name="methodOfPayment"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.duration}
+                    value={values.methodOfPayment}
                   >
                     <FormControlLabel
-                      value="days"
+                      value="cash"
                       control={<Radio />}
-                      label="Days"
+                      label="Cash"
                     />
                     <FormControlLabel
-                      value="weeks"
+                      value="mpesa"
                       control={<Radio />}
-                      label="Weeks"
+                      label="M-pesa"
                     />
                     <FormControlLabel
-                      value="months"
+                      value="bank"
                       control={<Radio />}
-                      label="Months"
-                    />
-                    <FormControlLabel
-                      value="years"
-                      control={<Radio />}
-                      label="Years"
+                      label="Bank"
                     />
                   </RadioGroup>
                   <FormHelperText>
-                    {touched.duration && errors.duration}
+                    {touched.methodOfPayment && errors.methodOfPayment}
                   </FormHelperText>
                 </FormControl>
 
-                {values.duration !== "" && (
+                {values.methodOfPayment !== "" && (
                   <TextField
                     fullWidth
                     variant="filled"
-                    type="number"
-                    label={`Enter The Value (${values.duration})`}
+                    type="text"
+                    label={`Enter The Receipt No (${values.methodOfPayment})`}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.durationValue}
+                    name="durationValue"
+                    error={!!touched.durationValue && !!errors.durationValue}
+                    helperText={touched.durationValue && errors.durationValue}
+                    sx={{
+                      gridColumn: "span 2",
+                      ".Mui-focused": {
+                        color: "#f2f0f0 !important",
+                        input: {
+                          color: "#f2f0f0 !important",
+                        },
+                      },
+                      ".Mui-focused.Mui-error": {
+                        color: "#f44336 !important",
+                      },
+                      ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                        {
+                          borderBottom: "2px solid #0ba2de !important",
+                        },
+                      ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                        {
+                          borderBottom: "2px solid #f5079e !important",
+                        },
+                      ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                        {
+                          borderBottom: "#f44336 !important",
+                        },
+                    }}
+                  />
+                )}
+                {values.methodOfPayment !== "" && (
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label={`Enter The Amount Paid (Kshs)`}
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.durationValue}
@@ -300,13 +306,13 @@ const months = [
                   variant="filled"
                   type="text"
                   multiline
-                  label="Qualification"
+                  label="Description"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.qualification}
+                  value={values.description}
                   name="description"
-                  error={!!touched.qualification && !!errors.qualification}
-                  helperText={touched.qualification && errors.qualification}
+                  error={!!touched.description && !!errors.description}
+                  helperText={touched.description && errors.description}
                   sx={{
                     gridColumn: "span 2",
                     "& .Mui-focused": {
@@ -335,58 +341,8 @@ const months = [
                       },
                   }}
                 />
-                {responsFields.length > 0 &&
-                  responsFields.map((responsField, index) => (
-                    <TextField
-                      key={responsField.id}
-                      fullWidth
-                      variant="filled"
-                      multiline
-                      type="text"
-                      label={responsField.name}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values[responsField.name]}
-                      name={responsField.name}
-                      sx={{
-                        gridColumn: "span 2",
-                        ".Mui-focused": {
-                          color: "#f2f0f0 !important",
-                          input: {
-                            color: "#f2f0f0 !important",
-                          },
-                        },
-                        ".Mui-focused.Mui-error": {
-                          color: "#f44336 !important",
-                        },
-                        ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
-                          {
-                            borderBottom: "2px solid #0ba2de !important",
-                          },
-                        ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
-                          {
-                            borderBottom: "2px solid #f5079e !important",
-                          },
-                        ".Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
-                          {
-                            color: "#f5079e !important",
-                          },
-                        ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                          {
-                            borderBottom: "#f44336 !important",
-                          },
-                      }}
-                    />
-                  ))}
-                <Box display="flex" mt="-55px" ml="260px">
-                  <iconButton onClick={addDescrField}>
-                    <Tooltip title="Add Qualification">
-                      <Add cursor="pointer" />
-                    </Tooltip>
-                  </iconButton>
-                </Box>
               </Box>
-              <Box display="flex">
+              <Box display="flex" mt='20px'>
                 <Button type="submit" color="secondary" variant="contained">
                   SUBMIT
                 </Button>
@@ -404,7 +360,7 @@ const checkoutSchema = yup.object().shape({
   code: yup.string().required("required"),
   title: yup.string().required("required"),
   level: yup.string().required("required"),
-  duration: yup.string().required("Select one of the buttons above"),
+  methodOfPayment: yup.string().required("Select one of the buttons above"),
   durationValue: yup.string().required("Required"),
 });
 
@@ -412,7 +368,7 @@ const initialValues = {
   code: "",
   title: "",
   level: "",
-  duration: "",
+  methodOfPayment: "",
   durationValue: "",
 };
 

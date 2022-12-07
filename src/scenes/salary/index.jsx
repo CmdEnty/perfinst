@@ -10,6 +10,7 @@ import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Header from "../../components/Header";
 import { useState } from "react";
 import RecordSalaryForm from "../../components/salary/recordSalaryForm";
+import SalaryHistoryList from "../../components/salary/salaryHistoryList";
 
 const Salary = () => {
   const theme = useTheme();
@@ -54,9 +55,9 @@ const Salary = () => {
           <br />{" "}
           <Box
             backgroundColor={colors.primary[400]}
-            width="350px"
+            width="300px"
             overflow="auto"
-            height="500px"
+            height="700px"
           >
             <Box ml="20px" mr="40px" mt="20px" width="250px">
               <TextField
@@ -104,12 +105,13 @@ const Salary = () => {
         </Box>
         <Box>
           {" "}
-          <Box backgroundColor={colors.primary[400]} width="590px">
+          <Box backgroundColor={colors.primary[400]} width="640px">
             <br />
             <Typography textAlign="center" fontSize="20px">
               Salary Histry
             </Typography>
             <br />
+            <SalaryHistoryList/>
           </Box>
         </Box>
       </Box>

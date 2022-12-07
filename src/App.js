@@ -17,6 +17,7 @@ import Course from "./scenes/course";
 import CourseView from "./scenes/courseView";
 import Emails from "./scenes/emails";
 import Salary from "./scenes/salary";
+import SalaryHistoryView from "./scenes/salaryHistoryView";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -41,6 +42,7 @@ function App() {
               <Route path="/courseView" element={<CourseView/>} />
               <Route path="/studentView" element={<StudentView />} />
               <Route path="/salary" element={<Salary />} />
+              <Route path="/salaryHistoryView" element={<SalaryHistoryView />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/course" element={<Course />} />
