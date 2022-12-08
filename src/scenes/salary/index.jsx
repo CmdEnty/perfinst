@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  useTheme,
-  Typography,
-  TextField,
-} from "@mui/material";
+import { Box, Button, useTheme, Typography, TextField } from "@mui/material";
 import { tokens } from "../../theme";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import Header from "../../components/Header";
 import { useState } from "react";
 import RecordSalaryForm from "../../components/salary/recordSalaryForm";
@@ -18,29 +11,19 @@ const Salary = () => {
   const [staffNo, setStaffNo] = useState();
   const [next, setNext] = useState(false);
 
-  const staffSearch = (e) => {setStaffNo([e.target.value])};
+  const staffSearch = (e) => {
+    setStaffNo([e.target.value]);
+  };
 
-  const nextStep =()=>{setNext(true)}
+  const nextStep = () => {
+    setNext(true);
+  };
 
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="SALARY" subtitle="Record & Manage Salary" />
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
-        </Box>
       </Box>
 
       <Box display="flex" gap="20px">
@@ -55,7 +38,7 @@ const Salary = () => {
           <br />{" "}
           <Box
             backgroundColor={colors.primary[400]}
-            width="300px"
+            width="310px"
             overflow="auto"
             height="700px"
           >
@@ -96,7 +79,7 @@ const Salary = () => {
               />
               {!next && (
                 <Button onClick={nextStep}>
-                  <Typography color="white">Save</Typography>
+                  <Typography color="white">NEXT</Typography>
                 </Button>
               )}
             </Box>
@@ -105,13 +88,13 @@ const Salary = () => {
         </Box>
         <Box>
           {" "}
-          <Box backgroundColor={colors.primary[400]} width="640px">
+          <Box backgroundColor={colors.primary[400]} width="630px">
             <br />
             <Typography textAlign="center" fontSize="20px">
-              Salary Histry
+              Salary Transaction Histry
             </Typography>
             <br />
-            <SalaryHistoryList/>
+            <SalaryHistoryList />
           </Box>
         </Box>
       </Box>

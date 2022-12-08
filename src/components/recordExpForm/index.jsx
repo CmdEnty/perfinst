@@ -4,23 +4,26 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
-import { Add } from "@mui/icons-material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormHelperText from "@mui/material/FormHelperText";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
-const RecordSalaryForm = (props) => {
+const RecordExpForm = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+    const [value, setValue] = useState(dayjs("2022-04-07"));
 
   const handleFormSubmit = (values) => {
     const NewValues = Object.assign(values, { form1Submitted: 1 });
     // props.handleFormChange(NewValues);
     // props.handlePage();
   };
-
 
   //   months
   const months = [
@@ -101,18 +104,31 @@ const RecordSalaryForm = (props) => {
                   },
                 }}
               >
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  {" "}
+                  <DatePicker
+                    disableFuture
+                    label="Date"
+                    openTo="year"
+                    views={["year", "month", "day"]}
+                    value={value}
+                    onChange={(newValue) => {
+                      setValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
                 <TextField
                   fullWidth
-                  disabled
                   variant="filled"
-                  type="text"
-                  label="Full Names"
+                  type="number"
+                  label="Amount Spent (Kshs)"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.fullNames}
-                  name="fullNames"
-                  error={!!touched.fullNames && !!errors.fullNames}
-                  helperText={touched.fullNames && errors.fullNames}
+                  value={values.amount}
+                  name="amount"
+                  error={!!touched.amount && !!errors.amount}
+                  helperText={touched.amount && errors.amount}
                   sx={{
                     gridColumn: "span 2",
                     ".Mui-focused": {
@@ -140,19 +156,19 @@ const RecordSalaryForm = (props) => {
 
                 <TextField
                   fullWidth
-                  disabled
                   variant="filled"
                   type="text"
-                  label="Designation"
+                  label="Spent For"
+                  multiline
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.designation}
-                  name="designation"
-                  error={!!touched.designation && !!errors.designation}
-                  helperText={touched.designation && errors.designation}
+                  value={values.reason}
+                  name="reason"
+                  error={!!touched.reason && !!errors.reason}
+                  helperText={touched.reason && errors.reason}
                   sx={{
                     gridColumn: "span 2",
-                    ".Mui-focused": {
+                    "& .Mui-focused": {
                       color: "#f2f0f0 !important",
                       input: {
                         color: "#f2f0f0 !important",
@@ -161,64 +177,24 @@ const RecordSalaryForm = (props) => {
                     ".Mui-focused.Mui-error": {
                       color: "#f44336 !important",
                     },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                    ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
+                    ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after": {
                       borderBottom: "2px solid #f5079e !important",
                     },
+                    ".Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                      {
+                        color: "#f5079e !important",
+                      },
                     ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
                       },
                   }}
                 />
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  select
-                  label="Select Month"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.month}
-                  name="month"
-                  SelectProps={{
-                    native: true,
-                  }}
-                  error={!!touched.month && !!errors.month}
-                  helperText={touched.month && errors.month}
-                  sx={{
-                    gridColumn: "span 2",
-                    ".Mui-focused": {
-                      color: "#f2f0f0 !important",
-                      input: {
-                        color: "#f2f0f0 !important",
-                      },
-                    },
-                    ".Mui-focused.Mui-error": {
-                      color: "#f44336 !important",
-                    },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                      {
-                        borderBottom: "2px solid #0ba2de !important",
-                      },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
-                      borderBottom: "2px solid #f5079e !important",
-                    },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                      {
-                        borderBottom: "#f44336 !important",
-                      },
-                  }}
-                >
-                  <option></option>
-                  {months.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
+
                 <FormControl
                   sx={{
                     ".css-w3lmqu-MuiFormLabel-root.Mui-focused": {
@@ -408,4 +384,4 @@ const initialValues = {
   durationValue: "",
 };
 
-export default RecordSalaryForm;
+export default RecordExpForm;

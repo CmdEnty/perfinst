@@ -7,7 +7,6 @@ import Tooltip from "@mui/material/Tooltip";
 import SalaryHistoryList from "../../components/salary/salaryHistoryList";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import PrintIcon from "@mui/icons-material/Print";
 
 const SalaryHistoryView = () => {
@@ -64,8 +63,8 @@ const SalaryHistoryView = () => {
           <Box mt="20px" ml="100px">
             <Tooltip title="View More Details">
               <Link
-                _blank
-                to="/salary"
+               target='_blank' 
+                to="/staffView"
                 style={{ textDecoration: "none", color: colors.grey[100] }}
               >
                 <Typography
@@ -88,14 +87,14 @@ const SalaryHistoryView = () => {
         </Box>
         <Box gridColumn="span 8" backgroundColor={colors.primary[400]}>
           <Card
-            sx={{ maxWidth: 550, ml: 5, backgroundColor: colors.grey[700] }}
+            sx={{ maxWidth: 550, ml: 5, mt:1, backgroundColor: colors.grey[700] , height:220}}
           >
-            <CardMedia height="140" />
+           
             <CardContent>
-              <Typography color="secondary">
+              <Typography color="secondary" textAlign='center'>
                 Transaction Receipt Number 134256
               </Typography>
-              <Box display="flex" gap="150px" m="10px">
+              <Box display="flex" gap="150px" m="2px">
                 <Box>
                   {" "}
                   <Typography
