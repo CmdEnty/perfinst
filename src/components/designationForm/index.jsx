@@ -87,23 +87,23 @@ const DesignationForm = (props) => {
                   helperText={touched.title && errors.title}
                   sx={{
                     gridColumn: "span 2",
-                    ".Mui-focused": {
+                    "& .Mui-focused": {
                       color: "#f2f0f0 !important",
                       input: {
                         color: "#f2f0f0 !important",
                       },
                     },
-                    ".Mui-focused.Mui-error": {
+                    "& .Mui-focused.Mui-error": {
                       color: "#f44336 !important",
                     },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
                       borderBottom: "2px solid #f5079e !important",
                     },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
                       },
@@ -123,23 +123,23 @@ const DesignationForm = (props) => {
                   helperText={touched.salary && errors.salary}
                   sx={{
                     gridColumn: "span 2",
-                    ".Mui-focused": {
+                    "& .Mui-focused": {
                       color: "#f2f0f0 !important",
                       input: {
                         color: "#f2f0f0 !important",
                       },
                     },
-                    ".Mui-focused.Mui-error": {
+                    "& .Mui-focused.Mui-error": {
                       color: "#f44336 !important",
                     },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
                       borderBottom: "2px solid #f5079e !important",
                     },
-                    ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
                       },
@@ -166,22 +166,22 @@ const DesignationForm = (props) => {
                             color: "#f2f0f0 !important",
                           },
                         },
-                        ".Mui-focused.Mui-error": {
+                        "& .Mui-focused.Mui-error": {
                           color: "#f44336 !important",
                         },
-                        ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
+                        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
                           {
                             borderBottom: "2px solid #0ba2de !important",
                           },
-                        ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
+                        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
                           {
                             borderBottom: "2px solid #f5079e !important",
                           },
-                        ".Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                        "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
                           {
                             color: "#f5079e !important",
                           },
-                        ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                        "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                           {
                             borderBottom: "#f44336 !important",
                           },
@@ -202,28 +202,28 @@ const DesignationForm = (props) => {
                             value={values[responsField.name]}
                             name={responsField.name}
                             sx={{
-                              ".Mui-focused": {
+                              "& .Mui-focused": {
                                 color: "#f2f0f0 !important",
                                 input: {
                                   color: "#f2f0f0 !important",
                                 },
                               },
-                              ".Mui-focused.Mui-error": {
+                              "& .Mui-focused.Mui-error": {
                                 color: "#f44336 !important",
                               },
-                              ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
+                              "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
                                 {
                                   borderBottom: "2px solid #0ba2de !important",
                                 },
-                              ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
+                              "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
                                 {
                                   borderBottom: "2px solid #f5079e !important",
                                 },
-                              ".Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                              "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
                                 {
                                   color: "#f5079e !important",
                                 },
-                              ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                              "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                                 {
                                   borderBottom: "#f44336 !important",
                                 },
@@ -259,28 +259,28 @@ const DesignationForm = (props) => {
                         touched.qualifications && errors.qualifications
                       }
                       sx={{
-                        ".Mui-focused": {
+                        "& .Mui-focused": {
                           color: "#f2f0f0 !important",
                           input: {
                             color: "#f2f0f0 !important",
                           },
                         },
-                        ".Mui-focused.Mui-error": {
+                        "& .Mui-focused.Mui-error": {
                           color: "#f44336 !important",
                         },
-                        ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
+                        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
                           {
                             borderBottom: "2px solid #0ba2de !important",
                           },
-                        ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
+                        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
                           {
                             borderBottom: "2px solid #f5079e !important",
                           },
-                        ".Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                        "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
                           {
                             color: "#f5079e !important",
                           },
-                        ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                        "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                           {
                             borderBottom: "#f44336 !important",
                           },
@@ -301,28 +301,28 @@ const DesignationForm = (props) => {
                             value={values[qualificationsField.name]}
                             name={qualificationsField.name}
                             sx={{
-                              ".Mui-focused": {
+                              "& .Mui-focused": {
                                 color: "#f2f0f0 !important",
                                 input: {
                                   color: "#f2f0f0 !important",
                                 },
                               },
-                              ".Mui-focused.Mui-error": {
+                              "& .Mui-focused.Mui-error": {
                                 color: "#f44336 !important",
                               },
-                              ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
+                              "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
                                 {
                                   borderBottom: "2px solid #0ba2de !important",
                                 },
-                              ".css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
+                              "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
                                 {
                                   borderBottom: "2px solid #f5079e !important",
                                 },
-                              ".Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                              "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
                                 {
                                   color: "#f5079e !important",
                                 },
-                              ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                              "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                                 {
                                   borderBottom: "#f44336 !important",
                                 },

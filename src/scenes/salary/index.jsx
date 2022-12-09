@@ -52,26 +52,27 @@ const Salary = () => {
                 value={staffNo}
                 name="nationality"
                 sx={{
-                  ".Mui-focused": {
+                  "& .Mui-focused": {
                     color: "#f5079e !important",
                     input: {
                       color: "#0ba2de !important",
                     },
                   },
-                  ".Mui-focused.Mui-error": {
+                  "& .Mui-focused.Mui-error": {
                     color: "#f44336 !important",
                   },
-                  ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before": {
-                    borderBottom: "2px solid #0ba2de !important",
-                  },
-                  ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                    {
+                      borderBottom: "2px solid #0ba2de !important",
+                    },
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
                     borderBottom: "2px solid #f5079e !important",
                   },
-                  ".Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                  "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
                     {
                       color: "#f5079e !important",
                     },
-                  ".css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                     {
                       borderBottom: "#f44336 !important",
                     },

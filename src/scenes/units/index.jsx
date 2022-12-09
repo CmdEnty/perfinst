@@ -43,18 +43,22 @@ const UnitsPage = () => {
             overflow="auto"
             height="500px"
           >
-            <AddUnitsForm/>
+            <AddUnitsForm />
           </Box>
         </Box>
         <Box>
           {" "}
-          <Box backgroundColor={colors.primary[400]} width="590px" height='600px'>
+          <Box
+            backgroundColor={colors.primary[400]}
+            width="590px"
+            height="600px"
+          >
             <br />
             <Typography textAlign="center" fontSize="20px">
               List Of Units
             </Typography>
             <br />
-            <Box width="550px" ml='20px' overflow='auto' height='500px'>
+            <Box width="550px" ml="20px" overflow="auto" height="500px">
               <Accordion
                 expanded={expanded === "panel1"}
                 onChange={handleChange("panel1")}
