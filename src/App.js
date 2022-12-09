@@ -19,6 +19,8 @@ import Emails from "./scenes/emails";
 import Salary from "./scenes/salary";
 import SalaryHistoryView from "./scenes/salaryHistoryView";
 import Expenditure from "./scenes/expenditure";
+import UnitsPage from "./scenes/units";
+import ClassessPage from "./scenes/classes";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -48,6 +50,8 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/course" element={<Course />} />
               <Route path="/expenditure" element={<Expenditure />} />
+              <Route path="/unit" element={<UnitsPage />} />
+              <Route path="/class" element={<ClassessPage />} />
             </Routes>
           </main>
         </div>

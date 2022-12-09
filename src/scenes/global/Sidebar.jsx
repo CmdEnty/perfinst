@@ -6,22 +6,18 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import PaidIcon from '@mui/icons-material/Paid';
+import PaidIcon from "@mui/icons-material/Paid";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import MoneyOffIcon from '@mui/icons-material/MoneyOff';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-import ArticleIcon from '@mui/icons-material/Article';
-import OutboxIcon from '@mui/icons-material/Outbox';
+import MoneyOffIcon from "@mui/icons-material/MoneyOff";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import ArticleIcon from "@mui/icons-material/Article";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-
-
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -197,8 +193,8 @@ const Sidebar = () => {
               Academics
             </Typography>
             <Item
-              title="Term"
-              to="/term"
+              title="Departments"
+              to="/department"
               icon={<CalendarMonthIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -210,6 +206,14 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Class"
+              to="/class"
+              icon={<CalendarMonthIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
             <Item
               title="Units"
               to="/unit"
@@ -233,55 +237,12 @@ const Sidebar = () => {
               Emails/Sms
             </Typography>
             <Item
-              title="Email"
+              title="Mail Box"
               to="/emails"
               icon={<EmailOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Sent"
-              to="/pie"
-              icon={<OutboxIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Drafts"
-              to="/faq"
-              icon={<DraftsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            {/* <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Geography Chart"
-              to="/geography"
-              icon={<MapOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
           </Box>
         </Menu>
       </ProSidebar>

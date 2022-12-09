@@ -82,6 +82,9 @@ const StudentView = () => {
           </Box>
           <Box display="flex" mt="70px" gap="10px">
             <Button color="secondary" variant="contained">
+              Suspend
+            </Button>
+            <Button color="secondary" variant="contained">
               Send Email
             </Button>
             <Button type="submit" color="secondary" variant="contained">
@@ -165,16 +168,17 @@ const StudentView = () => {
                     Information Technology
                   </Typography>
                 </Box>
+
                 <Typography
                   variant="h5"
                   fontWeight="bold"
                   color={colors.blueAccent[700]}
                 >
-                  Duration
+                  Class
                 </Typography>
                 <Box display="flex" gap="10px">
                   <Typography variant="h6" color={colors.grey[200]}>
-                    2 years
+                    2022/Sep/Int
                   </Typography>
                 </Box>
                 <Typography
@@ -182,11 +186,23 @@ const StudentView = () => {
                   fontWeight="bold"
                   color={colors.blueAccent[700]}
                 >
-                  Reporting Date
+                  Reported On
                 </Typography>
                 <Box display="flex" gap="10px">
                   <Typography variant="h6" color={colors.grey[200]}>
-                    20/10/2022
+                    23/04/2022
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="h5"
+                  fontWeight="bold"
+                  color={colors.blueAccent[700]}
+                >
+                  Fee Balance (Kshs)
+                </Typography>
+                <Box display="flex" gap="10px">
+                  <Typography variant="h6" color={colors.grey[200]}>
+                    8000
                   </Typography>
                 </Box>
               </Box>

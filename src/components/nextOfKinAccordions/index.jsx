@@ -6,12 +6,35 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { tokens } from "../../theme";
 import { Box, Button, useTheme } from "@mui/material";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import { useState } from "react";
+import * as yup from "yup";
+import ToggleEdit from "../../scenes/global/edibleField";
 
 export default function NextOfKinAccordions() {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [value, setValue] = useState(0);
+  const [state_data, setState_data] = useState({
+    selectedValue: "",
+    form1Submitted: "",
+    surName: "John",
+    fastName: "Mwangi",
+    middleName: "Njoroge",
+    selectedGender: "",
+    idNo: "N/A",
+    selectedNationality: "",
+    nationality: "",
+    specialNeeds: "N/A",
+    phone: "0712345678",
+    email: "N/A",
+  });
+
+  const checkoutSchema = yup.object().shape({
+    email: yup.string().required("required"),
+    phone: yup.string().required("required"),
+  });
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -43,11 +66,6 @@ export default function NextOfKinAccordions() {
                   <Typography variant="h6" color={colors.grey[200]}>
                     Jeremy Smalga
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
                 </Box>
               </Box>
               <Box mt="8px">
@@ -62,11 +80,6 @@ export default function NextOfKinAccordions() {
                   <Typography variant="h6" color={colors.grey[200]}>
                     Parent
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
                 </Box>
               </Box>
             </Box>
@@ -85,11 +98,6 @@ export default function NextOfKinAccordions() {
                   <Typography variant="h6" color={colors.grey[200]}>
                     Kenya
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
                 </Box>
                 <Typography
                   variant="h5"
@@ -102,11 +110,6 @@ export default function NextOfKinAccordions() {
                   <Typography variant="h6" color={colors.grey[200]}>
                     Mombasa
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
                 </Box>
                 <Typography
                   variant="h5"
@@ -119,11 +122,6 @@ export default function NextOfKinAccordions() {
                   <Typography variant="h6" color={colors.grey[200]}>
                     Changamwe
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
                 </Box>
                 <Typography
                   variant="h5"
@@ -136,11 +134,6 @@ export default function NextOfKinAccordions() {
                   <Typography variant="h6" color={colors.grey[200]}>
                     Chaani
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
                 </Box>
               </Box>
               <Box mt="-15px">
@@ -155,406 +148,21 @@ export default function NextOfKinAccordions() {
                   <Typography variant="h6" color={colors.grey[200]}>
                     3457889767
                   </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
                 </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Email
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Jeremysmalga@gmail.com
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Phone
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    +25478689777
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion
-          expanded={expanded === "panel2"}
-          onChange={handleChange("panel2")}
-          sx={{ bgcolor: colors.primary[400] }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Box display="flex" gap="97px" ml="15px">
-              <Box mt="-9px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Full Names
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Jeremy Smalga
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-              <Box mt="-9px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Relationship
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Parent
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box display="flex" gap="115px">
-              <Box mt="-15px" ml="15px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Country
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Kenya
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  County
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Mombasa
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Sub County
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Changamwe
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Location
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Chaani
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-              <Box mt="-15px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  ID/Passport
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    3457889767
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Email
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Jeremysmalga@gmail.com
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Phone
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    +25478689777
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-
-        <Accordion
-          expanded={expanded === "panel3"}
-          onChange={handleChange("panel3")}
-          sx={{ bgcolor: colors.primary[400] }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Box display="flex" gap="97px" ml="15px">
-              <Box mt="-9px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Full Names
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Jeremy Smalga
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-              <Box mt="-9px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Relationship
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Parent
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box display="flex" gap="115px">
-              <Box mt="-15px" ml="15px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Country
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Kenya
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  County
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Mombasa
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Sub County
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Changamwe
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Location
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Chaani
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-              </Box>
-              <Box mt="-15px">
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  ID/Passport
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    3457889767
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Email
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Jeremysmalga@gmail.com
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Phone
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    +25478689777
-                  </Typography>
-                  <ModeEditOutlineOutlinedIcon
-                    fontSize="small"
-                    color="secondary"
-                    sx={{ cursor: "pointer" }}
-                  />
-                </Box>
+                <ToggleEdit
+                  state_data={state_data}
+                  name="email"
+                  type="text"
+                  checkoutSchema={checkoutSchema}
+                  label="Email"
+                />
+                <ToggleEdit
+                  state_data={state_data}
+                  name="phone"
+                  type="text"
+                  checkoutSchema={checkoutSchema}
+                  label="Phone Number"
+                />
               </Box>
             </Box>
           </AccordionDetails>
