@@ -21,6 +21,7 @@ import SalaryHistoryView from "./scenes/salaryHistoryView";
 import Expenditure from "./scenes/expenditure";
 import UnitsPage from "./scenes/units";
 import ClassessPage from "./scenes/classes";
+import DepartmentsPage from "./scenes/department";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -52,6 +53,7 @@ function App() {
               <Route path="/expenditure" element={<Expenditure />} />
               <Route path="/unit" element={<UnitsPage />} />
               <Route path="/class" element={<ClassessPage />} />
+              <Route path="/department" element={<DepartmentsPage />} />
             </Routes>
           </main>
         </div>

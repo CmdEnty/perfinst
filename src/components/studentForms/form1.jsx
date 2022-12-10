@@ -1,39 +1,39 @@
-import * as React from 'react';
+import * as React from "react";
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import ColorRadioButtons from '../radio_btn';
+import ColorRadioButtons from "../radio_btn";
 import { useState } from "react";
 
 const Form1 = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [btnChange, setBtnChange] = useState({selectedValue: props.student.selectedValue,
-  selectedGender: props.student.selectedGender,
-  selectedNationality: props.student.selectedNationality,
+  const [btnChange, setBtnChange] = useState({
+    selectedValue: props.student.selectedValue,
+    selectedGender: props.student.selectedGender,
+    selectedNationality: props.student.selectedNationality,
   });
-  
-  const handleFormSubmit = (values) => {
-    const NewValues = Object.assign(values, {form1Submitted: 1});
-    props.handleFormChange(NewValues);
-     props.handlePage();
-  };
 
+  const handleFormSubmit = (values) => {
+    const NewValues = Object.assign(values, { form1Submitted: 1 });
+    props.handleFormChange(NewValues);
+    props.handlePage();
+  };
 
   const handleBtnChange = (event) => {
     let val = event.target.value;
-      
-    if (val === 'Mr' || val === 'Ms') {
-      setBtnChange({...btnChange, selectedValue : val});
+
+    if (val === "Mr" || val === "Ms") {
+      setBtnChange({ ...btnChange, selectedValue: val });
     }
-    if (val === 'Male' || val === 'Female') {
-      setBtnChange({...btnChange, selectedGender : val});
+    if (val === "Male" || val === "Female") {
+      setBtnChange({ ...btnChange, selectedGender: val });
     }
-    if (val === 'Kenya' || val === 'Other') {
-      setBtnChange({...btnChange, selectedNationality : val});
+    if (val === "Kenya" || val === "Other") {
+      setBtnChange({ ...btnChange, selectedNationality: val });
     }
-  }
-const {selectedValue, selectedGender, selectedNationality} =btnChange
+  };
+  const { selectedValue, selectedGender, selectedNationality } = btnChange;
   return (
     <>
       <Box m="100px" mt="15px">
@@ -316,11 +316,11 @@ const {selectedValue, selectedGender, selectedNationality} =btnChange
                       "& .Mui-focused.Mui-error": {
                         color: "#f44336 !important",
                       },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before, .css-1hnh80q::before":
                         {
                           borderBottom: "2px solid #0ba2de !important",
                         },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after, .css-1hnh80q::after":
                         {
                           borderBottom: "2px solid #f5079e !important",
                         },

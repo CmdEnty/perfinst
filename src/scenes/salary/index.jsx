@@ -61,13 +61,14 @@ const Salary = () => {
                   "& .Mui-focused.Mui-error": {
                     color: "#f44336 !important",
                   },
-                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root::before":
                     {
                       borderBottom: "2px solid #0ba2de !important",
                     },
-                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
-                    borderBottom: "2px solid #f5079e !important",
-                  },
+                  "& .Mui-focused.css-u7c0k7-MuiInputBase-root-MuiFilledInput-root::after":
+                    {
+                      borderBottom: "2px solid #f5079e !important",
+                    },
                   "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
                     {
                       color: "#f5079e !important",

@@ -4,14 +4,14 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-const AddUnitsForm1 = ({ setUnitsForm}) => {
+const AddUnitsForm1 = ({ setUnitsForm }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
     const NewValues = Object.assign(values, { form1Submitted: 1 });
     // props.handleFormChange(NewValues);
     // props.handlePage();
-    setUnitsForm("form2")
+    setUnitsForm("form2");
   };
 
   return (
@@ -67,9 +67,10 @@ const AddUnitsForm1 = ({ setUnitsForm}) => {
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
-                      borderBottom: "2px solid #f5079e !important",
-                    },
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                      {
+                        borderBottom: "2px solid #f5079e !important",
+                      },
                     "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
@@ -103,9 +104,10 @@ const AddUnitsForm1 = ({ setUnitsForm}) => {
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
-                      borderBottom: "2px solid #f5079e !important",
-                    },
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                      {
+                        borderBottom: "2px solid #f5079e !important",
+                      },
                     "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
@@ -136,13 +138,14 @@ const AddUnitsForm1 = ({ setUnitsForm}) => {
                     "& .Mui-focused.Mui-error": {
                       color: "#f44336 !important",
                     },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
+                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before, .css-n88uca::before":
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after": {
-                      borderBottom: "2px solid #f5079e !important",
-                    },
+                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after, .css-n88uca::after":
+                      {
+                        borderBottom: "2px solid #f5079e !important",
+                      },
                     "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
                       {
                         color: "#f5079e !important",

@@ -1,85 +1,87 @@
-import { useTheme } from "@mui/material";
-import { ResponsiveChoropleth } from "@nivo/geo";
-import { geoFeatures } from "../data/mockGeoFeatures";
-import { tokens } from "../theme";
-import { mockGeographyData as data } from "../data/mockData";
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+import TagFacesIcon from "@mui/icons-material/TagFaces";
 
-const GeographyChart = ({ isDashboard = false }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+const ListItem = styled("li")(({ theme }) => ({
+  margin: theme.spacing(0.5),
+}));
+
+export default function ChipsArray() {
+  const [chipData, setChipData] = React.useState([
+    { key: 0, label: "Angular" },
+    { key: 1, label: "jQuery" },
+    { key: 2, label: "Polymer" },
+    { key: 3, label: "React" },
+    { key: 4, label: "Vue.js" },
+  ]);
+
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key)
+    );
+  };
+
   return (
-    <ResponsiveChoropleth
-      data={data}
-      theme={{
-        axis: {
-          domain: {
-            line: {
-              stroke: colors.grey[100],
-            },
-          },
-          legend: {
-            text: {
-              fill: colors.grey[100],
-            },
-          },
-          ticks: {
-            line: {
-              stroke: colors.grey[100],
-              strokeWidth: 1,
-            },
-            text: {
-              fill: colors.grey[100],
-            },
-          },
-        },
-        legends: {
-          text: {
-            fill: colors.grey[100],
-          },
-        },
+    <Paper
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap",
+        listStyle: "none",
+        p: 0.5,
+        m: 0,
       }}
-      features={geoFeatures.features}
-      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      domain={[0, 1000000]}
-      unknownColor="#666666"
-      label="properties.name"
-      valueFormat=".2s"
-      projectionScale={isDashboard ? 40 : 150}
-      projectionTranslation={isDashboard ? [0.49, 0.6] : [0.5, 0.5]}
-      projectionRotation={[0, 0, 0]}
-      borderWidth={1.5}
-      borderColor="#ffffff"
-      legends={
-        !isDashboard
-          ? [
-              {
-                anchor: "bottom-left",
-                direction: "column",
-                justify: true,
-                translateX: 20,
-                translateY: -100,
-                itemsSpacing: 0,
-                itemWidth: 94,
-                itemHeight: 18,
-                itemDirection: "left-to-right",
-                itemTextColor: colors.grey[100],
-                itemOpacity: 0.85,
-                symbolSize: 18,
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemTextColor: "#ffffff",
-                      itemOpacity: 1,
-                    },
-                  },
-                ],
-              },
-            ]
-          : undefined
-      }
-    />
-  );
-};
+      component="ul"
+    >
+      {chipData.map((data) => {
+        let icon;
 
-export default GeographyChart;
+        if (data.label === "React") {
+          icon = <TagFacesIcon />;
+        }
+
+        return (
+          <ListItem key={data.key}>
+            <Chip
+              icon={icon}
+              label={data.label}
+              onDelete={data.label === "React" ? undefined : handleDelete(data)}
+            />
+          </ListItem>
+        );
+      })}
+    </Paper>
+  );
+}
+
+// import * as React from 'react';
+// import Chip from '@mui/material/Chip';
+// import Stack from '@mui/material/Stack';
+
+// export default function ClickableAndDeletableChips() {
+//   const handleClick = () => {
+//     console.info('You clicked the Chip.');
+//   };
+
+//   const handleDelete = () => {
+//     console.info('You clicked the delete icon.');
+//   };
+
+//   return (
+//     <Stack direction="row" spacing={1}>
+//       <Chip
+//         label="Clickable Deletable"
+//         onClick={handleClick}
+//         onDelete={handleDelete}
+//       />
+//       <Chip
+//         label="Clickable Deletable"
+//         variant="outlined"
+//         onClick={handleClick}
+//         onDelete={handleDelete}
+//       />
+//     </Stack>
+//   );
+// }

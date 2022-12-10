@@ -10,6 +10,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormHelperText from "@mui/material/FormHelperText";
+import Autocomplete from "@mui/material/Autocomplete";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import Checkbox from "@mui/material/Checkbox";
 
 const AddUnitsForm2 = ({ setUnitsForm }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -19,6 +23,21 @@ const AddUnitsForm2 = ({ setUnitsForm }) => {
     // props.handleFormChange(NewValues);
     // props.handlePage();
   };
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+  const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
+  const top100Films = [
+  { title: 'The Shawshank Redemption', year: 1994 },
+  { title: 'The Godfather', year: 1972 },
+  { title: 'The Godfather: Part II', year: 1974 },
+  { title: 'The Dark Knight', year: 2008 },
+  { title: '12 Angry Men', year: 1957 },
+  { title: "Schindler's List", year: 1993 },
+  { title: 'Pulp Fiction', year: 1994 },
+  {
+    title: 'The Lord of the Rings: The Return of the King',
+    year: 2003,
+  },]
 
   return (
     <>
@@ -50,10 +69,11 @@ const AddUnitsForm2 = ({ setUnitsForm }) => {
                 <FormControl
                   sx={{
                     gridColumn: "span 2",
-                    "& .css-w3lmqu-MuiFormLabel-root.Mui-focused": {
-                      color: "#f2f0f0 !important",
-                    },
-                    "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked":
+                    "& .css-w3lmqu-MuiFormLabel-root.Mui-focused, .css-7fdilt":
+                      {
+                        color: "#f2f0f0 !important",
+                      },
+                    "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked, .css-4pno3p.Mui-checked":
                       { color: "#0ba2de !important" },
                   }}
                   error={!!touched.courses && !!errors.courses}
@@ -91,42 +111,60 @@ const AddUnitsForm2 = ({ setUnitsForm }) => {
                 </FormControl>
 
                 {values.courses === "specify" && (
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Please search a course by its code"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.coursesField}
-                    name="coursesField"
-                    error={!!touched.coursesField && !!errors.coursesField}
-                    helperText={touched.coursesField && errors.coursesField}
-                    sx={{
-                      mt: -1,
-                      gridColumn: "span 2",
-                      "& .Mui-focused": {
-                        color: "#f2f0f0 !important",
-                        input: {
-                          color: "#f2f0f0 !important",
-                        },
-                      },
-                      "& .Mui-focused.Mui-error": {
-                        color: "#f44336 !important",
-                      },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                        {
-                          borderBottom: "2px solid #0ba2de !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                        {
-                          borderBottom: "2px solid #f5079e !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                        {
-                          borderBottom: "#f44336 !important",
-                        },
-                    }}
+                  <Autocomplete
+                    multiple
+                    limitTags={5}
+                    id="checkboxes-tags-demo"
+                    options={top100Films}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option.title}
+                    renderOption={(props, option, { selected }) => (
+                      <li {...props}>
+                        <Checkbox
+                          icon={icon}
+                          checkedIcon={checkedIcon}
+                          style={{ marginRight: 8 }}
+                          checked={selected}
+                        />
+                        {option.title}
+                      </li>
+                    )}
+                    style={{ width: 300 }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Search Course"
+                        placeholder="Search Course"
+                        sx={{
+                          gridColumn: "span 2",
+                          "& .Mui-focused": {
+                            color: "#f2f0f0 !important",
+                            input: {
+                              color: "#f2f0f0 !important",
+                            },
+                          },
+                          "& .Mui-focused.Mui-error": {
+                            color: "#f44336 !important",
+                          },
+                          "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before, .css-n88uca::before":
+                            {
+                              borderBottom: "2px solid #0ba2de !important",
+                            },
+                          "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after, .css-n88uca::after":
+                            {
+                              borderBottom: "2px solid #f5079e !important",
+                            },
+                          "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                            {
+                              color: "#f5079e !important",
+                            },
+                          "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                            {
+                              borderBottom: "#f44336 !important",
+                            },
+                        }}
+                      />
+                    )}
                   />
                 )}
               </Box>
