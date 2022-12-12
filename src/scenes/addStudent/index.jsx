@@ -1,7 +1,7 @@
 import React from 'react'
 import StudentFormTab from '../../components/studentFormTab';
 import Header from "../../components/Header";
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import AccountMenu from "../global/ColoredTab";
 import { useState } from "react";
 
@@ -53,6 +53,13 @@ function AddStudent() {
       <Box m="20px">
         <AccountMenu value="two" />
       </Box>
+      <Box m="20px 0 15px 30px">
+        {" "}
+        <Typography color="#0ba2de" fontWeight="bold" fontSize="16px">
+          REGISTER NEW STUDENT
+        </Typography>
+      </Box>
+
       <StudentFormTab student={student} handleFormChange={handleFormChange} />
     </>
   );

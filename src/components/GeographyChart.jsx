@@ -61,9 +61,9 @@ export default function ChipsArray() {
 // import Stack from '@mui/material/Stack';
 
 // export default function ClickableAndDeletableChips() {
-//   const handleClick = () => {
-//     console.info('You clicked the Chip.');
-//   };
+  // const handleClick = () => {
+  //   console.info('You clicked the Chip.');
+  // };
 
 //   const handleDelete = () => {
 //     console.info('You clicked the delete icon.');

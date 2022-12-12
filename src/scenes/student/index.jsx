@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
@@ -66,7 +66,7 @@ const Students = () => {
       <Header title="STUDENTS" subtitle="List of Admitted Students" />
       <AccountMenu value="one" />
       <Box
-        m="40px 0 0 0"
+        m="25px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -97,6 +97,9 @@ const Students = () => {
           },
         }}
       >
+        <Typography color="#0ba2de" fontWeight="bold" fontSize="16px">
+          LIST OF ADMITTED STUDENTS
+        </Typography>
         <DataGrid
           rows={mockDataContacts}
           columns={columns}

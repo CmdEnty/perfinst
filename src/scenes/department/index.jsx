@@ -1,18 +1,14 @@
 import * as React from "react";
 import { Box } from "@mui/material";
 import PropTypes from "prop-types";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import AccountMenu from "../global/ColoredTab";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Schools from "../../components/departs/schools";
-import Faculties from "../../components/departs/faculty";
 import Departments from "../../components/departs/departments";
 
 function TabPanel(props) {
@@ -108,7 +104,7 @@ const DepartmentsPage = () => {
     <Box m="20px">
       <Header
         title="DEPARTMENTS"
-        subtitle="Manage Schools, Faculty & Departments"
+        subtitle="Manage Fields & Departments"
       />
       <Box m="20px">
         <AppBar
@@ -123,9 +119,25 @@ const DepartmentsPage = () => {
             variant="fullWidth"
             aria-label="full width tabs example"
           >
-            <Tab label="Schools" {...a11yProps(0)} />
-            <Tab label="Fuculties" {...a11yProps(1)} />
-            <Tab label="Departments" {...a11yProps(2)} />
+            <Tab
+              label="Fields"
+              {...a11yProps(0)}
+              sx={{
+                color:
+                  value === 0 ? "#0ba2de !important" : "#f1f1f1 !important",
+                fontWeight: value === 0 ? "bold !important" : undefined,
+              }}
+            />
+
+            <Tab
+              label="Departments"
+              {...a11yProps(1)}
+              sx={{
+                color:
+                  value === 1 ? "#0ba2de !important" : "#f1f1f1 !important",
+                fontWeight: value === 1 ? "bold !important" : undefined,
+              }}
+            />
           </Tabs>
         </AppBar>
         <Box
@@ -166,10 +178,13 @@ const DepartmentsPage = () => {
                 },
               }}
             >
-              <Typography>SCHOOLS</Typography>
+              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+                LIST OF FIELDS
+              </Typography>
               <Schools />
             </Box>
           </TabPanel>
+
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Box
               m="0 0 0 0"
@@ -203,44 +218,9 @@ const DepartmentsPage = () => {
                 },
               }}
             >
-              <Typography>FACULTIES</Typography>
-              <Faculties />
-            </Box>
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            <Box
-              m="0 0 0 0"
-              height="75vh"
-              sx={{
-                "& .MuiDataGrid-root": {
-                  border: "none",
-                },
-                "& .MuiDataGrid-cell": {
-                  borderBottom: "none",
-                },
-                "& .name-column--cell": {
-                  color: colors.greenAccent[300],
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  backgroundColor: colors.blueAccent[700],
-                  borderBottom: "none",
-                },
-                "& .MuiDataGrid-virtualScroller": {
-                  backgroundColor: colors.primary[400],
-                },
-                "& .MuiDataGrid-footerContainer": {
-                  borderTop: "none",
-                  backgroundColor: colors.blueAccent[700],
-                },
-                "& .MuiCheckbox-root": {
-                  color: `${colors.greenAccent[200]} !important`,
-                },
-                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                  color: `${colors.grey[100]} !important`,
-                },
-              }}
-            >
-              <Typography>DEPARTMENTS</Typography>
+              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+                LIST OF DEPARTMENTS
+              </Typography>
               <Departments />
             </Box>
           </TabPanel>

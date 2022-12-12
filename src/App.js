@@ -5,7 +5,6 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Staff from "./scenes/staff";
 import Student from "./scenes/student";
-import FAQ from "./scenes/faq";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
@@ -22,6 +21,9 @@ import Expenditure from "./scenes/expenditure";
 import UnitsPage from "./scenes/units";
 import ClassessPage from "./scenes/classes";
 import DepartmentsPage from "./scenes/department";
+import AddStaff from "./scenes/addStaff";
+import StaffView from "./scenes/staffView";
+import FeesPage from "./scenes/fees";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -47,13 +49,15 @@ function App() {
               <Route path="/studentView" element={<StudentView />} />
               <Route path="/salary" element={<Salary />} />
               <Route path="/salaryHistoryView" element={<SalaryHistoryView />} />
-              <Route path="/faq" element={<FAQ />} />
+              <Route path="/fees" element={<FeesPage />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/course" element={<Course />} />
               <Route path="/expenditure" element={<Expenditure />} />
               <Route path="/unit" element={<UnitsPage />} />
               <Route path="/class" element={<ClassessPage />} />
               <Route path="/department" element={<DepartmentsPage />} />
+              <Route path="/addStaff" element={<AddStaff />} />
+              <Route path="/staffView" element={<StaffView />} />
             </Routes>
           </main>
         </div>

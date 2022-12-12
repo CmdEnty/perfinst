@@ -9,16 +9,57 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import { useState } from "react";
 import AddUnitsForm from "../../components/addUnitsForm";
+import { styled } from "@mui/material/styles";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+import TagFacesIcon from "@mui/icons-material/TagFaces";
+
+const ListItem = styled("li")(({ theme }) => ({
+  margin: theme.spacing(0.5),
+}));
 
 const UnitsPage = () => {
   const [expanded, setExpanded] = useState(false);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [chipData, setChipData] = React.useState([
+    { key: 0, label: "ICT" },
+    { key: 1, label: "Computer Science" },
+    { key: 2, label: "IT" },
+    { key: 3, label: "CCNA" },
+    { key: 4, label: "Multmedia" },
+    { key: 5, label: "ICT" },
+    { key: 6, label: "Computer Science" },
+    { key: 7, label: "IT" },
+    { key: 8, label: "CCNA" },
+    { key: 9, label: "Multmedia" },
+    { key: 10, label: "ICT" },
+    { key: 11, label: "Computer Science" },
+    { key: 12, label: "IT" },
+    { key: 13, label: "CCNA" },
+    { key: 14, label: "Multmedia" },
+    { key: 15, label: "ICT" },
+    { key: 16, label: "Computer Science" },
+    { key: 17, label: "IT" },
+    { key: 18, label: "CCNA" },
+    { key: 19, label: "Multmedia" },
+  ]);
+
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key)
+    );
+  };
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+    const handleClick = (data) => {
+      alert("You clicked the Chip.");
+    };
+
 
   return (
     <Box m="20px">
@@ -121,20 +162,41 @@ const UnitsPage = () => {
                         Courses
                       </Typography>
                       <Box display="flex" gap="10px">
-                        <Typography
-                          display="flex"
-                          variant="h6"
-                          color={colors.grey[200]}
+                        <Paper
+                          sx={{
+                            bgcolor: colors.primary[400],
+                            display: "flex",
+                            justifyContent: "center",
+                            flexWrap: "wrap",
+                            listStyle: "none",
+                            p: 0.5,
+                            m: 0,
+                          }}
+                          component="ul"
                         >
-                          1. Computer Science <br />
-                          2. IT <br />
-                          3. ICT <br />
-                        </Typography>
-                        <ModeEditOutlineOutlinedIcon
-                          fontSize="small"
-                          color="secondary"
-                          sx={{ cursor: "pointer" }}
-                        />
+                          {chipData.map((data) => {
+                            let icon;
+
+                            if (data.label === "React") {
+                              icon = <TagFacesIcon />;
+                            }
+
+                            return (
+                              <ListItem key={data.key}>
+                                <Chip
+                                  icon={icon}
+                                  label={data.label}
+                                  onClick={() => handleClick(data)}
+                                  onDelete={
+                                    data.label === "React"
+                                      ? undefined
+                                      : handleDelete(data)
+                                  }
+                                />
+                              </ListItem>
+                            );
+                          })}
+                        </Paper>
                       </Box>
                       <Typography
                         variant="h5"

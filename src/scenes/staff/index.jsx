@@ -1,29 +1,29 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box, Typography } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
+import { useTheme } from "@mui/material";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import StaffMenu from "../global/staffMenu";
 
 const Staff = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-    const navigate = useNavigate();
-    const staffViewPage = useCallback(
-      () => navigate("/staffView", { replace: true }),
-      [navigate]
-    );
+  const navigate = useNavigate();
+  const studentViewPage = useCallback(
+    () => navigate("/staffView", { replace: true }),
+    [navigate]
+  );
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID", flex: 0.5 },
+    { field: "admissionNo", headerName: "Staff Number" },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "Full Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
@@ -45,43 +45,28 @@ const Staff = () => {
       flex: 1,
     },
     {
-      field: "accessLevel",
-      headerName: "Access Level",
+      field: "location",
+      headerName: "Location",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
-          </Box>
-        );
-      },
+    },
+    {
+      field: "city",
+      headerName: "City",
+      flex: 1,
+    },
+    {
+      field: "idNo",
+      headerName: "ID Number",
+      flex: 1,
     },
   ];
 
   return (
     <Box m="20px">
-      <Header title="STAFF" subtitle="Managing The Staff Members" />
+      <Header title="STAFF" subtitle="Manage Staffs" />
+      <StaffMenu value="one" />
       <Box
-        m="40px 0 0 0"
+        m="25px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -107,13 +92,19 @@ const Staff = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
+        <Typography color="#0ba2de" fontWeight="bold" fontSize="16px">
+          LIST OF STAFFS
+        </Typography>
         <DataGrid
-          checkboxSelection
-          rows={mockDataTeam}
+          rows={mockDataContacts}
           columns={columns}
-          onRowClick={staffViewPage}
+          components={{ Toolbar: GridToolbar }}
+          onRowClick={studentViewPage}
         />
       </Box>
     </Box>

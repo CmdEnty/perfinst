@@ -55,7 +55,7 @@ function EditToolbar(props) {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add New School
+        Add New Field
       </Button>
     </GridToolbarContainer>
   );

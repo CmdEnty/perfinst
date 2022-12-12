@@ -1,16 +1,15 @@
 import * as React from "react";
 import { Box } from "@mui/material";
 import PropTypes from "prop-types";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import AccountMenu from "../global/ColoredTab";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import Departments from "../../components/departs/departments";
+import CollectFeesForm from "../../components/fees/collectFees";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,7 +44,7 @@ function a11yProps(index) {
   };
 }
 
-const PendingStudents = () => {
+const FeesPage = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [value, setValue] = React.useState(0);
@@ -103,26 +102,22 @@ const PendingStudents = () => {
 
   return (
     <Box m="20px">
-      <Header
-        title="STUDENTS AWAITING ADMISSION"
-        subtitle="List of Registered Students"
-      />
-      <AccountMenu value="three" />
+      <Header title="FEES" subtitle="Manage Fees & Fee Statement" />
       <Box m="20px">
         <AppBar
           position="static"
-          sx={{ bgcolor: colors.primary[400], width: 500, ml: 20 }}
+          sx={{ bgcolor: colors.primary[400], width: 750, ml: 10 }}
         >
           <Tabs
             value={value}
             onChange={handleChange}
             indicatorColor="secondary"
-            textColor="red"
+            textColor="inherit"
             variant="fullWidth"
             aria-label="full width tabs example"
           >
             <Tab
-              label="Local Applicants "
+              label="Collect Fees"
               {...a11yProps(0)}
               sx={{
                 color:
@@ -130,13 +125,23 @@ const PendingStudents = () => {
                 fontWeight: value === 0 ? "bold !important" : undefined,
               }}
             />
+
             <Tab
-              label="Online Applicants"
+              label="Transaction History"
               {...a11yProps(1)}
               sx={{
                 color:
                   value === 1 ? "#0ba2de !important" : "#f1f1f1 !important",
                 fontWeight: value === 1 ? "bold !important" : undefined,
+              }}
+            />
+            <Tab
+              label="Fee Statement"
+              {...a11yProps(2)}
+              sx={{
+                color:
+                  value === 2 ? "#0ba2de !important" : "#f1f1f1 !important",
+                fontWeight: value === 2 ? "bold !important" : undefined,
               }}
             />
           </Tabs>
@@ -179,16 +184,13 @@ const PendingStudents = () => {
                 },
               }}
             >
-              <Typography color="#0ba2de" fontWeight="bold" fontSize="16px">
-                LIST OF LOCAL APPLICANTS
+              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+                COLLECT SCHOOL FEES
               </Typography>
-              <DataGrid
-                rows={mockDataContacts}
-                columns={columns}
-                components={{ Toolbar: GridToolbar }}
-              />
+              <CollectFeesForm />
             </Box>
           </TabPanel>
+
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Box
               m="0 0 0 0"
@@ -222,14 +224,50 @@ const PendingStudents = () => {
                 },
               }}
             >
-              <Typography color="#0ba2de" fontWeight="bold" fontSize="16px">
-                LIST OF ONLINE APPLICANTS
+              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+                LIST OF DEPARTMENTS
               </Typography>
-              <DataGrid
-                rows={mockDataContacts}
-                columns={columns}
-                components={{ Toolbar: GridToolbar }}
-              />
+              <Departments />
+            </Box>
+          </TabPanel>
+
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            <Box
+              m="0 0 0 0"
+              height="75vh"
+              sx={{
+                "& .MuiDataGrid-root": {
+                  border: "none",
+                },
+                "& .MuiDataGrid-cell": {
+                  borderBottom: "none",
+                },
+                "& .name-column--cell": {
+                  color: colors.greenAccent[300],
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: colors.blueAccent[700],
+                  borderBottom: "none",
+                },
+                "& .MuiDataGrid-virtualScroller": {
+                  backgroundColor: colors.primary[400],
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  borderTop: "none",
+                  backgroundColor: colors.blueAccent[700],
+                },
+                "& .MuiCheckbox-root": {
+                  color: `${colors.greenAccent[200]} !important`,
+                },
+                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                  color: `${colors.grey[100]} !important`,
+                },
+              }}
+            >
+              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+                LIST OF DEPARTMENTS
+              </Typography>
+              <Departments />
             </Box>
           </TabPanel>
         </Box>
@@ -238,4 +276,4 @@ const PendingStudents = () => {
   );
 };
 
-export default PendingStudents;
+export default FeesPage;

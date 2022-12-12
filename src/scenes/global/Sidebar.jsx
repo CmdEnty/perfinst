@@ -165,7 +165,7 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Fees"
-              to="/invoices"
+              to="/fees"
               icon={<PaidIcon />}
               selected={selected}
               setSelected={setSelected}

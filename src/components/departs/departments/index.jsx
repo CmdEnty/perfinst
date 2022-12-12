@@ -72,8 +72,8 @@ function EditToolbar(props) {
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add New Faculty
+      <Button startIcon={<AddIcon />} onClick={handleClick}>
+        Add New Department
       </Button>
     </GridToolbarContainer>
   );
@@ -188,7 +188,7 @@ export default function Departments() {
     },
     {
       field: "faculty",
-      headerName: "Fuculty",
+      headerName: "Field",
       renderEditCell: renderSelectEditInputCell,
       width: 180,
       editable: true,
