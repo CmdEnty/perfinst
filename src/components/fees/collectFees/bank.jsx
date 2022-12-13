@@ -52,25 +52,26 @@ const BankForm = (props) => {
                   },
                 }}
               >
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                   {" "}
                   <DatePicker
                     disableFuture
-                    label="Date"
+                    label="Date Of Payment"
                     openTo="year"
                     views={["year", "month", "day"]}
                     value={value}
                     onChange={(newValue) => {
                       setValue(newValue);
                     }}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => <TextField {...params}   sx={{
+                    gridColumn: "span 2"}}/>}
                   />
                 </LocalizationProvider>
                 <TextField
                   fullWidth
                   variant="filled"
                   type="number"
-                  label="Amount Spent (Kshs)"
+                  label="Amount (Kshs)"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.amount}
@@ -107,7 +108,7 @@ const BankForm = (props) => {
                   fullWidth
                   variant="filled"
                   type="text"
-                  label="Spent For"
+                  label="Receipt Number"
                   multiline
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -143,211 +144,13 @@ const BankForm = (props) => {
                         borderBottom: "#f44336 !important",
                       },
                   }}
-                /> */}
-
-                <FormControl
-                  sx={{
-                    gridColumn: "span 8",
-                    "& .css-w3lmqu-MuiFormLabel-root.Mui-focused": {
-                      color: "#f2f0f0 !important",
-                    },
-                    "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked":
-                      { color: "#0ba2de !important" },
-                  }}
-                  error={!!touched.duration && !!errors.duration}
-                >
-                  <FormLabel id="demo-row-radio-buttons-group-label">
-                    Method Of Payment
-                  </FormLabel>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="methodOfPayment"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.methodOfPayment}
-                  >
-                    <FormControlLabel
-                      value="mpesa"
-                      control={<Radio />}
-                      label="M-pesa"
-                    />
-                    <FormControlLabel
-                      value="bank"
-                      control={<Radio />}
-                      label="Bank"
-                    />
-                  </RadioGroup>
-                  <FormHelperText>
-                    {touched.methodOfPayment && errors.methodOfPayment}
-                  </FormHelperText>
-                </FormControl>
-
-                {values.methodOfPayment !== "" && (
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Student Admissin No"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
-                    sx={{
-                      gridColumn: "span 2",
-                      "& .Mui-focused": {
-                        color: "#f2f0f0 !important",
-                        input: {
-                          color: "#f2f0f0 !important",
-                        },
-                      },
-                      "& .Mui-focused.Mui-error": {
-                        color: "#f44336 !important",
-                      },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                        {
-                          borderBottom: "2px solid #0ba2de !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                        {
-                          borderBottom: "2px solid #f5079e !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                        {
-                          borderBottom: "#f44336 !important",
-                        },
-                    }}
-                  />
-                )}
-                {values.methodOfPayment !== "" && (
-                  <TextField
-                    fullWidth
-                    disabled
-                    variant="filled"
-                    type="text"
-                    label="Full name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
-                    sx={{
-                      gridColumn: "span 2",
-                      "& .Mui-focused": {
-                        color: "#f2f0f0 !important",
-                        input: {
-                          color: "#f2f0f0 !important",
-                        },
-                      },
-                      "& .Mui-focused.Mui-error": {
-                        color: "#f44336 !important",
-                      },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                        {
-                          borderBottom: "2px solid #0ba2de !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                        {
-                          borderBottom: "2px solid #f5079e !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                        {
-                          borderBottom: "#f44336 !important",
-                        },
-                    }}
-                  />
-                )}
-                <TextField
-                  fullWidth
-                  disabled
-                  variant="filled"
-                  type="text"
-                  multiline
-                  label="Course"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.description}
-                  name="description"
-                  error={!!touched.description && !!errors.description}
-                  helperText={touched.description && errors.description}
-                  sx={{
-                    gridColumn: "span 2",
-                    "& .Mui-focused": {
-                      color: "#f2f0f0 !important",
-                      input: {
-                        color: "#f2f0f0 !important",
-                      },
-                    },
-                    "& .Mui-focused.Mui-error": {
-                      color: "#f44336 !important",
-                    },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
-                      {
-                        borderBottom: "2px solid #0ba2de !important",
-                      },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
-                      {
-                        borderBottom: "2px solid #f5079e !important",
-                      },
-                    "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
-                      {
-                        color: "#f5079e !important",
-                      },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                      {
-                        borderBottom: "#f44336 !important",
-                      },
-                  }}
                 />
-                <TextField
-                  fullWidth
-                  disabled
-                  variant="filled"
-                  type="text"
-                  multiline
-                  label="Fee Balance"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.description}
-                  name="description"
-                  error={!!touched.description && !!errors.description}
-                  helperText={touched.description && errors.description}
-                  sx={{
-                    gridColumn: "span 2",
-                    "& .Mui-focused": {
-                      color: "#f2f0f0 !important",
-                      input: {
-                        color: "#f2f0f0 !important",
-                      },
-                    },
-                    "& .Mui-focused.Mui-error": {
-                      color: "#f44336 !important",
-                    },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
-                      {
-                        borderBottom: "2px solid #0ba2de !important",
-                      },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
-                      {
-                        borderBottom: "2px solid #f5079e !important",
-                      },
-                    "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
-                      {
-                        color: "#f5079e !important",
-                      },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                      {
-                        borderBottom: "#f44336 !important",
-                      },
-                  }}
-                />
+
+               
               </Box>
               <Box display="flex" mt="20px">
                 <Button type="submit" color="secondary" variant="contained">
-                  CONTINUE
+                  SUBMIT
                 </Button>
               </Box>
               <br />

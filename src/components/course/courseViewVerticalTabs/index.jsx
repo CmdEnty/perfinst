@@ -66,12 +66,38 @@ export default function CourseViewCustomizedTabs() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Other Infos" {...a11yProps(0)} />
-          <Tab label="Fee Structure" {...a11yProps(1)} />
-          <Tab label="Units" {...a11yProps(2)} />
-          <Tab label="Classes" {...a11yProps(3)} />
-          <Tab label="Lecturers" {...a11yProps(4)} />
-          <Tab label="Students" {...a11yProps(5)} />
+          <Tab
+            label="Departments"
+            {...a11yProps(0)}
+            sx={{
+              color: value === 0 ? "#0ba2de !important" : "#f1f1f1 !important",
+              fontWeight: value === 0 ? "bold !important" : undefined,
+            }}
+          />
+          <Tab
+            label="Classes/Units"
+            {...a11yProps(1)}
+            sx={{
+              color: value === 1 ? "#0ba2de !important" : "#f1f1f1 !important",
+              fontWeight: value === 1 ? "bold !important" : undefined,
+            }}
+          />
+          <Tab
+            label="Fee Structure"
+            {...a11yProps(2)}
+            sx={{
+              color: value === 2 ? "#0ba2de !important" : "#f1f1f1 !important",
+              fontWeight: value === 2 ? "bold !important" : undefined,
+            }}
+          />
+          <Tab
+            label="Students"
+            {...a11yProps(3)}
+            sx={{
+              color: value === 3 ? "#0ba2de !important" : "#f1f1f1 !important",
+              fontWeight: value === 3 ? "bold !important" : undefined,
+            }}
+          />
         </Tabs>
       </AppBar>
       <Box
@@ -80,13 +106,16 @@ export default function CourseViewCustomizedTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          Departments
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          Classes And Units
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          Fee Structure
+        </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+          Students
         </TabPanel>
       </Box>
     </Box>

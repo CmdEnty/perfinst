@@ -8,7 +8,6 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import Departments from "../../components/departs/departments";
 import CollectFeesForm from "../../components/fees/collectFees";
 
 function TabPanel(props) {
@@ -225,9 +224,9 @@ const FeesPage = () => {
               }}
             >
               <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
-                LIST OF DEPARTMENTS
+                TRANSACTION HISTORY
               </Typography>
-              <Departments />
+             
             </Box>
           </TabPanel>
 
@@ -265,9 +264,9 @@ const FeesPage = () => {
               }}
             >
               <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
-                LIST OF DEPARTMENTS
+                PROCESS FEE STATEMENT
               </Typography>
-              <Departments />
+          
             </Box>
           </TabPanel>
         </Box>

@@ -3,8 +3,8 @@ import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import PendingActionsOutlinedIcon from '@mui/icons-material/PendingActionsOutlined';
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 
 import Header from "../../components/Header";
@@ -12,30 +12,24 @@ import LineChart from "../../components/LineChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const navigate = useNavigate();
+  const dashboardLinkView = useCallback(
+    (location) => navigate(`/${location}`, { replace: true }),
+    [navigate]
+  );
 
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
-        </Box>
       </Box>
 
       {/* GRID & CHARTS */}
@@ -71,6 +65,7 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          onClick={() => dashboardLinkView("staff")}
         >
           <StatBox
             title="43"
@@ -90,6 +85,7 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          onClick={() => dashboardLinkView("students")}
         >
           <StatBox
             title="32,441"
@@ -282,7 +278,7 @@ const Dashboard = () => {
             <BarChart isDashboard={true} />
           </Box>
         </Box>
-       <Box
+        <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}

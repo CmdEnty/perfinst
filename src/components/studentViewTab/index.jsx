@@ -85,17 +85,26 @@ export default function StudentViewTab() {
           <Tab
             label="Basic Info"
             {...a11yProps(0)}
-            // sx={{ color: "white !important" }}
+            sx={{
+              color: value === 0 ? "#0ba2de !important" : "#f1f1f1 !important",
+              fontWeight: value === 0 ? "bold !important" : undefined,
+            }}
           />
           <Tab
             label="Contact"
             {...a11yProps(1)}
-            // sx={{ color: "white !important" }}
+            sx={{
+              color: value === 1 ? "#0ba2de !important" : "#f1f1f1 !important",
+              fontWeight: value === 1 ? "bold !important" : undefined,
+            }}
           />
           <Tab
             label="Next Of Kin"
             {...a11yProps(2)}
-            // sx={{ color: "white !important" }}
+            sx={{
+              color: value === 2 ? "#0ba2de !important" : "#f1f1f1 !important",
+              fontWeight: value === 2 ? "bold !important" : undefined,
+            }}
           />
         </Tabs>
       </Box>

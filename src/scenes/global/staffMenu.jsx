@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function StaffMenu(props) {
   const styles = {
-    // color:"#f1f1f1",
+    fontSize: 17,
     minWidth: 90,
     "&:hover": {
       color: "#0ba2de",

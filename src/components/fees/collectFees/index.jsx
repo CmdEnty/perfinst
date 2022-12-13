@@ -10,20 +10,20 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormHelperText from "@mui/material/FormHelperText";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import MpesaForm from "./mpesa";
+import BankForm from "./bank";
 
 const CollectFeesForm = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [value, setValue] = useState(dayjs(""));
+  const [method, setMethod] = useState("");
 
   const handleFormSubmit = (values) => {
-    const NewValues = Object.assign(values, { form1Submitted: 1 });
+    // const NewValues = Object.assign(values, { form1Submitted: 1 });
     // props.handleFormChange(NewValues);
     // props.handlePage();
+    alert("submitted");
   };
 
   return (
@@ -53,31 +53,56 @@ const CollectFeesForm = (props) => {
                   },
                 }}
               >
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  {" "}
-                  <DatePicker
-                    disableFuture
-                    label="Date"
-                    openTo="year"
-                    views={["year", "month", "day"]}
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
+                <FormControl
+                  sx={{
+                    gridColumn: "span 8",
+                    "& .css-w3lmqu-MuiFormLabel-root.Mui-focused": {
+                      color: "#f2f0f0 !important",
+                    },
+                    "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked":
+                      { color: "#0ba2de !important" },
+                  }}
+                  error={!!touched.duration && !!errors.duration}
+                >
+                  <FormLabel id="demo-row-radio-buttons-group-label">
+                    Method Of Payment
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="methodOfPayment"
+                    onBlur={handleBlur}
+                    onChange={(setMethod(values.methodOfPayment), handleChange)}
+                    value={values.methodOfPayment}
+                  >
+                    <FormControlLabel
+                      value="mpesa"
+                      control={<Radio />}
+                      label="M-pesa"
+                    />
+                    <FormControlLabel
+                      value="bank"
+                      control={<Radio />}
+                      label="Bank"
+                    />
+                  </RadioGroup>
+                  <FormHelperText>
+                    {touched.methodOfPayment && errors.methodOfPayment}
+                  </FormHelperText>
+                </FormControl>
+
                 <TextField
                   fullWidth
+                  disabled={values.methodOfPayment === ""}
                   variant="filled"
-                  type="number"
-                  label="Amount Spent (Kshs)"
+                  type="text"
+                  label="Student Admissin No"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.amount}
-                  name="amount"
-                  error={!!touched.amount && !!errors.amount}
-                  helperText={touched.amount && errors.amount}
+                  value={values.durationValue}
+                  name="durationValue"
+                  error={!!touched.durationValue && !!errors.durationValue}
+                  helperText={touched.durationValue && errors.durationValue}
                   sx={{
                     gridColumn: "span 2",
                     "& .Mui-focused": {
@@ -106,16 +131,16 @@ const CollectFeesForm = (props) => {
 
                 <TextField
                   fullWidth
+                  disabled
                   variant="filled"
                   type="text"
-                  label="Spent For"
-                  multiline
+                  label="Full name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.reason}
-                  name="reason"
-                  error={!!touched.reason && !!errors.reason}
-                  helperText={touched.reason && errors.reason}
+                  value={values.durationValue}
+                  name="durationValue"
+                  error={!!touched.durationValue && !!errors.durationValue}
+                  helperText={touched.durationValue && errors.durationValue}
                   sx={{
                     gridColumn: "span 2",
                     "& .Mui-focused": {
@@ -127,140 +152,21 @@ const CollectFeesForm = (props) => {
                     "& .Mui-focused.Mui-error": {
                       color: "#f44336 !important",
                     },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before":
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after":
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
                       {
                         borderBottom: "2px solid #f5079e !important",
-                      },
-                    "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
-                      {
-                        color: "#f5079e !important",
                       },
                     "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
                       },
                   }}
-                /> */}
+                />
 
-                <FormControl
-                  sx={{
-                    gridColumn: "span 8",
-                    "& .css-w3lmqu-MuiFormLabel-root.Mui-focused": {
-                      color: "#f2f0f0 !important",
-                    },
-                    "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked":
-                      { color: "#0ba2de !important" },
-                  }}
-                  error={!!touched.duration && !!errors.duration}
-                >
-                  <FormLabel id="demo-row-radio-buttons-group-label">
-                    Method Of Payment
-                  </FormLabel>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="methodOfPayment"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.methodOfPayment}
-                  >
-                    <FormControlLabel
-                      value="mpesa"
-                      control={<Radio />}
-                      label="M-pesa"
-                    />
-                    <FormControlLabel
-                      value="bank"
-                      control={<Radio />}
-                      label="Bank"
-                    />
-                  </RadioGroup>
-                  <FormHelperText>
-                    {touched.methodOfPayment && errors.methodOfPayment}
-                  </FormHelperText>
-                </FormControl>
-
-                {values.methodOfPayment !== "" && (
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Student Admissin No"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
-                    sx={{
-                      gridColumn: "span 2",
-                      "& .Mui-focused": {
-                        color: "#f2f0f0 !important",
-                        input: {
-                          color: "#f2f0f0 !important",
-                        },
-                      },
-                      "& .Mui-focused.Mui-error": {
-                        color: "#f44336 !important",
-                      },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                        {
-                          borderBottom: "2px solid #0ba2de !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                        {
-                          borderBottom: "2px solid #f5079e !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                        {
-                          borderBottom: "#f44336 !important",
-                        },
-                    }}
-                  />
-                )}
-                {values.methodOfPayment !== "" && (
-                  <TextField
-                    fullWidth
-                    disabled
-                    variant="filled"
-                    type="text"
-                    label="Full name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
-                    sx={{
-                      gridColumn: "span 2",
-                      "& .Mui-focused": {
-                        color: "#f2f0f0 !important",
-                        input: {
-                          color: "#f2f0f0 !important",
-                        },
-                      },
-                      "& .Mui-focused.Mui-error": {
-                        color: "#f44336 !important",
-                      },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                        {
-                          borderBottom: "2px solid #0ba2de !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                        {
-                          borderBottom: "2px solid #f5079e !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                        {
-                          borderBottom: "#f44336 !important",
-                        },
-                    }}
-                  />
-                )}
                 <TextField
                   fullWidth
                   disabled
@@ -355,7 +261,8 @@ const CollectFeesForm = (props) => {
             </form>
           )}
         </Formik>
-        <MpesaForm/>
+        {method === "mpesa" && <MpesaForm />}
+        {method === "bank" && <BankForm />}
       </Box>
     </>
   );

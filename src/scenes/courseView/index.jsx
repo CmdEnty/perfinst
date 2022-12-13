@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  useTheme,
-  Typography,
-  Tooltip,
-} from "@mui/material";
+import { Box, Button, useTheme, Typography, Tooltip } from "@mui/material";
 import { tokens } from "../../theme";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
@@ -28,20 +21,6 @@ const CourseView = () => {
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="COURSE VIEW" subtitle="Manage Course Details" />
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
-        </Box>
       </Box>
 
       <Box display="flex" gap="20px">
@@ -56,7 +35,7 @@ const CourseView = () => {
             height="500px"
           >
             <Typography textAlign="center" fontSize="20px" mt="20px">
-              Add Course Form
+              Course Details
             </Typography>
           </Box>
         </Box>
