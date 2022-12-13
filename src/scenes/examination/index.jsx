@@ -8,8 +8,9 @@ import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import Schools from "../../components/departs/schools";
-import Departments from "../../components/departs/departments";
+import Exams from "../../components/examination/exams";
+import Grades from "../../components/examination/grades";
+import RecordResults from "../../components/examination/recordResults";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,7 +45,7 @@ function a11yProps(index) {
   };
 }
 
-const DepartmentsPage = () => {
+const Examinations = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [value, setValue] = React.useState(0);
@@ -103,13 +104,13 @@ const DepartmentsPage = () => {
   return (
     <Box m="20px">
       <Header
-        title="DEPARTMENTS"
-        subtitle="Manage Fields & Departments"
+        title="EXAMINATIONS"
+        subtitle="Manage Exams, Timetable, Record Results & Print Report Forms"
       />
       <Box m="20px">
         <AppBar
           position="static"
-          sx={{ bgcolor: colors.primary[400], width: 600, ml: 20 }}
+          sx={{ bgcolor: colors.primary[400], width: 900, ml: 1 }}
         >
           <Tabs
             value={value}
@@ -120,7 +121,7 @@ const DepartmentsPage = () => {
             aria-label="full width tabs example"
           >
             <Tab
-              label="Fields"
+              label="EXAMS"
               {...a11yProps(0)}
               sx={{
                 color:
@@ -130,12 +131,30 @@ const DepartmentsPage = () => {
             />
 
             <Tab
-              label="Departments"
+              label="GRADES/POINTS"
               {...a11yProps(1)}
               sx={{
                 color:
                   value === 1 ? "#0ba2de !important" : "#f1f1f1 !important",
                 fontWeight: value === 1 ? "bold !important" : undefined,
+              }}
+            />
+            <Tab
+              label="RECORD RESULTS"
+              {...a11yProps(2)}
+              sx={{
+                color:
+                  value === 2 ? "#0ba2de !important" : "#f1f1f1 !important",
+                fontWeight: value === 2 ? "bold !important" : undefined,
+              }}
+            />
+            <Tab
+              label="MANAGE RESULTS/REPORT FORMS"
+              {...a11yProps(3)}
+              sx={{
+                color:
+                  value === 3 ? "#0ba2de !important" : "#f1f1f1 !important",
+                fontWeight: value === 3 ? "bold !important" : undefined,
               }}
             />
           </Tabs>
@@ -179,9 +198,9 @@ const DepartmentsPage = () => {
               }}
             >
               <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
-                LIST OF FIELDS
+                EXAMS
               </Typography>
-              <Schools />
+              <Exams />
             </Box>
           </TabPanel>
 
@@ -219,9 +238,91 @@ const DepartmentsPage = () => {
               }}
             >
               <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
-                LIST OF DEPARTMENTS
+                GRADES/POINTS
               </Typography>
-              <Departments />
+              <Typography color="secondary" fontStyle="italic" fontSize="14px">
+                NOTE: These Grades are used to generate End Term Exams FINAL RESULTS
+                Report Form (AVERAGE OF CAT1, CAT2 & END TERM)
+              </Typography>
+              <Grades />
+            </Box>
+          </TabPanel>
+
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            <Box
+              m="0 0 0 0"
+              height="75vh"
+              sx={{
+                "& .MuiDataGrid-root": {
+                  border: "none",
+                },
+                "& .MuiDataGrid-cell": {
+                  borderBottom: "none",
+                },
+                "& .name-column--cell": {
+                  color: colors.greenAccent[300],
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: colors.blueAccent[700],
+                  borderBottom: "none",
+                },
+                "& .MuiDataGrid-virtualScroller": {
+                  backgroundColor: colors.primary[400],
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  borderTop: "none",
+                  backgroundColor: colors.blueAccent[700],
+                },
+                "& .MuiCheckbox-root": {
+                  color: `${colors.greenAccent[200]} !important`,
+                },
+                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                  color: `${colors.grey[100]} !important`,
+                },
+              }}
+            >
+              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+                RECORD RESULTS
+              </Typography>
+              <RecordResults />
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={3} dir={theme.direction}>
+            <Box
+              m="0 0 0 0"
+              height="75vh"
+              sx={{
+                "& .MuiDataGrid-root": {
+                  border: "none",
+                },
+                "& .MuiDataGrid-cell": {
+                  borderBottom: "none",
+                },
+                "& .name-column--cell": {
+                  color: colors.greenAccent[300],
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: colors.blueAccent[700],
+                  borderBottom: "none",
+                },
+                "& .MuiDataGrid-virtualScroller": {
+                  backgroundColor: colors.primary[400],
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  borderTop: "none",
+                  backgroundColor: colors.blueAccent[700],
+                },
+                "& .MuiCheckbox-root": {
+                  color: `${colors.greenAccent[200]} !important`,
+                },
+                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                  color: `${colors.grey[100]} !important`,
+                },
+              }}
+            >
+              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+                MANAGE RESULTS/REPORT FORMS
+              </Typography>
             </Box>
           </TabPanel>
         </Box>
@@ -230,4 +331,4 @@ const DepartmentsPage = () => {
   );
 };
 
-export default DepartmentsPage;
+export default Examinations;

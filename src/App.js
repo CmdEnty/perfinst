@@ -24,6 +24,7 @@ import DepartmentsPage from "./scenes/department";
 import AddStaff from "./scenes/addStaff";
 import StaffView from "./scenes/staffView";
 import FeesPage from "./scenes/fees";
+import Examinations from "./scenes/examination";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -58,6 +59,7 @@ function App() {
               <Route path="/department" element={<DepartmentsPage />} />
               <Route path="/addStaff" element={<AddStaff />} />
               <Route path="/staffView" element={<StaffView />} />
+              <Route path="/examination" element={<Examinations />} />
             </Routes>
           </main>
         </div>

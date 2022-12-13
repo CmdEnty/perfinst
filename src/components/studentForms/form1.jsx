@@ -34,6 +34,15 @@ const Form1 = (props) => {
     }
   };
   const { selectedValue, selectedGender, selectedNationality } = btnChange;
+
+    const styles = {
+      fontSize: 17,
+      minWidth: 90,
+      "&:hover": {
+        color: "#0ba2de",
+      },
+    };
+    
   return (
     <>
       <Box m="100px" mt="15px">
@@ -139,7 +148,7 @@ const Form1 = (props) => {
                     "& .Mui-focused.Mui-error": {
                       color: "#f44336 !important",
                     },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                    "& .css-uc0k7-MuiInputBase-root-MuiFilledInput-root:before":
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
