@@ -149,14 +149,12 @@ export const theme1 = createTheme({
             },
 
             // radio btns
-        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::before, .css-n88uca::before":
+       "& .css-w3lmqu-MuiFormLabel-root.Mui-focused, .css-7fdilt":
             {
-              borderBottom: "2px solid #0ba2de !important",
+              color: "#f2f0f0 !important",
             },
-        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::after, .css-n88uca::after":
-            {
-              borderBottom: "2px solid #f5079e !important",
-            },
+        "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked, .css-4pno3p.Mui-checked":
+            { color: "#0ba2de !important" },
         },
       },
     },
