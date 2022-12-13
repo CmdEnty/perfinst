@@ -120,10 +120,54 @@ export const tokens = (mode) => ({
       }),
 });
 
+export const theme1 = createTheme({
+  components: {
+    // Name of the component
+    MuiTextField: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS  
+        
+      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root::before, .css-1hnh80q::before":
+          {
+            borderBottom: "2px solid #0ba2de !important",
+          },
+       "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root::after, .css-1hnh80q::after":
+            {
+              borderBottom: "2px solid #f5079e !important",
+            },
+
+            // multiline
+       "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::before, .css-n88uca::before":
+            {
+              borderBottom: "2px solid #0ba2de !important",
+            },
+       "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::after, .css-n88uca::after":
+            {
+              borderBottom: "2px solid #f5079e !important",
+            },
+
+            // radio btns
+        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::before, .css-n88uca::before":
+            {
+              borderBottom: "2px solid #0ba2de !important",
+            },
+        "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::after, .css-n88uca::after":
+            {
+              borderBottom: "2px solid #f5079e !important",
+            },
+        },
+      },
+    },
+  },
+},)
+
 // mui theme settings
 export const themeSettings = (mode) => {
   const colors = tokens(mode);
   return {
+    ...theme1,
     palette: {
       mode: mode,
       ...(mode === "dark"
@@ -198,6 +242,9 @@ export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
 
+
+
+
 export const useMode = () => {
   const [mode, setMode] = useState("dark");
 
@@ -212,3 +259,4 @@ export const useMode = () => {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
 };
+

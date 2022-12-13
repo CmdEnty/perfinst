@@ -146,11 +146,11 @@ const AddUnitsForm2 = ({ setUnitsForm }) => {
                           "& .Mui-focused.Mui-error": {
                             color: "#f44336 !important",
                           },
-                          "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:before, .css-n88uca::before":
+                          "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::before, .css-n88uca::before":
                             {
                               borderBottom: "2px solid #0ba2de !important",
                             },
-                          "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root:after, .css-n88uca::after":
+                          "& .css-g7eipk-MuiInputBase-root-MuiFilledInput-root::after, .css-n88uca::after":
                             {
                               borderBottom: "2px solid #f5079e !important",
                             },
