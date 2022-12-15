@@ -4,6 +4,8 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import CourseViewCustomizedTabs from "../../components/course/courseViewVerticalTabs";
+import CourseDetails from "../../components/course/courseViewDetails";
+
 const CourseView = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -37,6 +39,7 @@ const CourseView = () => {
             <Typography textAlign="center" fontSize="20px" mt="20px">
               Course Details
             </Typography>
+            <CourseDetails />
           </Box>
         </Box>
         <Box>

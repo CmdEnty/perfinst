@@ -6,8 +6,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-// import { useTheme } from "@mui/material";
 import { tokens } from "../../../theme";
+import CourseViewClasses from "../courseClasses";
+import CourseQual from "../courseQual";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,7 +45,7 @@ function a11yProps(index) {
 
 export default function CourseViewCustomizedTabs() {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState();
   const colors = tokens(theme.palette.mode);
 
   const handleChange = (event, newValue) => {
@@ -67,7 +68,7 @@ export default function CourseViewCustomizedTabs() {
           aria-label="full width tabs example"
         >
           <Tab
-            label="Departments"
+            label="Classes/Units"
             {...a11yProps(0)}
             sx={{
               color: value === 0 ? "#0ba2de !important" : "#f1f1f1 !important",
@@ -75,7 +76,7 @@ export default function CourseViewCustomizedTabs() {
             }}
           />
           <Tab
-            label="Classes/Units"
+            label="Fee Structure"
             {...a11yProps(1)}
             sx={{
               color: value === 1 ? "#0ba2de !important" : "#f1f1f1 !important",
@@ -83,19 +84,11 @@ export default function CourseViewCustomizedTabs() {
             }}
           />
           <Tab
-            label="Fee Structure"
+            label="Qualifications"
             {...a11yProps(2)}
             sx={{
               color: value === 2 ? "#0ba2de !important" : "#f1f1f1 !important",
               fontWeight: value === 2 ? "bold !important" : undefined,
-            }}
-          />
-          <Tab
-            label="Students"
-            {...a11yProps(3)}
-            sx={{
-              color: value === 3 ? "#0ba2de !important" : "#f1f1f1 !important",
-              fontWeight: value === 3 ? "bold !important" : undefined,
             }}
           />
         </Tabs>
@@ -106,16 +99,15 @@ export default function CourseViewCustomizedTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Departments
+          Classes And Units
+          <CourseViewClasses />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Classes And Units
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
           Fee Structure
         </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
-          Students
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          Qualifications
+          <CourseQual />
         </TabPanel>
       </Box>
     </Box>

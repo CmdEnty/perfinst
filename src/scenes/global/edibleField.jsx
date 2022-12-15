@@ -14,7 +14,7 @@ export default function ToggleEdit(props) {
   const [editMode, setEditMode] = React.useState(false);
   const colors = tokens(theme.palette.mode);
 
-  const { checkoutSchema, name, type, label } = props;
+  const { checkoutSchema, name, type, label, editable } = props;
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
@@ -49,6 +49,7 @@ export default function ToggleEdit(props) {
         }) => (
           <form onSubmit={handleSubmit}>
             <Box
+              // mt="2px"
               display="grid"
               gap="20px"
               gridTemplateColumns="repeat(6, minmax(0, 1fr))"
@@ -62,14 +63,16 @@ export default function ToggleEdit(props) {
                   <Typography variant="h6" color={colors.grey[200]}>
                     {props.state_data[name]}
                   </Typography>
-                  <Tooltip title="Edit">
-                    <ModeEditOutlineOutlinedIcon
-                      fontSize="small"
-                      color="secondary"
-                      sx={{ cursor: "pointer" }}
-                      onClick={toggleEditMode}
-                    />
-                  </Tooltip>
+                  {editable !== false && (
+                    <Tooltip title="Edit">
+                      <ModeEditOutlineOutlinedIcon
+                        fontSize="small"
+                        color="secondary"
+                        sx={{ cursor: "pointer" }}
+                        onClick={toggleEditMode}
+                      />
+                    </Tooltip>
+                  )}
                 </Box>
               </Box>
             ) : (

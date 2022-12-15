@@ -5,6 +5,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
 import dayjs from "dayjs";
+import StudentList from "./studentList";
 
 const RecordResults = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -173,6 +174,7 @@ const RecordResults = (props) => {
             </form>
           )}
         </Formik>
+        <StudentList />
       </Box>
     </>
   );

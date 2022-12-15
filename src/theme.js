@@ -147,17 +147,18 @@ export const theme1 = createTheme({
             {
               borderBottom: "2px solid #f5079e !important",
             },
-
-            // radio btns
-       "& .css-w3lmqu-MuiFormLabel-root.Mui-focused, .css-7fdilt":
-            {
-              color: "#f2f0f0 !important",
-            },
-        "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked, .css-4pno3p.Mui-checked":
-            { color: "#0ba2de !important" },
         },
       },
     },
+    MuiFormControl:{styleOverrides: {root:{
+              color: "#f2f0f0 !important",
+              "#demo-row-radio-buttons-group-label, .css-7fdilt":{color: "#f2f0f0 !important",},
+      },},},
+         MuiFormControlLabel:{styleOverrides: {root:{
+          "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked, .css-4pno3p.Mui-checked":
+              { color: "#0ba2de !important" },
+              
+      },},},
   },
 },)
 
