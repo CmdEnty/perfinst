@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import { tokens } from "../../../theme";
 import CourseViewClasses from "../courseClasses";
 import CourseQual from "../courseQual";
+import CourseFeeStructure from "../feeStructure";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -103,7 +104,7 @@ export default function CourseViewCustomizedTabs() {
           <CourseViewClasses />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Fee Structure
+          <CourseFeeStructure />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Qualifications

@@ -63,7 +63,7 @@ const SalaryHistoryView = () => {
           <Box mt="20px" ml="100px">
             <Tooltip title="View More Details">
               <Link
-               target='_blank' 
+                target="_blank"
                 to="/staffView"
                 style={{ textDecoration: "none", color: colors.grey[100] }}
               >
@@ -87,11 +87,16 @@ const SalaryHistoryView = () => {
         </Box>
         <Box gridColumn="span 8" backgroundColor={colors.primary[400]}>
           <Card
-            sx={{ maxWidth: 550, ml: 5, mt:1, backgroundColor: colors.grey[700] , height:220}}
+            sx={{
+              maxWidth: 550,
+              ml: 5,
+              mt: 1,
+              backgroundColor: colors.primary[600],
+              height: 220,
+            }}
           >
-           
             <CardContent>
-              <Typography color="secondary" textAlign='center'>
+              <Typography color="secondary" textAlign="center">
                 Transaction Receipt Number 134256
               </Typography>
               <Box display="flex" gap="150px" m="2px">

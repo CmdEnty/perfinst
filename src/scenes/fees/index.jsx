@@ -9,6 +9,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import CollectFeesForm from "../../components/fees/collectFees";
+import TransactionHistory from "../../components/fees/transactionHistory";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -223,10 +224,10 @@ const FeesPage = () => {
                 },
               }}
             >
-              <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
+              {/* <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
                 TRANSACTION HISTORY
-              </Typography>
-             
+              </Typography> */}
+              <TransactionHistory />
             </Box>
           </TabPanel>
 
@@ -266,7 +267,6 @@ const FeesPage = () => {
               <Typography color="#0ba2de" fontWeight="bold" fontSize="17px">
                 PROCESS FEE STATEMENT
               </Typography>
-          
             </Box>
           </TabPanel>
         </Box>

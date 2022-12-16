@@ -132,6 +132,7 @@ const AddUnitsForm2 = ({ setUnitsForm }) => {
                     style={{ width: 300 }}
                     renderInput={(params) => (
                       <TextField
+                      // multiline
                         {...params}
                         label="Search Course"
                         placeholder="Search Course"

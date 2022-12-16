@@ -38,9 +38,9 @@ const Salary = () => {
           <br />{" "}
           <Box
             backgroundColor={colors.primary[400]}
-            width="310px"
+            maxWidth="350px"
             overflow="auto"
-            height="700px"
+            maxHeight="600px"
           >
             <Box ml="20px" mr="40px" mt="20px" width="250px">
               <TextField
