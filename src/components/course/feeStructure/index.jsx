@@ -50,9 +50,14 @@ export default function CourseFeeStructure() {
           }}
         />
       </Box>
-      <Box maxHeight="500px" width="550px" overflow="auto">
-        <Box backgroundColor={colors.primary[500]} width="530px">
-          <Box width="530px" p="10px 10px 10px 10px">
+      <Box
+        maxHeight="600px"
+        width="580px"
+        overflow="auto"
+        ml="-15px"
+      >
+        <Box backgroundColor={colors.primary[500]} width="570px">
+          <Box width="570px" p="10px 10px 10px 10px">
             {" "}
             <Accordion
               expanded={expanded === "panel1"}
