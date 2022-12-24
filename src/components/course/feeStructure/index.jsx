@@ -56,6 +56,7 @@ export default function CourseFeeStructure() {
         overflow="auto"
         ml="-15px"
       >
+      
         <Box backgroundColor={colors.primary[500]} width="570px">
           <Box width="570px" p="10px 10px 10px 10px">
             {" "}

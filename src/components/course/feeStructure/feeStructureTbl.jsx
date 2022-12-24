@@ -11,15 +11,30 @@ import {
 import { tokens } from "../../../theme";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import ClickAwayListener from "@mui/base/ClickAwayListener";
 
 export default function FeeStructureTbl() {
   const [terms, setTerms] = useState(false);
-  const [numberOfTerms, setNumberOfTerms] = useState();
+  const [numberOfTerms, setNumberOfTerms] = useState(0);
   const [columns, setColumns] = useState();
   const [tcolumns, setTcolumns] = useState([]);
   const [rowNumber, setRowNumber] = useState(0);
+  const [totalsFields, setTotalsFields] = useState();
+  const [editMode, setEditMode] = useState();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const handleClickAway = (id, value, event) => {
+    if (editMode) {
+      if (id === editMode) {
+        if (value === "") {
+          alert("Please fill the field");
+        } else {
+          setEditMode();
+        }
+      }
+    }
+  };
 
   const addRows = () => {
     if (!terms) {
@@ -35,6 +50,7 @@ export default function FeeStructureTbl() {
   };
 
   let colm = [];
+  let totalsColm = [];
 
   const handleNumberOfTerms = (e) => {
     const values = e.target.value;
@@ -43,6 +59,7 @@ export default function FeeStructureTbl() {
   const handleTerms = (e) => {
     if (Number(rowNumber) < 1) {
       e.preventDefault();
+      creatTotalsColm();
     }
 
     const newValue = Number(numberOfTerms) + 2;
@@ -92,6 +109,45 @@ export default function FeeStructureTbl() {
     setRowNumber(newRowNo);
   };
 
+  const creatTotalsColm = () => {
+    const newValue = Number(numberOfTerms) + 1;
+    const lastInd = Number(newValue) - 1;
+    let id;
+    let headerName;
+    let groupName;
+    let fieldName;
+    let fieldVal;
+
+    for (let index = 0; index < newValue; index++) {
+      switch (index) {
+        case lastInd:
+          id = `total${index}/r${rowNumber}`;
+          headerName = `Total`;
+          groupName = `subTotal`;
+          fieldName = `total`;
+          fieldVal = 0;
+          break;
+        default:
+          id = `t${index}`;
+          headerName = `Term ${index + 1} Totals`;
+          groupName = `Term ${index + 1}`;
+          fieldName = `term`;
+          fieldVal = 0;
+          break;
+      }
+
+      let element = {
+        id: id,
+        headerName: headerName,
+        groupName: groupName,
+        fieldName: fieldName,
+        fieldVal: fieldVal,
+      };
+      totalsColm.push(element);
+    }
+    setTotalsFields(totalsColm);
+  };
+
   const handleChange = (id, event) => {
     const value = event.target.value;
 
@@ -99,9 +155,7 @@ export default function FeeStructureTbl() {
       if (id === i.id) {
         i.fieldVal = value;
         if (i.fieldName === "term") {
-          // const termFields = columns.filter((column) => column.id === i.id);
-          // termFields.fieldVal = value;
-
+          getTermTotal(i);
           setColumns(getSubTotal([...columns]));
         }
       }
@@ -112,10 +166,50 @@ export default function FeeStructureTbl() {
   };
 
   const deleteRow = (rowNum) => {
+    const deletedRow = tcolumns.filter((tcolumn) => tcolumn.rowNo === rowNum);
+    deletedRow.map((deletedR) => {
+      deletedR.vals.map((val) => {
+        if (val.fieldName === "term") {
+          const subT = totalsFields.map((totalsField) => {
+            if (totalsField.groupName === val.headerName) {
+              totalsField.fieldVal =
+                Number(totalsField.fieldVal) - Number(val.fieldVal);
+            }
+            if (totalsField.fieldName === "total") {
+              totalsField.fieldVal =
+                Number(totalsField.fieldVal) - Number(val.fieldVal);
+            }
+            return totalsField;
+          });
+          setTotalsFields([...subT]);
+        }
+        return val;
+      });
+      return deletedR;
+    });
+
     setTcolumns(tcolumns.filter((tcolumn) => tcolumn.rowNo !== rowNum));
   };
 
   const deleteColumn = () => {
+    columns.map((deletedR) => {
+      if (deletedR.fieldName === "term") {
+        const subT = totalsFields.map((totalsField) => {
+          if (totalsField.groupName === deletedR.headerName) {
+            totalsField.fieldVal =
+              Number(totalsField.fieldVal) - Number(deletedR.fieldVal);
+          }
+          if (totalsField.fieldName === "total") {
+            totalsField.fieldVal =
+              Number(totalsField.fieldVal) - Number(deletedR.fieldVal);
+          }
+          return totalsField;
+        });
+        setTotalsFields([...subT]);
+      }
+
+      return deletedR;
+    });
     setColumns([]);
     setTerms(false);
   };
@@ -127,27 +221,104 @@ export default function FeeStructureTbl() {
     setTerms(false);
     setRowNumber(0);
     setNumberOfTerms(0);
+    setTotalsFields([]);
   };
 
   const getSubTotal = (val) => {
     let subT = 0;
 
-    // subT = Number(i.fieldVal) + Number(subT);
-
     const subTotal = val.filter((column) => column.fieldName === "subTotal");
     const termsFields = val.filter((column) => column.fieldName === "term");
 
-    // index.fieldVal = Number(i.fieldVal) + Number(index.fieldVal);
     termsFields.map((termsField) => {
       subT = Number(subT) + Number(termsField.fieldVal);
       subTotal.map((sTotal) => {
         sTotal.fieldVal = subT;
-        // alert(subT);
         return setColumns([...val, termsField]);
       });
 
       return columns;
     });
+  };
+
+  const getTermTotal = (i) => {
+    let subT = 0;
+
+    let tFields = 0;
+    let genTotal = 0;
+    tcolumns.flat().map((tcolm) => {
+      tcolm.vals.map((val) => {
+        if (val.headerName === i.headerName) {
+          tFields = Number(tFields) + Number(val.fieldVal);
+        }
+
+        return val;
+      });
+
+      return tcolm;
+    });
+
+    columns.map((termsField) => {
+      if (termsField.headerName === i.headerName) {
+        subT = Number(subT) + Number(termsField.fieldVal);
+      }
+
+      return subT;
+    });
+
+    const calTotalsFields = totalsFields.map((fTotal) => {
+      if (fTotal.groupName === i.headerName) {
+        fTotal.fieldVal = Number(subT) + Number(tFields);
+      }
+      if (fTotal.fieldName === "term") {
+        genTotal = Number(genTotal) + Number(fTotal.fieldVal);
+      }
+      if (fTotal.fieldName === "total") {
+        fTotal.fieldVal = Number(genTotal);
+      }
+      return fTotal;
+    });
+    setTotalsFields([...calTotalsFields]);
+  };
+
+  const fieldInEditMode = (id) => {
+    setEditMode(id);
+  };
+
+  const savedFieldChange = (id, rowNm, event) => {
+    const value = event.target.value;
+
+    const newInputFields = tcolumns.map((val) => {
+      let subT = 0;
+      if (val.rowNo === rowNm) {
+        val.vals.map((i) => {
+          switch (i.fieldName) {
+            case "term":
+              if (id === i.id) {
+                i.fieldVal = value;
+
+                getTermTotal(i);
+              }
+              subT = Number(subT) + Number(i.fieldVal);
+              break;
+            case "subTotal":
+              i.fieldVal = subT;
+              break;
+            case "description":
+              if (id === i.id) {
+                i.fieldVal = value;
+              }
+              break;
+            default:
+              break;
+          }
+
+          return i;
+        });
+      }
+      return val;
+    });
+    setTcolumns(newInputFields);
   };
 
   return (
@@ -192,7 +363,6 @@ export default function FeeStructureTbl() {
             <Box>
               <Button
                 type="submit"
-                // onClick={}
                 variant="contained"
                 sx={{
                   color: colors.grey[100],
@@ -276,44 +446,56 @@ export default function FeeStructureTbl() {
           <Box display="flex" gap="10px" key={rowNo}>
             {vals.map((cm) => {
               return (
-                <TextField
-                  multiline
-                  fullWidth
-                  variant="filled"
-                  disabled={cm.fieldName === "subTotal"}
-                  type={cm.fieldName === "description" ? "text" : "number"}
-                  label={cm.headerName}
-                  value={
-                    cm.fieldName === "term" && cm.fieldVal === 0
-                      ? ""
-                      : cm.fieldVal
+                <ClickAwayListener
+                  // key={cm.id}
+                  onClickAway={(event) =>
+                    handleClickAway(cm.id, cm.fieldVal, event)
                   }
-                  onChange={handleTerms}
-                  name={cm.fieldName}
-                  sx={{
-                    "& .Mui-focused": {
-                      color: "#f2f0f0 !important",
-                      input: {
+                >
+                  <TextField
+                    multiline
+                    fullWidth
+                    variant="filled"
+                    disabled={cm.fieldName === "subTotal" || cm.id !== editMode}
+                    onDoubleClick={() => fieldInEditMode(cm.id)}
+                    type={cm.fieldName === "description" ? "text" : "number"}
+                    label={cm.headerName}
+                    value={
+                      cm.fieldName === "term" && cm.fieldVal === 0
+                        ? ""
+                        : cm.fieldVal
+                    }
+                    onChange={(event) => savedFieldChange(cm.id, rowNo, event)}
+                    name={cm.fieldName}
+                    sx={{
+                      width:
+                        cm.fieldName === "description"
+                          ? "40%"
+                          : `${60 / (Number(numberOfTerms) + 1)}%`,
+                      "& .Mui-focused": {
                         color: "#f2f0f0 !important",
+                        input: {
+                          color: "#f2f0f0 !important",
+                        },
                       },
-                    },
-                    "& .Mui-focused.Mui-error": {
-                      color: "#f44336 !important",
-                    },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                      {
-                        borderBottom: "2px solid #0ba2de !important",
+                      "& .Mui-focused.Mui-error": {
+                        color: "#f44336 !important",
                       },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                      {
-                        borderBottom: "2px solid #f5079e !important",
-                      },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                      {
-                        borderBottom: "#f44336 !important",
-                      },
-                  }}
-                />
+                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                        {
+                          borderBottom: "2px solid #0ba2de !important",
+                        },
+                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                        {
+                          borderBottom: "2px solid #f5079e !important",
+                        },
+                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                        {
+                          borderBottom: "#f44336 !important",
+                        },
+                    }}
+                  />
+                </ClickAwayListener>
               );
             })}
             {Number(rowNumber) > 0 && (
@@ -329,49 +511,50 @@ export default function FeeStructureTbl() {
 
       {terms === true && (
         <form>
-          <Box display="flex" gap="10px">
+          <Box display="flex" gap="10px" width="100%">
             {columns.map((clm) => (
-              <Box width="200px" key={clm.id}>
-                <TextField
-                  multiline
-                  fullWidth
-                  disabled={clm.fieldName === "subTotal"}
-                  variant="filled"
-                  type={clm.fieldName === "description" ? "text" : "number"}
-                  label={clm.headerName}
-                  // onBlur={handleBlur}
-                  onChange={(event) => handleChange(clm.id, event)}
-                  name={clm.fieldName}
-                  value={
-                    clm.fieldName === "term" && clm.fieldVal === 0
-                      ? ""
-                      : clm.fieldVal
-                  }
-                  sx={{
-                    "& .Mui-focused": {
+              <TextField
+                multiline
+                fullWidth
+                disabled={clm.fieldName === "subTotal"}
+                variant="filled"
+                type={clm.fieldName === "description" ? "text" : "number"}
+                label={clm.headerName}
+                // onBlur={handleBlur}
+                onChange={(event) => handleChange(clm.id, event)}
+                name={clm.fieldName}
+                value={
+                  clm.fieldName === "term" && clm.fieldVal === 0
+                    ? ""
+                    : clm.fieldVal
+                }
+                sx={{
+                  width:
+                    clm.fieldName === "description"
+                      ? "40%"
+                      : `${60 / (Number(numberOfTerms) + 1)}%`,
+                  "& .Mui-focused": {
+                    color: "#f2f0f0 !important",
+                    input: {
                       color: "#f2f0f0 !important",
-                      input: {
-                        color: "#f2f0f0 !important",
-                      },
                     },
-                    "& .Mui-focused.Mui-error": {
-                      color: "#f44336 !important",
+                  },
+                  "& .Mui-focused.Mui-error": {
+                    color: "#f44336 !important",
+                  },
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                    {
+                      borderBottom: "2px solid #0ba2de !important",
                     },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                      {
-                        borderBottom: "2px solid #0ba2de !important",
-                      },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                      {
-                        borderBottom: "2px solid #f5079e !important",
-                      },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                      {
-                        borderBottom: "#f44336 !important",
-                      },
-                  }}
-                />
-              </Box>
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
+                    borderBottom: "2px solid #f5079e !important",
+                  },
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                    {
+                      borderBottom: "#f44336 !important",
+                    },
+                }}
+              />
             ))}
             <Tooltip title="Delete this row">
               <IconButton onClick={deleteColumn}>
@@ -380,6 +563,65 @@ export default function FeeStructureTbl() {
             </Tooltip>
           </Box>
         </form>
+      )}
+
+      {Number(rowNumber) > 0 && (
+        <Box
+          display="flex"
+          gap="10px"
+          sx={{
+            pr: "45px",
+
+            justifyContent: "flex-end",
+          }}
+        >
+          <Box
+            display="flex"
+            gap="10px"
+            width="100%"
+            sx={{
+              pl: "60px",
+              justifyContent: "flex-end",
+            }}
+          >
+            {totalsFields.map((totalsField) => (
+              <TextField
+                multiline
+                fullWidth
+                disabled
+                variant="filled"
+                type="number"
+                label={totalsField.headerName}
+                name={totalsField.fieldName}
+                value={totalsField.fieldVal}
+                sx={{
+                  width: `${60 / (Number(numberOfTerms) + 1)}%`,
+                  "& .Mui-focused": {
+                    color: "#f2f0f0 !important",
+                    input: {
+                      color: "#f2f0f0 !important",
+                    },
+                  },
+                  "& .Mui-focused.Mui-error": {
+                    color: "#f44336 !important",
+                  },
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                    {
+                      borderBottom: "2px solid #0ba2de !important",
+                    },
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
+                    borderBottom: "2px solid #f5079e !important",
+                  },
+                  "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                    {
+                      borderBottom: "#f44336 !important",
+                    },
+                }}
+              />
+              // </Box>
+            ))}
+          </Box>
+        </Box>
       )}
     </Box>
   );
