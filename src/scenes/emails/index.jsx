@@ -95,7 +95,7 @@ export default function Emails() {
         </TabPanel>
         <TabPanel value={value} index={2}>
           Draft
-          <DraftList/>
+          <DraftList />
         </TabPanel>
       </Box>
     </Box>

@@ -12,6 +12,8 @@ import { tokens } from "../../../theme";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import ClickAwayListener from "@mui/base/ClickAwayListener";
+import { undoSnackBar } from "../../snackBar";
+import { useSnackbar } from "notistack";
 
 export default function FeeStructureTbl() {
   const [terms, setTerms] = useState(false);
@@ -23,6 +25,7 @@ export default function FeeStructureTbl() {
   const [editMode, setEditMode] = useState();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleClickAway = (id, value, event) => {
     if (editMode) {
@@ -73,20 +76,20 @@ export default function FeeStructureTbl() {
       switch (index) {
         case 0:
           id = `descr${index}/r${rowNumber}`;
-          headerName = `Description`;
-          fieldName = `description`;
+          headerName = "Description";
+          fieldName = "description";
           fieldVal = "";
           break;
         case lastInd:
           id = `subTotal${index}/r${rowNumber}`;
-          headerName = `SubTotal`;
-          fieldName = `subTotal`;
+          headerName = "SubTotal";
+          fieldName = "subTotal";
           fieldVal = 0;
           break;
         default:
           id = `t${index}/r${rowNumber}`;
           headerName = `Term ${index}`;
-          fieldName = `term`;
+          fieldName = "term";
           fieldVal = 0;
           break;
       }
@@ -122,16 +125,16 @@ export default function FeeStructureTbl() {
       switch (index) {
         case lastInd:
           id = `total${index}/r${rowNumber}`;
-          headerName = `Total`;
-          groupName = `subTotal`;
-          fieldName = `total`;
+          headerName = "Total";
+          groupName = "subTotal";
+          fieldName = "total";
           fieldVal = 0;
           break;
         default:
           id = `t${index}`;
           headerName = `Term ${index + 1} Totals`;
           groupName = `Term ${index + 1}`;
-          fieldName = `term`;
+          fieldName = "term";
           fieldVal = 0;
           break;
       }
@@ -146,6 +149,7 @@ export default function FeeStructureTbl() {
       totalsColm.push(element);
     }
     setTotalsFields(totalsColm);
+    totalsColm = [];
   };
 
   const handleChange = (id, event) => {
@@ -166,11 +170,14 @@ export default function FeeStructureTbl() {
   };
 
   const deleteRow = (rowNum) => {
+    const currentRows = [...tcolumns];
+    const clmn = "tcolumns";
+    let subT;
     const deletedRow = tcolumns.filter((tcolumn) => tcolumn.rowNo === rowNum);
     deletedRow.map((deletedR) => {
       deletedR.vals.map((val) => {
         if (val.fieldName === "term") {
-          const subT = totalsFields.map((totalsField) => {
+          subT = totalsFields.map((totalsField) => {
             if (totalsField.groupName === val.headerName) {
               totalsField.fieldVal =
                 Number(totalsField.fieldVal) - Number(val.fieldVal);
@@ -181,17 +188,30 @@ export default function FeeStructureTbl() {
             }
             return totalsField;
           });
-          setTotalsFields([...subT]);
         }
         return val;
       });
       return deletedR;
     });
-
+    setTotalsFields(subT);
     setTcolumns(tcolumns.filter((tcolumn) => tcolumn.rowNo !== rowNum));
+    undoSnackBar(
+      "Row deleted successfuly",
+      enqueueSnackbar,
+      closeSnackbar,
+      setTcolumns,
+      currentRows,
+      setTerms,
+      clmn,
+      setTotalsFields,
+      deletedRow,
+      totalsFields
+    );
   };
 
   const deleteColumn = () => {
+    const currentRows = [...columns];
+    const clmn = "columns";
     columns.map((deletedR) => {
       if (deletedR.fieldName === "term") {
         const subT = totalsFields.map((totalsField) => {
@@ -212,6 +232,19 @@ export default function FeeStructureTbl() {
     });
     setColumns([]);
     setTerms(false);
+    undoSnackBar(
+      "Row deleted successfuly",
+      enqueueSnackbar,
+      closeSnackbar,
+      setColumns,
+      currentRows,
+      setTerms,
+      clmn,
+      setTotalsFields,
+      currentRows,
+      totalsFields
+    );
+    return;
   };
 
   const cancelTable = () => {
@@ -447,13 +480,12 @@ export default function FeeStructureTbl() {
             {vals.map((cm) => {
               return (
                 <ClickAwayListener
-                  // key={cm.id}
                   onClickAway={(event) =>
                     handleClickAway(cm.id, cm.fieldVal, event)
                   }
                 >
                   <TextField
-                    multiline
+                    multiline={cm.fieldName === "description"}
                     fullWidth
                     variant="filled"
                     disabled={cm.fieldName === "subTotal" || cm.id !== editMode}
@@ -514,13 +546,14 @@ export default function FeeStructureTbl() {
           <Box display="flex" gap="10px" width="100%">
             {columns.map((clm) => (
               <TextField
-                multiline
                 fullWidth
+                multiline={clm.fieldName === "description"}
                 disabled={clm.fieldName === "subTotal"}
                 variant="filled"
                 type={clm.fieldName === "description" ? "text" : "number"}
                 label={clm.headerName}
                 // onBlur={handleBlur}
+
                 onChange={(event) => handleChange(clm.id, event)}
                 name={clm.fieldName}
                 value={
@@ -586,7 +619,6 @@ export default function FeeStructureTbl() {
           >
             {totalsFields.map((totalsField) => (
               <TextField
-                multiline
                 fullWidth
                 disabled
                 variant="filled"
