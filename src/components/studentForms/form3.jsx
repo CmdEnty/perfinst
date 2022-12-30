@@ -1,30 +1,33 @@
-import * as React from 'react';
+import * as React from "react";
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import ColorRadioButtons from '../radio_btn';
+import ColorRadioButtons from "../radio_btn";
 const Form2 = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [btnChange, setBtnChange] = React.useState({p_selectedNationality: props.student.p_selectedNationality});
+  const [btnChange, setBtnChange] = React.useState({
+    p_selectedNationality: props.student.p_selectedNationality,
+  });
 
   const handleFormSubmit = (values) => {
-    const NewValues = Object.assign(values, {form3Submitted: 1});
+    const NewValues = Object.assign(values, { form3Submitted: 1 });
+
     props.handleFormChange(NewValues);
-     props.handlePage();
+    props.handlePage();
   };
 
   const handleBtnChange = (event) => {
     let val = event.target.value;
-    setBtnChange({...btnChange, p_selectedNationality : val});
-  }
+    setBtnChange({ ...btnChange, p_selectedNationality: val });
+  };
 
-    const pagePrev = (values) => {
+  const pagePrev = (values) => {
     props.handleFormChange(values);
     props.handlePagePrev();
-  }
+  };
 
-  const {p_selectedNationality} = btnChange
+  const { p_selectedNationality } = btnChange;
 
   return (
     <>
@@ -448,7 +451,9 @@ const checkoutSchema = yup.object().shape({
   p_phone: yup.string().required("required"),
   p_email: yup.string().required("required"),
   relationShip: yup.string().required("required"),
-  p_selectedNationality: yup.string().required("You must select one the buttons"),
+  p_selectedNationality: yup
+    .string()
+    .required("You must select one the buttons"),
   passportNumber: yup.string().required("required"),
   p_nationality: yup.string().required("required"),
   p_idNo: yup.string().required("required"),

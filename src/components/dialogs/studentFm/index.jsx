@@ -35,7 +35,8 @@ export default function StudentFormDialog() {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
-        onClick={() => window.location("addStudent")}
+        // onClick={handleClose}
+        // onClick={() => window.location("addStudent")}
       >
         <DialogTitle>{"Student Registration Completed"}</DialogTitle>
         <DialogContent>
@@ -44,11 +45,11 @@ export default function StudentFormDialog() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Link to="/addStudent">
-            <Button>
-              <Typography color="white !important">OK</Typography>
-            </Button>
-          </Link>
+          {/* <Link to="/addStudent"> */}
+          <Button onClick={handleClose}>
+            <Typography color="white !important">OK</Typography>
+          </Button>
+          {/* </Link> */}
         </DialogActions>
       </Dialog>
     </div>

@@ -30,18 +30,24 @@ const Sidebar = () => {
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
+          // maxWidth: "200px !important",
+          // minWidth: "5px !important",
+          // height:"100%"
         },
         "& .pro-sidebar": {
           // position: "fixed !important",
           height: "auto !important",
+          maxWidth: "220px !important",
+          minWidth: "2px !important",
+          // maxHeight: "900px !important",
+          // minHeight: "1000px !important",
           // overflowY: "scroll !important",
-          // width: "15vw !important"
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
+          padding: "5px 40px 0 5px !important",
         },
         "& .pro-inner-item:hover": {
           color: "#868dfb !important",
@@ -58,7 +64,7 @@ const Sidebar = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "2px 0 20px 0",
               color: colors.grey[100],
             }}
           >
@@ -66,10 +72,11 @@ const Sidebar = () => {
               <Box
                 display="flex"
                 justifyContent="space-between"
+                // gap="20px"
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
+                <Typography variant="h6" color={colors.grey[100]}>
                   ADMIN
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -80,38 +87,37 @@ const Sidebar = () => {
           </MenuItem>
 
           {!isCollapsed && (
-            <Box mb="25px">
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                mt="-5px"
-              >
+            <Box mb="5px">
+              <Box display="flex" sx={{ m: "-10px 0 0 45px" }}>
                 <img
                   alt="profile-user"
-                  width="150px"
-                  height="100px"
+                  width="115px"
+                  height="65px"
                   src={`../../assets/user.png`}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
-              <Box textAlign="center">
+              <Box>
                 <Typography
-                  variant="h2"
+                  variant="h5"
                   color={colors.grey[100]}
                   fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
+                  sx={{ m: "10px 0 0 44px" }}
                 >
                   Perfect Institute
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography
+                  variant="h6"
+                  color={colors.greenAccent[500]}
+                  sx={{ m: "0 0 10px 55px" }}
+                >
                   Of Technology
                 </Typography>
               </Box>
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+          <Box paddingLeft={isCollapsed ? undefined : "3%"}>
             <Item
               title="Dashboard"
               to="/"
@@ -120,13 +126,15 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Administration
-            </Typography>
+            {!isCollapsed && (
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Administration
+              </Typography>
+            )}
             <Item
               title="Staff"
               to="/staff"
@@ -156,13 +164,15 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Accounts
-            </Typography>
+            {!isCollapsed && (
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Accounts
+              </Typography>
+            )}
             <Item
               title="Fees"
               to="/fees"
@@ -185,13 +195,15 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Academics
-            </Typography>
+            {!isCollapsed && (
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Academics
+              </Typography>
+            )}
             <Item
               title="Departments"
               to="/department"
@@ -229,13 +241,15 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Emails/Sms
-            </Typography>
+            {!isCollapsed && (
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Emails/Sms
+              </Typography>
+            )}
             <Item
               title="Mail Box"
               to="/emails"

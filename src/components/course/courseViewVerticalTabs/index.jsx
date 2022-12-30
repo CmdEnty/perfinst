@@ -59,7 +59,10 @@ export default function CourseViewCustomizedTabs() {
 
   return (
     <Box sx={{ bgcolor: colors.primary[400] }}>
-      <AppBar position="static" sx={{ bgcolor: colors.primary[400] }}>
+      <AppBar
+        position="static"
+        sx={{ bgcolor: colors.primary[400]}}
+      >
         <Tabs
           value={value}
           onChange={handleChange}

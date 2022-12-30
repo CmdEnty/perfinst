@@ -152,7 +152,7 @@ export default function CourseQual() {
     <Box
       sx={{
         height: 500,
-        width: "100%",
+        width: "590px",
         "& .actions": {
           color: "secondary",
         },

@@ -5,19 +5,23 @@ import { Link } from "react-router-dom";
 import StudentViewTab from "../../components/studentViewTab";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import Tooltip from "@mui/material/Tooltip";
+import { useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 
 
 const StudentView = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+    const { data, isSuccess, isLoading, isError } = useQuery(["students"],  () =>
+      axiosReq.get("/student")
+    );
 
   return (
     <Box m="20px">
       <Tooltip title="Back">
         <Link
           to="/students"
-          style={{ textDecoration: "none", color: colors.grey[100] }}
-        >
+          style={{ textDecoration: "none", color: colors.grey[100] }}>
           <ArrowBackOutlinedIcon sx={{ fontSize: 30, mt: -4 }} />
         </Link>
       </Tooltip>
@@ -35,22 +39,19 @@ const StudentView = () => {
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
         gridAutoRows="180px"
-        gap="1px"
-      >
+        gap="1px">
         {/* ROW 1 */}
         <Box
           gridColumn="span 4"
           backgroundColor={colors.primary[400]}
           display="flex"
           alignItems="center"
-          justifyContent="center"
-        >
+          justifyContent="center">
           <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            mt="-5px"
-          >
+            mt="-5px">
             <img
               alt="profile-user"
               width="150px"
@@ -66,17 +67,16 @@ const StudentView = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          gap="50px"
-        >
+          gap="50px">
           <Box mt="-50px" ml="5px">
             <Typography variant="h4" fontWeight="600" color={colors.grey[100]}>
-              Mr John Jeremy
+              {isLoading === true && "loading.."}
+              {isError === true && "Error.."}
             </Typography>
             <Typography
               variant="h5"
               fontWeight="bold"
-              color={colors.greenAccent[500]}
-            >
+              color={colors.greenAccent[500]}>
               Mombasa, Kenya
             </Typography>
           </Box>
@@ -100,21 +100,18 @@ const StudentView = () => {
         <Box
           gridColumn="span 4"
           gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
+          backgroundColor={colors.primary[400]}>
           <Box
             mt="25px"
             p="0 30px"
             display="flex "
             justifyContent="space-between"
-            alignItems="center"
-          >
+            alignItems="center">
             <Box sx={{ width: 260, ml: -1 }}>
               <Typography
                 variant="h5"
                 fontWeight="Bold"
-                color={colors.grey[100]}
-              >
+                color={colors.grey[100]}>
                 Course
               </Typography>
               <Typography
@@ -125,8 +122,7 @@ const StudentView = () => {
                   borderBottom: 1,
                   borderColor: "divider",
                   ml: 5,
-                }}
-              ></Typography>
+                }}></Typography>
             </Box>
           </Box>
           <Box height="250px" m="10px 0 0 0">
@@ -135,8 +131,7 @@ const StudentView = () => {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Level
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -147,8 +142,7 @@ const StudentView = () => {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Code
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -159,8 +153,7 @@ const StudentView = () => {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Title
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -172,8 +165,7 @@ const StudentView = () => {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Class
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -184,8 +176,7 @@ const StudentView = () => {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Reported On
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -196,8 +187,7 @@ const StudentView = () => {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Fee Balance (Kshs)
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -213,15 +203,13 @@ const StudentView = () => {
         <Box
           gridColumn="span 8"
           gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
+          backgroundColor={colors.primary[400]}>
           <Box
             mt="25px"
             p="0 30px"
             display="flex "
             justifyContent="space-between"
-            alignItems="center"
-          >
+            alignItems="center">
             <StudentViewTab />
           </Box>
         </Box>

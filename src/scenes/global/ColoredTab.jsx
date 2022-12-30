@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const styles = {
   minWidth: 90,
-  fontSize: 17,
+  fontSize: 13,
   "&:hover": {
     color: "#0ba2de",
   },

@@ -32,6 +32,9 @@ export default function FeeStructureTbl() {
       if (id === editMode) {
         if (value === "") {
           alert("Please fill the field");
+          //  setTimeout(() => {
+          //    event.target.name.focus();
+          //  }, 100);
         } else {
           setEditMode();
         }
@@ -314,7 +317,10 @@ export default function FeeStructureTbl() {
     setTotalsFields([...calTotalsFields]);
   };
 
-  const fieldInEditMode = (id) => {
+  const fieldInEditMode = (id, event) => {
+    // setTimeout(() => {
+    //   event.target.name.focus();
+    // }, 100);
     setEditMode(id);
   };
 
@@ -364,7 +370,10 @@ export default function FeeStructureTbl() {
               disabled={terms}
               fullWidth
               variant="filled"
+              // focused
+
               type="number"
+              InputProps={{ inputProps: { min: 1, max: 3 } }}
               label="Enter Number Of Terms"
               value={numberOfTerms === 0 ? "" : numberOfTerms}
               onChange={(event) => handleNumberOfTerms(event)}
@@ -472,74 +481,85 @@ export default function FeeStructureTbl() {
           </Box>
         </Box>
       )}
-
-      {tcolumns.map((clm) => {
-        const { vals, rowNo } = clm;
-        return (
-          <Box display="flex" gap="10px" key={rowNo}>
-            {vals.map((cm) => {
-              return (
-                <ClickAwayListener
-                  onClickAway={(event) =>
-                    handleClickAway(cm.id, cm.fieldVal, event)
-                  }
-                >
-                  <TextField
-                    multiline={cm.fieldName === "description"}
-                    fullWidth
-                    variant="filled"
-                    disabled={cm.fieldName === "subTotal" || cm.id !== editMode}
-                    onDoubleClick={() => fieldInEditMode(cm.id)}
-                    type={cm.fieldName === "description" ? "text" : "number"}
-                    label={cm.headerName}
-                    value={
-                      cm.fieldName === "term" && cm.fieldVal === 0
-                        ? ""
-                        : cm.fieldVal
+      <Box overflow="auto" maxHeight="290px">
+        {tcolumns.map((clm) => {
+          const { vals, rowNo } = clm;
+          return (
+            <Box display="flex" gap="10px" key={rowNo} mb="10px">
+              {vals.map((cm) => {
+                return (
+                  <ClickAwayListener
+                    onClickAway={(event) =>
+                      handleClickAway(cm.id, cm.fieldVal, event)
                     }
-                    onChange={(event) => savedFieldChange(cm.id, rowNo, event)}
-                    name={cm.fieldName}
-                    sx={{
-                      width:
-                        cm.fieldName === "description"
-                          ? "40%"
-                          : `${60 / (Number(numberOfTerms) + 1)}%`,
-                      "& .Mui-focused": {
-                        color: "#f2f0f0 !important",
-                        input: {
+                  >
+                    <TextField
+                      multiline={cm.fieldName === "description"}
+                      fullWidth
+                      variant="filled"
+                      InputProps={
+                        cm.fieldName === "term" && {
+                          inputProps: { min: 1, max: 3 },
+                        }
+                      }
+                      disabled={
+                        cm.fieldName === "subTotal" || cm.id !== editMode
+                      }
+                      focused={cm.id === editMode}
+                      onDoubleClick={(event) => fieldInEditMode(cm.id, event)}
+                      type={cm.fieldName === "description" ? "text" : "number"}
+                      label={cm.headerName}
+                      value={
+                        cm.fieldName === "term" && cm.fieldVal === 0
+                          ? ""
+                          : cm.fieldVal
+                      }
+                      onChange={(event) =>
+                        savedFieldChange(cm.id, rowNo, event)
+                      }
+                      name={cm.fieldName}
+                      sx={{
+                        width:
+                          cm.fieldName === "description"
+                            ? "40%"
+                            : `${60 / (Number(numberOfTerms) + 1)}%`,
+                        "& .Mui-focused": {
                           color: "#f2f0f0 !important",
+                          input: {
+                            color: "#f2f0f0 !important",
+                          },
                         },
-                      },
-                      "& .Mui-focused.Mui-error": {
-                        color: "#f44336 !important",
-                      },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
-                        {
-                          borderBottom: "2px solid #0ba2de !important",
+                        "& .Mui-focused.Mui-error": {
+                          color: "#f44336 !important",
                         },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
-                        {
-                          borderBottom: "2px solid #f5079e !important",
-                        },
-                      "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
-                        {
-                          borderBottom: "#f44336 !important",
-                        },
-                    }}
-                  />
-                </ClickAwayListener>
-              );
-            })}
-            {Number(rowNumber) > 0 && (
-              <Tooltip title="Delete this row">
-                <IconButton onClick={() => deleteRow(rowNo)}>
-                  <DeleteIcon color="error" />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Box>
-        );
-      })}
+                        "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                          {
+                            borderBottom: "2px solid #0ba2de !important",
+                          },
+                        "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                          {
+                            borderBottom: "2px solid #f5079e !important",
+                          },
+                        "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                          {
+                            borderBottom: "#f44336 !important",
+                          },
+                      }}
+                    />
+                  </ClickAwayListener>
+                );
+              })}
+              {Number(rowNumber) > 0 && (
+                <Tooltip title="Delete this row">
+                  <IconButton onClick={() => deleteRow(rowNo)}>
+                    <DeleteIcon color="error" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </Box>
+          );
+        })}
+      </Box>
 
       {terms === true && (
         <form>

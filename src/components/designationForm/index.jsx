@@ -14,6 +14,7 @@ const DesignationForm = (props) => {
   const [fields, setFieldsField] = useState({});
 
   const handleFormSubmit = (values) => {
+    alert('added')
     const NewValues = Object.assign(values, { form1Submitted: 1 });
     props.handleFormChange(NewValues);
     props.handlePage();

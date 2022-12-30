@@ -25,14 +25,19 @@ const CourseView = () => {
         <Header title="COURSE VIEW" subtitle="Manage Course Details" />
       </Box>
 
-      <Box display="flex" gap="20px">
-        <Box>
+      <Box
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        gridAutoRows="180px"
+        gap="5px"
+      >
+        <Box gridColumn="span 4">
           {" "}
           <Box
             backgroundColor={colors.primary[400]}
             alignItems="center"
             justifyContent="center"
-            width="350px"
+            // width="350px"
             overflow="auto"
             height="500px"
           >
@@ -42,9 +47,12 @@ const CourseView = () => {
             <CourseDetails />
           </Box>
         </Box>
-        <Box>
+        <Box gridColumn="span 8">
           {" "}
-          <Box backgroundColor={colors.primary[400]} width="590px">
+          <Box
+            backgroundColor={colors.primary[400]}
+ 
+          >
             <CourseViewCustomizedTabs />
           </Box>
         </Box>

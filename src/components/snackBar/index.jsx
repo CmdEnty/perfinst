@@ -61,14 +61,13 @@ export const undoSnackBar = (
     }
   };
   const undoFunction = () => {
-
     calcT();
     undoFunc(undoArg);
   };
   const action = (snackbarId) => (
     <>
       <Button
-        color="primary"
+        sx={{ color: "#f5079e" }}
         size="small"
         onClick={() => {
           undoFunction();
@@ -95,7 +94,7 @@ export const undoSnackBar = (
     {
       action,
       anchorOrigin: { vertical, horizontal },
-      severity: "alert",
+      variant: "success",
     }
   );
 };

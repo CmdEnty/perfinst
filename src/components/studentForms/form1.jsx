@@ -10,12 +10,12 @@ const Form1 = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [btnChange, setBtnChange] = useState({
     selectedValue: props.student.selectedValue,
-    selectedGender: props.student.selectedGender,
+    gender: props.student.gender,
     selectedNationality: props.student.selectedNationality,
   });
 
   const handleFormSubmit = (values) => {
-    const NewValues = Object.assign(values, { form1Submitted: 1 });
+    const NewValues = Object.assign(values, { regNo: 1 });
     props.handleFormChange(NewValues);
     props.handlePage();
   };
@@ -27,22 +27,22 @@ const Form1 = (props) => {
       setBtnChange({ ...btnChange, selectedValue: val });
     }
     if (val === "Male" || val === "Female") {
-      setBtnChange({ ...btnChange, selectedGender: val });
+      setBtnChange({ ...btnChange, gender: val });
     }
     if (val === "Kenya" || val === "Other") {
       setBtnChange({ ...btnChange, selectedNationality: val });
     }
   };
-  const { selectedValue, selectedGender, selectedNationality } = btnChange;
+  const { selectedValue, gender, selectedNationality } = btnChange;
 
-    const styles = {
-      fontSize: 17,
-      minWidth: 90,
-      "&:hover": {
-        color: "#0ba2de",
-      },
-    };
-    
+  // const styles = {
+  //   fontSize: 17,
+  //   minWidth: 90,
+  //   "&:hover": {
+  //     color: "#0ba2de",
+  //   },
+  // };
+
   return (
     <>
       <Box m="100px" mt="15px">
@@ -208,20 +208,16 @@ const Form1 = (props) => {
                   <ColorRadioButtons
                     handleBtnChange={handleBtnChange}
                     btnChange={btnChange}
-                    name="selectedGender"
-                    value={values.selectedGender}
-                    onChange={(values.selectedGender = selectedGender)}
+                    name="gender"
+                    value={values.gender}
+                    onChange={(values.gender = gender)}
                     title="Gender"
                     value1="Male"
                     value2="Female"
                     span1="Male"
                     span2="Female"
-                    error={!!touched.selectedGender && !!errors.selectedGender}
-                    msg1={
-                      !selectedGender &&
-                      touched.selectedGender &&
-                      errors.selectedGender
-                    }
+                    error={!!touched.gender && !!errors.gender}
+                    msg1={!gender && touched.gender && errors.gender}
                   />
                 </Box>
 
@@ -232,10 +228,10 @@ const Form1 = (props) => {
                   label="ID No"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.idNo}
-                  name="idNo"
-                  error={!!touched.idNo && !!errors.idNo}
-                  helperText={touched.idNo && errors.idNo}
+                  value={values.idNumber}
+                  name="idNumber"
+                  error={!!touched.idNumber && !!errors.idNumber}
+                  helperText={touched.idNumber && errors.idNumber}
                   sx={{
                     gridColumn: "span 2",
                     "& .Mui-focused": {
@@ -363,8 +359,8 @@ const checkoutSchema = yup.object().shape({
   surName: yup.string().required("required"),
   fastName: yup.string().required("required"),
   middleName: yup.string().required("required"),
-  selectedGender: yup.string().required("You must select one the buttons"),
-  idNo: yup.string().required("required"),
+  gender: yup.string().required("You must select one the buttons"),
+  idNumber: yup.string().required("required"),
   selectedNationality: yup.string().required("You must select one the buttons"),
   nationality: yup.string().required("required"),
 });
@@ -373,8 +369,8 @@ const initialValues = {
   surName: "",
   fastName: "",
   middleName: "",
-  selectedGender: "",
-  idNo: "",
+  gender: "",
+  idNumber: "",
   selectedNationality: "",
   nationality: "",
 };

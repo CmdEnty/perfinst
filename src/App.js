@@ -25,13 +25,15 @@ import AddStaff from "./scenes/addStaff";
 import StaffView from "./scenes/staffView";
 import FeesPage from "./scenes/fees";
 import Examinations from "./scenes/examination";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-
+const queryClient = new QueryClient()
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
   return (
+     <QueryClientProvider client={queryClient}>
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -66,6 +68,7 @@ function App() {
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
+    </QueryClientProvider>
   );
 }
 

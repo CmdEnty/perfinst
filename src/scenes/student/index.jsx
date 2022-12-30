@@ -7,6 +7,8 @@ import { useTheme } from "@mui/material";
 import AccountMenu from "../global/ColoredTab";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 
 const Students = () => {
   const theme = useTheme();
@@ -16,6 +18,10 @@ const Students = () => {
   const studentViewPage = useCallback(
     () => navigate("/studentView", { replace: true }),
     [navigate]
+  );
+
+  const { data, isSuccess } = useQuery(["students"], () =>
+    axiosReq.get("/student")
   );
 
   const columns = [
@@ -95,8 +101,7 @@ const Students = () => {
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${colors.grey[100]} !important`,
           },
-        }}
-      >
+        }}>
         <Typography color="#0ba2de" fontWeight="bold" fontSize="16px">
           LIST OF ADMITTED STUDENTS
         </Typography>
