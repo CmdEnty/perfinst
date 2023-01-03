@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import AccountMenu from "../global/ColoredTab";
@@ -13,58 +12,59 @@ import { axiosReq } from "../../axiosReq";
 const Students = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const [studes, setStudes] = React.useState([]);
   const navigate = useNavigate();
   const studentViewPage = useCallback(
-    () => navigate("/studentView", { replace: true }),
+    (id) => navigate("/studentView/" + id, { replace: true }),
     [navigate]
   );
 
-  const { data, isSuccess } = useQuery(["students"], () =>
-    axiosReq.get("/student")
+  const { isLoading, isError } = useQuery(["students"], () =>
+    axiosReq.get("/student").then((res) => {
+      return setStudes([...res.data]);
+    })
   );
-
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "admissionNo", headerName: "Admission Number" },
+    { field: "surName", headerName: "SurName", flex: 0.5 },
+    { field: "fastName", headerName: "Fast Name" },
     {
-      field: "name",
-      headerName: "Name",
+      field: "middleName",
+      headerName: "Middle Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
+      field: "sgender",
+      headerName: "Gender",
+      // type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "snationality",
+      headerName: "Nationality",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "location",
-      headerName: "Location",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "idNo",
+      field: "idNumber",
       headerName: "ID Number",
       flex: 1,
     },
+    {
+      field: "dob",
+      headerName: "DOB",
+      flex: 1,
+    },
+    // {
+    //   field: "city",
+    //   headerName: "City",
+    //   flex: 1,
+    // },
+    // {
+    //   field: "idNo",
+    //   headerName: "ID Number",
+    //   flex: 1,
+    // },
   ];
 
   return (
@@ -106,10 +106,10 @@ const Students = () => {
           LIST OF ADMITTED STUDENTS
         </Typography>
         <DataGrid
-          rows={mockDataContacts}
+          rows={studes}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
-          onRowClick={studentViewPage}
+          onRowClick={(rows) => studentViewPage(rows.id)}
         />
       </Box>
     </Box>

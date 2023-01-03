@@ -15,7 +15,7 @@ const Form1 = (props) => {
   });
 
   const handleFormSubmit = (values) => {
-    const NewValues = Object.assign(values, { regNo: 1 });
+    const NewValues = Object.assign(values, { regNo: new Date().getTime() });
     props.handleFormChange(NewValues);
     props.handlePage();
   };
@@ -35,22 +35,13 @@ const Form1 = (props) => {
   };
   const { selectedValue, gender, selectedNationality } = btnChange;
 
-  // const styles = {
-  //   fontSize: 17,
-  //   minWidth: 90,
-  //   "&:hover": {
-  //     color: "#0ba2de",
-  //   },
-  // };
-
   return (
     <>
       <Box m="100px" mt="15px">
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={Object.assign(initialValues, props.student)}
-          validationSchema={checkoutSchema}
-        >
+          validationSchema={checkoutSchema}>
           {({
             values,
             errors,
@@ -66,8 +57,7 @@ const Form1 = (props) => {
                 gridTemplateColumns="repeat(6, minmax(0, 1fr))"
                 sx={{
                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                }}
-              >
+                }}>
                 <Box sx={{ gridColumn: "span 7" }}>
                   <ColorRadioButtons
                     handleBtnChange={handleBtnChange}
@@ -271,7 +261,7 @@ const Form1 = (props) => {
                     onChange={
                       ((values.selectedNationality = selectedNationality),
                       selectedNationality === "Kenya"
-                        ? (values.nationality = "N/A")
+                        ? (values.nationality = "Kenya")
                         : selectedNationality === "Other" &&
                           values.nationality === "N/A"
                         ? (values.nationality = "")

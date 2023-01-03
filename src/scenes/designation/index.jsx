@@ -10,11 +10,21 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import Header from "../../components/Header";
 import DesignationModal from "../../components/designationModal";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 
 export default function DesignationAccordions() {
   const [expanded, setExpanded] = React.useState(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+   const [designations, setDesignations] = React.useState([]);
+
+   const { isLoading, isError } = useQuery(["designationsList"], () =>
+     axiosReq.get("/designation").then((res) => {
+       setDesignations(...res.data);
+       return res.data;
+     })
+   );
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -71,7 +81,7 @@ export default function DesignationAccordions() {
                   </Typography>
                   <Box display="flex" gap="10px">
                     <Typography variant="h6" color={colors.grey[200]}>
-                      Secretary
+                      {designations.nameTitle}
                     </Typography>
                     <ModeEditOutlineOutlinedIcon
                       fontSize="small"

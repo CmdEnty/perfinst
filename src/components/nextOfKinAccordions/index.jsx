@@ -10,7 +10,7 @@ import { useState } from "react";
 import * as yup from "yup";
 import ToggleEdit from "../../scenes/global/edibleField";
 
-export default function NextOfKinAccordions() {
+export default function NextOfKinAccordions(props) {
   const [expanded, setExpanded] = useState(false);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -46,25 +46,22 @@ export default function NextOfKinAccordions() {
         <Accordion
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
-          sx={{ bgcolor: colors.primary[400] }}
-        >
+          sx={{ bgcolor: colors.primary[400] }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
+            id="panel1bh-header">
             <Box display="flex" gap="97px" ml="15px">
               <Box mt="8px">
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Full Names
                 </Typography>
                 <Box display="flex" gap="10px">
                   <Typography variant="h6" color={colors.grey[200]}>
-                    Jeremy Smalga
+                    {props.studes.fullNames}
                   </Typography>
                 </Box>
               </Box>
@@ -72,13 +69,12 @@ export default function NextOfKinAccordions() {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Relationship
                 </Typography>
                 <Box display="flex" gap="10px">
                   <Typography variant="h6" color={colors.grey[200]}>
-                    Parent
+                    {props.studes.relation}
                   </Typography>
                 </Box>
               </Box>
@@ -90,20 +86,18 @@ export default function NextOfKinAccordions() {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Country
                 </Typography>
                 <Box display="flex" gap="10px">
                   <Typography variant="h6" color={colors.grey[200]}>
-                    Kenya
+                    {props.studes.nationality}
                   </Typography>
                 </Box>
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   County
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -114,8 +108,7 @@ export default function NextOfKinAccordions() {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Sub County
                 </Typography>
                 <Box display="flex" gap="10px">
@@ -126,13 +119,12 @@ export default function NextOfKinAccordions() {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Location
                 </Typography>
                 <Box display="flex" gap="10px">
                   <Typography variant="h6" color={colors.grey[200]}>
-                    Chaani
+                    {props.studes.plocation}
                   </Typography>
                 </Box>
               </Box>
@@ -140,25 +132,24 @@ export default function NextOfKinAccordions() {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   ID/Passport
                 </Typography>
                 <Box display="flex" gap="10px">
                   <Typography variant="h6" color={colors.grey[200]}>
-                    3457889767
+                    {props.studes.idNo}
                   </Typography>
                 </Box>
                 <ToggleEdit
-                  state_data={state_data}
-                  name="email"
+                  studes={props.studes}
+                  name="emailAddress"
                   type="text"
                   checkoutSchema={checkoutSchema}
                   label="Email"
                 />
                 <ToggleEdit
-                  state_data={state_data}
-                  name="phone"
+                  studes={props.studes}
+                  name="phoneNo"
                   type="text"
                   checkoutSchema={checkoutSchema}
                   label="Phone Number"

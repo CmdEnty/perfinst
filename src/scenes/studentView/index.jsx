@@ -1,20 +1,25 @@
+import React from "react";
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import StudentViewTab from "../../components/studentViewTab";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import { useQuery } from "@tanstack/react-query";
 import { axiosReq } from "../../axiosReq";
 
-
 const StudentView = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-    const { data, isSuccess, isLoading, isError } = useQuery(["students"],  () =>
-      axiosReq.get("/student")
-    );
+  const [studes, setStudes] = React.useState([]);
+
+  const sid = useLocation().pathname.split("/")[2];
+  const { isLoading } = useQuery(["studentDetails"], () =>
+    axiosReq.get("/student/studentView/" + sid).then((res) => {
+      return setStudes(...res.data);
+    })
+  );
 
   return (
     <Box m="20px">
@@ -69,15 +74,25 @@ const StudentView = () => {
           justifyContent="center"
           gap="50px">
           <Box mt="-50px" ml="5px">
-            <Typography variant="h4" fontWeight="600" color={colors.grey[100]}>
+            <Typography
+              variant="h4"
+              fontWeight="600"
+              color={colors.grey[100]}
+              textTransform="capitalize">
               {isLoading === true && "loading.."}
-              {isError === true && "Error.."}
+
+              {studes.studentTitle +
+                "   " +
+                studes.fastName +
+                "   " +
+                studes.surName}
             </Typography>
             <Typography
+              textTransform="capitalize"
               variant="h5"
               fontWeight="bold"
               color={colors.greenAccent[500]}>
-              Mombasa, Kenya
+              {studes.county + ",   " + studes.snationality}
             </Typography>
           </Box>
           <Box display="flex" mt="70px" gap="10px">
@@ -109,6 +124,7 @@ const StudentView = () => {
             alignItems="center">
             <Box sx={{ width: 260, ml: -1 }}>
               <Typography
+                textTransform="capitalize"
                 variant="h5"
                 fontWeight="Bold"
                 color={colors.grey[100]}>
@@ -135,7 +151,10 @@ const StudentView = () => {
                   Level
                 </Typography>
                 <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
+                  <Typography
+                    variant="h6"
+                    color={colors.grey[200]}
+                    textTransform="capitalize">
                     Diploma
                   </Typography>
                 </Box>
@@ -157,7 +176,10 @@ const StudentView = () => {
                   Title
                 </Typography>
                 <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
+                  <Typography
+                    variant="h6"
+                    color={colors.grey[200]}
+                    textTransform="capitalize">
                     Information Technology
                   </Typography>
                 </Box>
@@ -210,7 +232,7 @@ const StudentView = () => {
             display="flex "
             justifyContent="space-between"
             alignItems="center">
-            <StudentViewTab />
+            <StudentViewTab studes={studes} />
           </Box>
         </Box>
       </Box>

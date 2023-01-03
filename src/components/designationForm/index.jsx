@@ -4,6 +4,8 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 
 const DesignationForm = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -12,18 +14,39 @@ const DesignationForm = (props) => {
   const [dynamicQualField, setDynamicQualField] = useState(0);
   const [dynamicDescrField, setDynamicDescrField] = useState(0);
   const [fields, setFieldsField] = useState({});
+  const [design, setDesign] = useState({});
 
+  const queryClient = useQueryClient();
+
+  // Mutations
+  const mutation = useMutation(
+    (newDesign) => {
+      axiosReq.post("/designation/addDesign", newDesign);
+    },
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+         queryClient.invalidateQueries(["designationsList"]);
+      },
+      onError: () => {
+        return alert("oops something went wrong");
+      },
+    }
+  );
   const handleFormSubmit = (values) => {
-    alert('added')
-    const NewValues = Object.assign(values, { form1Submitted: 1 });
-    props.handleFormChange(NewValues);
-    props.handlePage();
+    console.log(values)
+    setDesign(values);
+    mutation.mutate(design);
+    // alert("added");
+    // const NewValues = Object.assign(values, { form1Submitted: 1 });
+    // props.handleFormChange(NewValues);
+    // props.handlePage();
   };
 
   const checkoutSchema = yup.object().shape({
     title: yup.string().required("required"),
     salary: yup.string().required("required"),
-    description: yup.string().required("required"),
+    responsibilities: yup.string().required("required"),
     qualifications: yup.string().required("required"),
   });
 
@@ -56,8 +79,7 @@ const DesignationForm = (props) => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={Object.assign(initialValues, props.student, fields)}
-          validationSchema={checkoutSchema}
-        >
+          validationSchema={checkoutSchema}>
           {({
             values,
             errors,
@@ -73,8 +95,7 @@ const DesignationForm = (props) => {
                 gridTemplateColumns="repeat(4, minmax(0, 1fr))"
                 sx={{
                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                }}
-              >
+                }}>
                 <TextField
                   fullWidth
                   variant="filled"
@@ -101,9 +122,10 @@ const DesignationForm = (props) => {
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
-                      borderBottom: "2px solid #f5079e !important",
-                    },
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                      {
+                        borderBottom: "2px solid #f5079e !important",
+                      },
                     "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
@@ -114,8 +136,8 @@ const DesignationForm = (props) => {
                 <TextField
                   fullWidth
                   variant="filled"
-                  type="text"
-                  label="Salary"
+                  type="number"
+                  label="Salary (Monthly)"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.salary}
@@ -137,9 +159,10 @@ const DesignationForm = (props) => {
                       {
                         borderBottom: "2px solid #0ba2de !important",
                       },
-                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after": {
-                      borderBottom: "2px solid #f5079e !important",
-                    },
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                      {
+                        borderBottom: "2px solid #f5079e !important",
+                      },
                     "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
                       {
                         borderBottom: "#f44336 !important",
@@ -156,10 +179,14 @@ const DesignationForm = (props) => {
                       label="Responsibilities"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      value={values.description}
-                      name="description"
-                      error={!!touched.description && !!errors.description}
-                      helperText={touched.description && errors.description}
+                      value={values.responsibilities}
+                      name="responsibilities"
+                      error={
+                        !!touched.responsibilities && !!errors.responsibilities
+                      }
+                      helperText={
+                        touched.responsibilities && errors.responsibilities
+                      }
                       sx={{
                         "& .Mui-focused": {
                           color: "#f2f0f0 !important",
@@ -236,8 +263,7 @@ const DesignationForm = (props) => {
                       <Button
                         color="secondary"
                         variant="contained"
-                        onClick={addDescrField}
-                      >
+                        onClick={addDescrField}>
                         ADD
                       </Button>
                     </Box>
@@ -335,8 +361,7 @@ const DesignationForm = (props) => {
                       <Button
                         color="secondary"
                         variant="contained"
-                        onClick={addQualField}
-                      >
+                        onClick={addQualField}>
                         ADD
                       </Button>
                     </Box>
@@ -359,7 +384,7 @@ const DesignationForm = (props) => {
 const initialValues = {
   title: "",
   salary: "",
-  description: "",
+  responsibilities: "",
   qualifications: "",
 };
 

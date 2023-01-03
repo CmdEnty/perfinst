@@ -4,12 +4,22 @@ import Header from "../../components/Header";
 import { useState } from "react";
 import RecordSalaryForm from "../../components/salary/recordSalaryForm";
 import SalaryHistoryList from "../../components/salary/salaryHistoryList";
+import { useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 
 const Salary = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [staffNo, setStaffNo] = useState();
   const [next, setNext] = useState(false);
+
+     const { isLoading, isError } = useQuery(["salaryHistory"], () =>
+       axiosReq.get("/salary").then((res) => {
+         //  setDesignations(...res.data);
+         console.log(res.data);
+         return res.data;
+       })
+     );
 
   const staffSearch = (e) => {
     setStaffNo([e.target.value]);
@@ -30,18 +40,16 @@ const Salary = () => {
         <Box
           alignItems="center"
           justifyContent="center"
-          backgroundColor={colors.primary[400]}
-        >
+          backgroundColor={colors.primary[400]}>
           <Typography textAlign="center" fontSize="20px" mt="20px">
             Record Salary Form
           </Typography>
-          <br />{" "}
+          <br />
           <Box
             backgroundColor={colors.primary[400]}
             maxWidth="350px"
             overflow="auto"
-            maxHeight="600px"
-          >
+            maxHeight="600px">
             <Box ml="20px" mr="40px" mt="20px" width="250px">
               <TextField
                 fullWidth

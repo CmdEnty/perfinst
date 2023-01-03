@@ -13,29 +13,9 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
 } from "@mui/x-data-grid";
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomUpdatedDate,
-  randomId,
-} from "@mui/x-data-grid-generator";
-
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    description: "yugjgffffffff",
-    dateCreated: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    description: 'hhhhhhhhhhhh',
-    dateCreated: randomCreatedDate(),
-  
-  },
- 
-];
+import { randomId } from "@mui/x-data-grid-generator";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../../axiosReq";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -44,7 +24,7 @@ function EditToolbar(props) {
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, name: "", description: "", isNew: true },
+      { id, fieldName: "", descr: "", isNew: true },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -67,8 +47,21 @@ EditToolbar.propTypes = {
 };
 
 export default function Schools() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
+
+  const { isLoading } = useQuery(["fieldsList"], () =>
+    axiosReq.get("/field").then((res) => {
+      return setRows(res.data);
+    })
+  );
+
+  // Mutations
+  const mutation = useMutation(
+    (newField) => {
+      axiosReq.post("/field/addfield", newField);
+    }
+  );
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -105,12 +98,13 @@ export default function Schools() {
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    mutation.mutate(updatedRow);
     return updatedRow;
   };
 
   const columns = [
-    { field: "name", headerName: "Name", width: 180, editable: true },
-    { field: "description", headerName: "Description", editable: true },
+    { field: "fieldName", headerName: "Name", width: 200, editable: true },
+    { field: "descr", headerName: "Description", width: 350, editable: true },
     {
       field: "dateCreated",
       headerName: "Date Created",
@@ -175,8 +169,7 @@ export default function Schools() {
         "& .textPrimary": {
           color: "primary",
         },
-      }}
-    >
+      }}>
       <DataGrid
         rows={rows}
         columns={columns}

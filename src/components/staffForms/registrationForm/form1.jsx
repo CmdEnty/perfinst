@@ -40,8 +40,7 @@ const Form1 = (props) => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={Object.assign(initialValues, props.student)}
-          validationSchema={checkoutSchema}
-        >
+          validationSchema={checkoutSchema}>
           {({
             values,
             errors,
@@ -57,8 +56,7 @@ const Form1 = (props) => {
                 gridTemplateColumns="repeat(6, minmax(0, 1fr))"
                 sx={{
                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                }}
-              >
+                }}>
                 <Box sx={{ gridColumn: "span 7" }}>
                   <ColorRadioButtons
                     handleBtnChange={handleBtnChange}
@@ -223,10 +221,10 @@ const Form1 = (props) => {
                   label="ID No"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.idNo}
-                  name="idNo"
-                  error={!!touched.idNo && !!errors.idNo}
-                  helperText={touched.idNo && errors.idNo}
+                  value={values.idNumber}
+                  name="idNumber"
+                  error={!!touched.idNumber && !!errors.idNumber}
+                  helperText={touched.idNumber && errors.idNumber}
                   sx={{
                     gridColumn: "span 2",
                     "& .Mui-focused": {
@@ -266,10 +264,10 @@ const Form1 = (props) => {
                     onChange={
                       ((values.selectedNationality = selectedNationality),
                       selectedNationality === "Kenya"
-                        ? (values.nationality = "N/A")
+                        ? (values.snationality = "N/A")
                         : selectedNationality === "Other" &&
-                          values.nationality === "N/A"
-                        ? (values.nationality = "")
+                          values.snationality === "N/A"
+                        ? (values.snationality = "")
                         : "")
                     }
                     title="Nationality"
@@ -297,14 +295,14 @@ const Form1 = (props) => {
                     label="Please specify your Nationality"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.nationality}
-                    name="nationality"
+                    value={values.snationality}
+                    name="snationality"
                     error={
                       selectedNationality === "Other" &&
-                      !!touched.nationality &&
-                      !!errors.nationality
+                      !!touched.snationality &&
+                      !!errors.snationality
                     }
-                    helperText={touched.nationality && errors.nationality}
+                    helperText={touched.snationality && errors.snationality}
                     sx={{
                       gridColumn: "span 2",
                       "& .Mui-focused": {
@@ -355,9 +353,9 @@ const checkoutSchema = yup.object().shape({
   fastName: yup.string().required("required"),
   middleName: yup.string().required("required"),
   selectedGender: yup.string().required("You must select one the buttons"),
-  idNo: yup.string().required("required"),
+  idNumber: yup.string().required("required"),
   selectedNationality: yup.string().required("You must select one the buttons"),
-  nationality: yup.string().required("required"),
+  snationality: yup.string().required("required"),
 });
 const initialValues = {
   selectedValue: "",
@@ -365,9 +363,9 @@ const initialValues = {
   fastName: "",
   middleName: "",
   selectedGender: "",
-  idNo: "",
+  idNumber: "",
   selectedNationality: "",
-  nationality: "",
+  snationality: "",
 };
 
 export default Form1;

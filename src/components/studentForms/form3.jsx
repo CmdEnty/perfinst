@@ -35,8 +35,7 @@ const Form2 = (props) => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={Object.assign(initialValues, props.student)}
-          validationSchema={checkoutSchema}
-        >
+          validationSchema={checkoutSchema}>
           {({
             values,
             errors,
@@ -52,8 +51,7 @@ const Form2 = (props) => {
                 gridTemplateColumns="repeat(6, minmax(0, 1fr))"
                 sx={{
                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-                }}
-              >
+                }}>
                 <TextField
                   fullWidth
                   variant="filled"
@@ -247,6 +245,47 @@ const Form2 = (props) => {
                   }}
                 />
 
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Gender"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.p_gender}
+                  name="p_gender"
+                  error={!!touched.p_gender && !!errors.p_gender}
+                  helperText={touched.p_gender && errors.p_gender}
+                  sx={{
+                    gridColumn: "span 2",
+                    "& .Mui-focused": {
+                      color: "#f5079e !important",
+                      input: {
+                        color: "#0ba2de !important",
+                      },
+                    },
+                    "& .Mui-focused.Mui-error": {
+                      color: "#f44336 !important",
+                    },
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:before":
+                      {
+                        borderBottom: "2px solid #0ba2de !important",
+                      },
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root:after":
+                      {
+                        borderBottom: "2px solid #f5079e !important",
+                      },
+                    "& .Mui-error.css-1rv476z-MuiInputBase-input-MuiFilledInput-input":
+                      {
+                        color: "#f5079e !important",
+                      },
+                    "& .css-u7c0k7-MuiInputBase-root-MuiFilledInput-root.Mui-error:after":
+                      {
+                        borderBottom: "#f44336 !important",
+                      },
+                  }}
+                />
+
                 <Box sx={{ gridColumn: "span 7" }}>
                   <ColorRadioButtons
                     handleBtnChange={handleBtnChange}
@@ -256,7 +295,7 @@ const Form2 = (props) => {
                     onChange={
                       ((values.p_selectedNationality = p_selectedNationality),
                       p_selectedNationality === "Kenya"
-                        ? ((values.p_nationality = "N/A"),
+                        ? ((values.p_nationality = "Kenya"),
                           (values.passportNumber = "N/A"))
                         : p_selectedNationality === "Other" &&
                           values.p_nationality === "N/A"
@@ -429,8 +468,7 @@ const Form2 = (props) => {
                   type="submit"
                   color="secondary"
                   variant="contained"
-                  onClick={() => pagePrev(values)}
-                >
+                  onClick={() => pagePrev(values)}>
                   PREVIOUS
                 </Button>
                 <Button type="submit" color="secondary" variant="contained">
@@ -451,6 +489,7 @@ const checkoutSchema = yup.object().shape({
   p_phone: yup.string().required("required"),
   p_email: yup.string().required("required"),
   relationShip: yup.string().required("required"),
+  p_gender: yup.string().required("required"),
   p_selectedNationality: yup
     .string()
     .required("You must select one the buttons"),
@@ -464,6 +503,7 @@ const initialValues = {
   p_phone: "",
   p_email: "",
   relationShip: "",
+  p_gender: "",
   p_selectedNationality: "",
   passportNumber: "",
   p_nationality: "",

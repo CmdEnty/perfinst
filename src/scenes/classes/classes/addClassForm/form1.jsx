@@ -8,13 +8,34 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { axiosReq } from "../../../../axiosReq";
 
 const AddClassesForm1 = ({ setClassesForm }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [value, setValue] = useState(dayjs(""));
+   const queryClient = useQueryClient();
+
+   // Mutations
+   const mutation = useMutation(
+     (newClass) => {
+       axiosReq.post("/intakeClass/addClass", newClass);
+     },
+     {
+       onSuccess: () => {
+         // Invalidate and refetch
+          queryClient.invalidateQueries(["classesList"]);
+       },
+       onError: () => {
+         return alert("oops something went wrong");
+       },
+     }
+   );
 
   const handleFormSubmit = (values) => {
     const NewValues = Object.assign(values, { form1Submitted: 1 });
+   
+    mutation.mutate(values)
     // props.handleFormChange(NewValues);
     // props.handlePage();
     setClassesForm("form2");
@@ -26,8 +47,7 @@ const AddClassesForm1 = ({ setClassesForm }) => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}
-          validationSchema={checkoutSchema}
-        >
+          validationSchema={checkoutSchema}>
           {({
             values,
             errors,
@@ -45,8 +65,7 @@ const AddClassesForm1 = ({ setClassesForm }) => {
                   "& > div": {
                     gridColumn: isNonMobile ? undefined : "span 4",
                   },
-                }}
-              >
+                }}>
                 <TextField
                   fullWidth
                   variant="filled"
@@ -92,6 +111,7 @@ const AddClassesForm1 = ({ setClassesForm }) => {
                     views={["year", "month", "day"]}
                     value={value}
                     onChange={(newValue) => {
+                      values.reportingDate = newValue;
                       setValue(newValue);
                     }}
                     name="reportingDate"
@@ -187,15 +207,15 @@ const AddClassesForm1 = ({ setClassesForm }) => {
 };
 
 const checkoutSchema = yup.object().shape({
-  // code: yup.string().required("required"),
+  description: yup.string().required("required"),
   title: yup.string().required("required"),
-  // reportingDate: yup.string().required("required"),
+  reportingDate: yup.string().required("required"),
 });
 
 const initialValues = {
-  // code: "",
+  description: "",
   title: "",
-  // reportingDate: "",
+  reportingDate: "",
 };
 
 export default AddClassesForm1;

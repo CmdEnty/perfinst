@@ -15,45 +15,9 @@ import {
   GridActionsCellItem,
   useGridApiContext,
 } from "@mui/x-data-grid";
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomUpdatedDate,
-  randomId,
-} from "@mui/x-data-grid-generator";
-
-const initialRows = [
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    description: "iiiiiiiiiiiii",
-    dateCreated: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    description: "iiiiiiiiiiiii",
-    dateCreated: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    description: "iiiiiiiiiiiii",
-    dateCreated: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    description: "iiiiiiiiiiiii",
-    dateCreated: randomCreatedDate(),
-  },
-  {
-    id: randomId(),
-    name: randomTraderName(),
-    description: "iiiiiiiiiiiii",
-    dateCreated: randomCreatedDate(),
-  },
-];
+import { randomId } from "@mui/x-data-grid-generator";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../../axiosReq";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -62,7 +26,7 @@ function EditToolbar(props) {
     const id = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, name: "", description: "", isNew: true },
+      { id, departName: "", descr: "", isNew: true },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -104,8 +68,7 @@ function SelectEditInputCell(props) {
       size="small"
       sx={{ height: 1 }}
       native
-      autoFocus
-    >
+      autoFocus>
       <option>Select Faculty</option>
       <option>Faculty of Arts.</option>
       <option>Faculty of Commerce.</option>
@@ -135,9 +98,19 @@ const renderSelectEditInputCell = (params) => {
 };
 
 export default function Departments() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
+  const { isLoading } = useQuery(["departmentsList"], () =>
+    axiosReq.get("/department").then((res) => {
+      return setRows(res.data);
+    })
+  );
+
+  // Mutations
+  const mutation = useMutation((newDepartment) => {
+    axiosReq.post("/department/addDepartment", newDepartment);
+  });
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
   };
@@ -173,21 +146,22 @@ export default function Departments() {
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    mutation.mutate(updatedRow);
     return updatedRow;
   };
 
   const columns = [
-    { field: "name", headerName: "Name", width: 180, editable: true },
-    { field: "description", headerName: "Description", editable: true },
+    { field: "departName", headerName: "Name", width: 200, editable: true },
+    { field: "descr", headerName: "Description", width: 250, editable: true },
     {
       field: "dateCreated",
       headerName: "Date Created",
       type: "date",
-      width: 180,
+      width: 100,
       editable: true,
     },
     {
-      field: "faculty",
+      field: "fieldId",
       headerName: "Field",
       renderEditCell: renderSelectEditInputCell,
       width: 180,
@@ -249,8 +223,7 @@ export default function Departments() {
         "& .textPrimary": {
           color: "primary",
         },
-      }}
-    >
+      }}>
       <DataGrid
         rows={rows}
         columns={columns}

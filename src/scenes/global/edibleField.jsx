@@ -12,6 +12,7 @@ export default function ToggleEdit(props) {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
   const [editMode, setEditMode] = React.useState(false);
+  const [visited, setVisited] = React.useState(false);
   const colors = tokens(theme.palette.mode);
 
   const { checkoutSchema, name, type, label, editable } = props;
@@ -30,15 +31,18 @@ export default function ToggleEdit(props) {
 
   return (
     <Box>
-      <Typography variant="h5" fontWeight="bold" color={colors.blueAccent[700]}>
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        color={colors.blueAccent[700]}
+        textTransform="capitalize">
         {label}
       </Typography>
 
       <Formik
         onSubmit={handleFormSubmit}
-        initialValues={props.state_data}
-        validationSchema={checkoutSchema}
-      >
+        initialValues={props.studes}
+        validationSchema={checkoutSchema}>
         {({
           values,
           errors,
@@ -55,13 +59,16 @@ export default function ToggleEdit(props) {
               gridTemplateColumns="repeat(6, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            ></Box>
+              }}></Box>
             {!editMode ? (
               <Box>
                 <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    {props.state_data[name]}
+                  <Typography
+                    variant="h6"
+                    color={colors.grey[200]}
+                    textTransform="capitalize">
+                    {props.studes[name] +  "  "}
+                    {name === "period" && props.studes["duration"]}
                   </Typography>
                   {editable !== false && (
                     <Tooltip title="Edit">
@@ -82,9 +89,14 @@ export default function ToggleEdit(props) {
                   variant="filled"
                   type={type}
                   label={label}
-                  onBlur={handleBlur}
+                  focused={!values[name] && visited}
+                  onBlur={setVisited(true)}
                   onChange={handleChange}
-                  value={values[name]}
+                  value={
+                    !values[name] && !visited
+                      ? props.studes[name]
+                      : values[name]
+                  }
                   name={name}
                   error={!!touched[name] && !!errors[name]}
                   helperText={touched[name] && errors[name]}
@@ -121,7 +133,7 @@ export default function ToggleEdit(props) {
                       color="secondary"
                       sx={{ cursor: "pointer" }}
                       onClick={() => (
-                        ((values[name] = props.state_data[name]),
+                        ((values[name] = props.studes[name]),
                         (errors[name] = "")),
                         setEditMode(!editMode)
                       )}

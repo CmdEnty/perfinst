@@ -18,8 +18,7 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
@@ -42,12 +41,9 @@ function a11yProps(index) {
   };
 }
 
-export default function StudentViewTab() {
+export default function StudentViewTab(props) {
   const [value, setValue] = useState(0);
-  const [state_data, setState_data] = useState({
-    phone: "0712345678",
-    email: "N/A",
-  });
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -56,20 +52,13 @@ export default function StudentViewTab() {
   };
 
   const checkoutSchema = yup.object().shape({
-    // selectedValue: yup.string().required("You must select one the buttons"),
     surName: yup.string().required("required"),
     fastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().required("required"),
-    phone: yup.string().required("required"),
+    phoneNumber: yup.string().required("required"),
     specialNeeds: yup.string().required("required"),
-    idNo: yup.string().required("required"),
-    // selectedGender: yup.string().required("You must select one the buttons"),
-    // idNo: yup.string().required("required"),
-    // selectedNationality: yup
-    //   .string()
-    //   .required("You must select one the buttons"),
-    // nationality: yup.string().required("required"),
+    idNumber: yup.string().required("required"),
   });
 
   return (
@@ -80,8 +69,7 @@ export default function StudentViewTab() {
           onChange={handleChange}
           textColor="secondary"
           indicatorColor="secondary"
-          aria-label="basic tabs example"
-        >
+          aria-label="basic tabs example">
           <Tab
             label="Basic Info"
             {...a11yProps(0)}
@@ -113,21 +101,21 @@ export default function StudentViewTab() {
           <Box>
             <Box mt="-15px" ml="-20px">
               <ToggleEdit
-                state_data={state_data}
+                studes={props.studes}
                 name="surName"
                 type="text"
                 checkoutSchema={checkoutSchema}
                 label="SurName"
               />
               <ToggleEdit
-                state_data={state_data}
+                studes={props.studes}
                 name="fastName"
                 type="text"
                 checkoutSchema={checkoutSchema}
                 label="Fast Name"
               />
               <ToggleEdit
-                state_data={state_data}
+                studes={props.studes}
                 name="middleName"
                 type="text"
                 checkoutSchema={checkoutSchema}
@@ -137,18 +125,17 @@ export default function StudentViewTab() {
               <Typography
                 variant="h5"
                 fontWeight="bold"
-                color={colors.blueAccent[700]}
-              >
+                color={colors.blueAccent[700]}>
                 Date Of Birth
               </Typography>
               <Box display="flex" gap="10px">
                 <Typography variant="h6" color={colors.grey[200]}>
-                  04/05/1990
+                  {props.studes.dob}
                 </Typography>
               </Box>
               <ToggleEdit
-                state_data={state_data}
-                name="idNo"
+                studes={props.studes}
+                name="idNumber"
                 type="text"
                 checkoutSchema={checkoutSchema}
                 label="ID/PassPort"
@@ -156,13 +143,15 @@ export default function StudentViewTab() {
               <Typography
                 variant="h5"
                 fontWeight="bold"
-                color={colors.blueAccent[700]}
-              >
+                color={colors.blueAccent[700]}>
                 Gender
               </Typography>
               <Box display="flex" gap="10px">
-                <Typography variant="h6" color={colors.grey[200]}>
-                  Male
+                <Typography
+                  variant="h6"
+                  color={colors.grey[200]}
+                  textTransform="capitalize">
+                  {props.studes.sgender}
                 </Typography>
               </Box>
             </Box>
@@ -174,41 +163,34 @@ export default function StudentViewTab() {
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   County Of Birth
                 </Typography>
                 <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Mombasa
+                  <Typography
+                    variant="h6"
+                    color={colors.grey[200]}
+                    textTransform="capitalize">
+                    {props.studes.placeOfBirth}
                   </Typography>
                 </Box>
+
                 <Typography
                   variant="h5"
                   fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
-                  Location
-                </Typography>
-                <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Chaani
-                  </Typography>
-                </Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                  color={colors.blueAccent[700]}
-                >
+                  color={colors.blueAccent[700]}>
                   Marital Status
                 </Typography>
                 <Box display="flex" gap="10px">
-                  <Typography variant="h6" color={colors.grey[200]}>
-                    Single
+                  <Typography
+                    variant="h6"
+                    color={colors.grey[200]}
+                    textTransform="capitalize">
+                    {props.studes.maritalStatus}
                   </Typography>
                 </Box>
                 <ToggleEdit
-                  state_data={state_data}
+                  studes={props.studes}
                   name="specialNeeds"
                   type="text"
                   checkoutSchema={checkoutSchema}
@@ -224,8 +206,8 @@ export default function StudentViewTab() {
         <Box>
           <Box mt="-15px" ml="-20px">
             <ToggleEdit
-              state_data={state_data}
-              name="phone"
+              studes={props.studes}
+              name="phoneNumber"
               type="text"
               checkoutSchema={checkoutSchema}
               label="Phone Number"
@@ -233,41 +215,47 @@ export default function StudentViewTab() {
             <Typography
               variant="h5"
               fontWeight="bold"
-              color={colors.blueAccent[700]}
-            >
+              color={colors.blueAccent[700]}>
               County
             </Typography>
             <Box display="flex" gap="10px">
-              <Typography variant="h6" color={colors.grey[200]}>
-                Mombasa
+              <Typography
+                variant="h6"
+                color={colors.grey[200]}
+                textTransform="capitalize">
+                {props.studes.county}
               </Typography>
             </Box>
             <Typography
               variant="h5"
               fontWeight="bold"
-              color={colors.blueAccent[700]}
-            >
+              color={colors.blueAccent[700]}>
               Sub County
             </Typography>
             <Box display="flex" gap="10px">
-              <Typography variant="h6" color={colors.grey[200]}>
+              <Typography
+                variant="h6"
+                color={colors.grey[200]}
+                textTransform="capitalize">
                 Changamwe
               </Typography>
             </Box>
             <Typography
               variant="h5"
               fontWeight="bold"
-              color={colors.blueAccent[700]}
-            >
+              color={colors.blueAccent[700]}>
               Location
             </Typography>
             <Box display="flex" gap="10px">
-              <Typography variant="h6" color={colors.grey[200]}>
-                Chaani
+              <Typography
+                variant="h6"
+                color={colors.grey[200]}
+                textTransform="capitalize">
+                {props.studes.location}
               </Typography>
             </Box>
             <ToggleEdit
-              state_data={state_data}
+              studes={props.studes}
               name="email"
               type="text"
               checkoutSchema={checkoutSchema}
@@ -282,7 +270,7 @@ export default function StudentViewTab() {
       <TabPanel value={value} index={2}>
         <Box>
           <Box mt="-20px" ml="-50px">
-            <NextOfKinAccordions />
+            <NextOfKinAccordions studes={props.studes} />
           </Box>
         </Box>
       </TabPanel>

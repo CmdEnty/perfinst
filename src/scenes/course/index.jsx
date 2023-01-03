@@ -1,12 +1,22 @@
-import { Box, Button, useTheme, Typography } from "@mui/material";
+import React from "react";
+import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import CourseList from "../../components/course/courseList";
 import AddCourseForm from "../../components/addCourseForm";
-
+import { useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 const Course = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [courses, setCourses] = React.useState([]);
+
+  const { isLoading, isError } = useQuery(["coursesList"], () =>
+    axiosReq.get("/courses").then((res) => {
+      setCourses(res.data);
+      return res.data;
+    })
+  );
 
   return (
     <Box m="20px">
@@ -19,8 +29,7 @@ const Course = () => {
         <Box
           alignItems="center"
           justifyContent="center"
-          backgroundColor={colors.primary[400]}
-        >
+          backgroundColor={colors.primary[400]}>
           <Typography textAlign="center" fontSize="20px" mt="20px">
             Add Course Form
           </Typography>
@@ -29,8 +38,7 @@ const Course = () => {
             backgroundColor={colors.primary[400]}
             width="350px"
             overflow="auto"
-            height="500px"
-          >
+            height="500px">
             <AddCourseForm />
           </Box>
         </Box>
@@ -42,7 +50,7 @@ const Course = () => {
               List Of Courses
             </Typography>
             <br />
-            <CourseList />
+            <CourseList courses={courses} />
           </Box>
         </Box>
       </Box>

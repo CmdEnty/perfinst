@@ -5,7 +5,7 @@ import Alert from "@mui/material/Alert";
 import StudentFormDialog from "../dialogs/studentFm";
 import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, QueryClient } from "@tanstack/react-query";
 import { axiosReq } from "../../axiosReq";
 
 export default function ConfirmationForm(props) {
@@ -43,41 +43,18 @@ export default function ConfirmationForm(props) {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  // Access the client
-  const queryClient = useQueryClient();
-
-  const { isLoading, isError, data, error } = useQuery(["todos"], () =>
-    axiosReq
-      .get("student")
-      .then((res) => {
-        return alert(res.data);
-      })
-      .catch((error) => {
-        return alert(error);
-      })
-  );
-
-  // Queries
-  // const query = useQuery({ queryKey: ["todos"], queryFn: getTodos });
+  const queryClient = new QueryClient();
 
   // Mutations
   const mutation = useMutation(
     (newStudent) => {
-      axiosReq
-        .post("student/addStudent", newStudent)
-        .then((res) => {
-          return alert("added");
-        })
-        .catch((error) => {
-          return alert(error);
-        });
+      axiosReq.post("/student/addStudent", newStudent);
     },
     {
       onSuccess: () => {
-        return alert("added");
+        setOpen(true);
         // Invalidate and refetch
-        // queryClient.invalidateQueries({ queryKey: ["todos"] });
+        queryClient.invalidateQueries(["students"]);
       },
       onError: () => {
         return alert("oops something went wrong");

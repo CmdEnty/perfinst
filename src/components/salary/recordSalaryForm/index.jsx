@@ -9,14 +9,33 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormHelperText from "@mui/material/FormHelperText";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { axiosReq } from "../../../axiosReq";
 
 const RecordSalaryForm = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+    const queryClient = useQueryClient();
+
+    // Mutations
+    const mutation = useMutation(
+      (newSalary) => {
+        axiosReq.post("/salary/addSalary", newSalary);
+      },
+      {
+        onSuccess: () => {
+          // Invalidate and refetch
+          queryClient.invalidateQueries(["salaryHistory"]);
+        },
+        onError: () => {
+          return alert("oops something went wrong");
+        },
+      }
+    );
 
   const handleFormSubmit = (values) => {
-    const NewValues = Object.assign(values, { form1Submitted: 1 });
-    // props.handleFormChange(NewValues);
-    // props.handlePage();
+
+    mutation.mutate(values)
+
   };
 
 
@@ -78,8 +97,7 @@ const RecordSalaryForm = (props) => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={Object.assign(initialValues)}
-          validationSchema={checkoutSchema}
-        >
+          validationSchema={checkoutSchema}>
           {({
             values,
             errors,
@@ -97,8 +115,7 @@ const RecordSalaryForm = (props) => {
                   "& > div": {
                     gridColumn: isNonMobile ? undefined : "span 4",
                   },
-                }}
-              >
+                }}>
                 <TextField
                   fullWidth
                   disabled
@@ -211,8 +228,7 @@ const RecordSalaryForm = (props) => {
                       {
                         borderBottom: "#f44336 !important",
                       },
-                  }}
-                >
+                  }}>
                   <option></option>
                   {months.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -228,8 +244,7 @@ const RecordSalaryForm = (props) => {
                     "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked":
                       { color: "#0ba2de !important" },
                   }}
-                  error={!!touched.duration && !!errors.duration}
-                >
+                  error={!!touched.duration && !!errors.duration}>
                   <FormLabel id="demo-row-radio-buttons-group-label">
                     Method Of Payment
                   </FormLabel>
@@ -239,8 +254,7 @@ const RecordSalaryForm = (props) => {
                     name="methodOfPayment"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.methodOfPayment}
-                  >
+                    value={values.methodOfPayment}>
                     <FormControlLabel
                       value="cash"
                       control={<Radio />}
@@ -270,10 +284,10 @@ const RecordSalaryForm = (props) => {
                     label={`Enter The Receipt No (${values.methodOfPayment})`}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
+                    value={values.receiptNo}
+                    name="receiptNo"
+                    error={!!touched.receiptNo && !!errors.receiptNo}
+                    helperText={touched.receiptNo && errors.receiptNo}
                     sx={{
                       gridColumn: "span 2",
                       "& .Mui-focused": {
@@ -304,14 +318,14 @@ const RecordSalaryForm = (props) => {
                   <TextField
                     fullWidth
                     variant="filled"
-                    type="text"
+                    type="number"
                     label={`Enter The Amount Paid (Kshs)`}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
+                    value={values.amount}
+                    name="amount"
+                    error={!!touched.amount && !!errors.amount}
+                    helperText={touched.amount && errors.amount}
                     sx={{
                       gridColumn: "span 2",
                       "& .Mui-focused": {
@@ -395,19 +409,23 @@ const RecordSalaryForm = (props) => {
 };
 
 const checkoutSchema = yup.object().shape({
-  code: yup.string().required("required"),
-  title: yup.string().required("required"),
+  month: yup.string().required("required"),
+  receiptNo: yup.string().required("required"),
   month: yup.string().required("required"),
   methodOfPayment: yup.string().required("Select one of the buttons above"),
-  durationValue: yup.string().required("Required"),
+  amount: yup.string().required("Required"),
+  // description: yup.string().required("Required"),
 });
 
 const initialValues = {
-  code: "",
-  title: "",
+  staffNo: "",
+  fullNames: "",
+  designation: "",
   month: "",
+  receiptNo: "",
   methodOfPayment: "",
-  durationValue: "",
+  amount: "",
+  description: "",
 };
 
 export default RecordSalaryForm;
