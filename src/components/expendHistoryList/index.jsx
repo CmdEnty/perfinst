@@ -1,44 +1,44 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../../theme";
+import { tokens } from "../../theme";
 import { useTheme } from "@mui/material";
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SalaryHistoryList = (props) => {
+const ExpendHistoryList = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const navigate = useNavigate();
   const salaryHistoryViewPage = useCallback(
-    () => navigate("/salaryHistoryView", { replace: true }),
+    () => navigate("/expendHistoryView", { replace: true }),
     [navigate]
   );
 
   const columns = [
-    { field: "staffNo", headerName: "StaffNo", flex: 0.5 },
-    { field: "dateCreated", headerName: "Full Names" },
+    { field: "amount", headerName: "Amount", flex: 0.5 },
+    { field: "spentFor", headerName: "Spent For" },
     {
-      field: "month",
-      headerName: "Month",
+      field: "methodOfPayment",
+      headerName: "MethodOfPayment",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "paymentMode",
-      headerName: "PaymentMode",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "amount",
-      headerName: "Amount",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
       field: "receiptNo",
-      headerName: "Receipt No",
+      headerName: "ReceiptNo",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "recipientPhone",
+      headerName: "RecipientPhone",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "dateSpent",
+      headerName: "DateSpent",
       headerAlign: "left",
       align: "left",
     },
@@ -77,7 +77,7 @@ const SalaryHistoryList = (props) => {
           },
         }}>
         <DataGrid
-          rows={props.salaryHistry}
+          rows={props.otherExpenditures}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
           onRowClick={salaryHistoryViewPage}
@@ -87,4 +87,4 @@ const SalaryHistoryList = (props) => {
   );
 };
 
-export default SalaryHistoryList;
+export default ExpendHistoryList;

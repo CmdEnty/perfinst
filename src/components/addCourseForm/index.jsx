@@ -16,6 +16,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Checkbox from "@mui/material/Checkbox";
+import { useQuery } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 
 const AddCourseForm = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -24,6 +26,18 @@ const AddCourseForm = (props) => {
   const [dynamicDescrField, setDynamicDescrField] = useState(0);
   const [fields, setFieldsField] = useState({});
   const [open, setOpen] = useState(false);
+  const [searchedCourses, setSearchedCourses] = useState([]);
+
+  const { isLoading, data } = useQuery(["searchedCourse"], () =>
+    axiosReq
+      .get("/courses")
+      .then((res) => {
+        return setSearchedCourses(res.data);
+      })
+      .catch((err) => {
+        return err;
+      })
+  );
 
   const handleFormSubmit = (values) => {
     console.log(values);
@@ -45,19 +59,7 @@ const AddCourseForm = (props) => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-  const top100Films = [
-    { title: "The Shawshank Redemption", year: 1994 },
-    { title: "The Godfather", year: 1972 },
-    { title: "The Godfather: Part II", year: 1974 },
-    { title: "The Dark Knight", year: 2008 },
-    { title: "12 Angry Men", year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: "Pulp Fiction", year: 1994 },
-    {
-      title: "The Lord of the Rings: The Return of the King",
-      year: 2003,
-    },
-  ];
+  const courses = [...searchedCourses];
 
   const addDescrField = (e) => {
     e.preventDefault();
@@ -182,9 +184,9 @@ const AddCourseForm = (props) => {
                 <Autocomplete
                   limitTags={5}
                   id="checkboxes-tags-demo"
-                  options={top100Films}
+                  options={courses}
                   disableCloseOnSelect
-                  getOptionLabel={(option) => option.title}
+                  getOptionLabel={(option) => option.courseCode}
                   renderOption={(props, option, { selected }) => (
                     <li {...props}>
                       <Checkbox
@@ -193,7 +195,7 @@ const AddCourseForm = (props) => {
                         style={{ marginRight: 8 }}
                         checked={selected}
                       />
-                      {option.title}
+                      {option.courseName}
                     </li>
                   )}
                   style={{ width: 250 }}

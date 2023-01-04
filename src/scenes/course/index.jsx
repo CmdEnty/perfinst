@@ -4,15 +4,17 @@ import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import CourseList from "../../components/course/courseList";
 import AddCourseForm from "../../components/addCourseForm";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosReq } from "../../axiosReq";
 const Course = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [courses, setCourses] = React.useState([]);
+  const queryClient = useQueryClient();
 
   const { isLoading, isError } = useQuery(["coursesList"], () =>
     axiosReq.get("/courses").then((res) => {
+      queryClient.invalidateQueries(["searchedCourse"]);
       setCourses(res.data);
       return res.data;
     })

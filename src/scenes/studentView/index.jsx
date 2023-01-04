@@ -15,10 +15,15 @@ const StudentView = () => {
   const [studes, setStudes] = React.useState([]);
 
   const sid = useLocation().pathname.split("/")[2];
-  const { isLoading } = useQuery(["studentDetails"], () =>
-    axiosReq.get("/student/studentView/" + sid).then((res) => {
-      return setStudes(...res.data);
-    })
+  const { isLoading, data } = useQuery(["studentDetails"], () =>
+    axiosReq
+      .get("/student/studentView/" + sid)
+      .then((res) => {
+        return setStudes(res.data);
+      })
+      .catch((err) => {
+        return err;
+      })
   );
 
   return (

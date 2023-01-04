@@ -12,14 +12,13 @@ const Salary = () => {
   const colors = tokens(theme.palette.mode);
   const [staffNo, setStaffNo] = useState();
   const [next, setNext] = useState(false);
+  const [salaryHistry, setSalaryHistry] = useState([]);
 
-     const { isLoading, isError } = useQuery(["salaryHistory"], () =>
-       axiosReq.get("/salary").then((res) => {
-         //  setDesignations(...res.data);
-         console.log(res.data);
-         return res.data;
-       })
-     );
+  const { isLoading, isError } = useQuery(["salaryHistory"], () =>
+    axiosReq.get("/salary").then((res) => {
+      return setSalaryHistry(res.data);
+    })
+  );
 
   const staffSearch = (e) => {
     setStaffNo([e.target.value]);
@@ -104,7 +103,7 @@ const Salary = () => {
               Salary Transaction Histry
             </Typography>
             <br />
-            <SalaryHistoryList />
+            <SalaryHistoryList salaryHistry={salaryHistry}/>
           </Box>
         </Box>
       </Box>

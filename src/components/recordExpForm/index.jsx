@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, TextField, Tooltip } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -14,15 +14,34 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { axiosReq } from "../../axiosReq";
 
 const RecordExpForm = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [value, setValue] = useState(dayjs(""));
 
-  const handleFormSubmit = (values) => {
-    const NewValues = Object.assign(values, { form1Submitted: 1 });
-    // props.handleFormChange(NewValues);
-    // props.handlePage();
+  const queryClient = useQueryClient();
+
+  // Mutations
+  const mutation = useMutation(
+    (newExpenditure) => {
+      axiosReq.post("/otherExpenditure/addOtherExpenditure", newExpenditure);
+    },
+    {
+      onSuccess: () => {
+        // resetForm()
+        // Invalidate and refetch
+         queryClient.invalidateQueries(["otherExpendituresList"]);
+      },
+      onError: () => {
+        return alert("oops something went wrong");
+      },
+    }
+  );
+
+  const handleFormSubmit = (values, resetForm) => {
+    mutation.mutate(values);
   };
 
   return (
@@ -31,9 +50,9 @@ const RecordExpForm = (props) => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={Object.assign(initialValues)}
-          validationSchema={checkoutSchema}
-        >
+          validationSchema={checkoutSchema}>
           {({
+            resetForm,
             values,
             errors,
             touched,
@@ -50,17 +69,17 @@ const RecordExpForm = (props) => {
                   "& > div": {
                     gridColumn: isNonMobile ? undefined : "span 4",
                   },
-                }}
-              >
+                }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   {" "}
                   <DatePicker
                     disableFuture
-                    label="Date"
+                    label="Date Spent"
                     openTo="year"
                     views={["year", "month", "day"]}
                     value={value}
                     onChange={(newValue) => {
+                      values.dateSpent = newValue;
                       setValue(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}
@@ -111,10 +130,10 @@ const RecordExpForm = (props) => {
                   multiline
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.reason}
-                  name="reason"
-                  error={!!touched.reason && !!errors.reason}
-                  helperText={touched.reason && errors.reason}
+                  value={values.spentFor}
+                  name="spentFor"
+                  error={!!touched.spentFor && !!errors.spentFor}
+                  helperText={touched.spentFor && errors.spentFor}
                   sx={{
                     gridColumn: "span 2",
                     "& .Mui-focused": {
@@ -153,8 +172,7 @@ const RecordExpForm = (props) => {
                     "& .css-1a9y42x-MuiButtonBase-root-MuiRadio-root.Mui-checked":
                       { color: "#0ba2de !important" },
                   }}
-                  error={!!touched.duration && !!errors.duration}
-                >
+                  error={!!touched.methodOfPayment && !!errors.methodOfPayment}>
                   <FormLabel id="demo-row-radio-buttons-group-label">
                     Method Of Payment
                   </FormLabel>
@@ -164,8 +182,7 @@ const RecordExpForm = (props) => {
                     name="methodOfPayment"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.methodOfPayment}
-                  >
+                    value={values.methodOfPayment}>
                     <FormControlLabel
                       value="cash"
                       control={<Radio />}
@@ -195,10 +212,10 @@ const RecordExpForm = (props) => {
                     label={`Enter The Receipt No (${values.methodOfPayment})`}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
+                    value={values.receiptNo}
+                    name="receiptNo"
+                    error={!!touched.receiptNo && !!errors.receiptNo}
+                    helperText={touched.receiptNo && errors.receiptNo}
                     sx={{
                       gridColumn: "span 2",
                       "& .Mui-focused": {
@@ -229,14 +246,14 @@ const RecordExpForm = (props) => {
                   <TextField
                     fullWidth
                     variant="filled"
-                    type="text"
-                    label={`Enter The Amount Paid (Kshs)`}
+                    type="number"
+                    label={`The recipient phone number`}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.durationValue}
-                    name="durationValue"
-                    error={!!touched.durationValue && !!errors.durationValue}
-                    helperText={touched.durationValue && errors.durationValue}
+                    value={values.recipientPhone}
+                    name="recipientPhone"
+                    error={!!touched.recipientPhone && !!errors.recipientPhone}
+                    helperText={touched.recipientPhone && errors.recipientPhone}
                     sx={{
                       gridColumn: "span 2",
                       "& .Mui-focused": {
@@ -320,19 +337,23 @@ const RecordExpForm = (props) => {
 };
 
 const checkoutSchema = yup.object().shape({
-  code: yup.string().required("required"),
-  title: yup.string().required("required"),
-  month: yup.string().required("required"),
+  dateSpent: yup.string().required("required"),
+  amount: yup.string().required("required"),
+  spentFor: yup.string().required("required"),
   methodOfPayment: yup.string().required("Select one of the buttons above"),
-  durationValue: yup.string().required("Required"),
+  receiptNo: yup.string().required("Required"),
+  recipientPhone: yup.string().required("Required"),
+  // description: yup.string().required("Required"),
 });
 
 const initialValues = {
-  code: "",
-  title: "",
-  month: "",
+  dateSpent: "",
+  amount: "",
+  spentFor: "",
   methodOfPayment: "",
-  durationValue: "",
+  receiptNo: "",
+  recipientPhone: "",
+  description: "",
 };
 
 export default RecordExpForm;
